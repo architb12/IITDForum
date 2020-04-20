@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<small lang="en">
+<head>
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <br>
+    <small> By {{ post.author }}</small>
+    <p>
+        {{ post.text }}
+    </p>
+
+    {{ post.likes_count }}
+    <br>
+    Time: {{ post.pub_date }}
+
+    <ul>
+        {% for comment in comments %}
+        <li> {{comment.text}} : {{ comment.author }} : {{ comment.likes_count }} : {{ comment.pub_date }} </li>
+        {% endfor %}
+    </ul>
+
+
+</body>
+</html>
