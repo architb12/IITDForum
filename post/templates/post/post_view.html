@@ -17,7 +17,7 @@
 
     <ul>
         {% for comment in comments %}
-        <li> {{comment.text}} : {{ comment.author }} : {{ comment.likes_count }} : {{ comment.pub_date }} </li>
+        <li> {{comment.text}} : {{ comment.author }} : {{ comment.likers | length }} : {{ comment.pub_date }} </li>
         {% endfor %}
     </ul>
 

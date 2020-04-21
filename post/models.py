@@ -9,7 +9,6 @@ class Post(models.Model):
     title = models.CharField(max_length = 50)
     text = models.CharField(max_length = 500)
     likers = []
-    likes_count = models.IntegerField(default = 0)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     pub_date = models.DateTimeField(default = timezone.now())
 
