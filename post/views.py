@@ -4,6 +4,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 
 # Create your views here.
 
+#View individual post with comments
 def post_view(request, post_id):
     try:
         post = Post.objects.get(id=post_id)
@@ -11,3 +12,7 @@ def post_view(request, post_id):
         raise Http404("ERROR 404: Post does not exist")
     comments = post.comment_set.order_by('-pub_date')
     return render(request, 'post/post_view.html', {'post': post, 'comments': comments})
+
+#Home page 
+def home(request):
+    return render(request,'post/home.html',{})
