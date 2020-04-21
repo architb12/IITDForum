@@ -20,5 +20,4 @@ class Comment(models.Model):
     text = models.CharField(max_length = 500)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     likers = []
-    likes_count = models.IntegerField(default = 0)
     pub_date = models.DateTimeField(default = timezone.now())

@@ -11,7 +11,7 @@
         {{ post.text }}
     </p>
 
-    {{ post.likes_count }}
+    {{ post.likers | length }}
     <br>
     Time: {{ post.pub_date }}
 
