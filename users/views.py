@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from .forms import SignUpForm
 from django.contrib import messages
+from django.contrib.auth.views import LoginView
 # Create your views here.
+# View For sign up form
 def signup(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)

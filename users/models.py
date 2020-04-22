@@ -11,3 +11,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.parent_user.username
+
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name

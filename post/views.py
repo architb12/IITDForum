@@ -15,4 +15,5 @@ def post_view(request, post_id):
 
 #Home page 
 def home(request):
-    return render(request,'post/home.html',{})
+    posts = Post.objects.all().order_by('-pub_date')
+    return render(request,'post/home.html',{'posts':posts})

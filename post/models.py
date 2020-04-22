@@ -6,14 +6,13 @@ import datetime
 # Create your models here.
 # Model for Post
 class Post(models.Model):
-    title = models.CharField(max_length = 50)
     text = models.CharField(max_length = 500)
     likers = []
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     pub_date = models.DateTimeField(default = timezone.now())
 
     def __str__(self):
-        return self.title
+        return str(self.pub_date) + ' by ' + self.author.username
 
 class Comment(models.Model):
     parent_post = models.ForeignKey(Post, on_delete = models.CASCADE)
