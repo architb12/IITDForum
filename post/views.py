@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Post, Comment
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-
+from django.views.generic import RedirectView
 # Create your views here.
 
 #View individual post with comments
@@ -17,3 +17,9 @@ def post_view(request, post_id):
 def home(request):
     posts = Post.objects.all().order_by('-pub_date')
     return render(request,'post/home.html',{'posts':posts})
+
+class PostLikeToggle(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        id=self.kwargs.get("id")
+        
+

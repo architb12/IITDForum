@@ -6,8 +6,7 @@ import datetime
 # Create your models here.
 # Model for Post
 class Post(models.Model):
-    text = models.CharField(max_length = 500)
-    likers = []
+    text = models.CharField(max_length = 5000)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     pub_date = models.DateTimeField(default = timezone.now())
 
@@ -18,5 +17,11 @@ class Comment(models.Model):
     parent_post = models.ForeignKey(Post, on_delete = models.CASCADE)
     text = models.CharField(max_length = 500)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
-    likers = []
     pub_date = models.DateTimeField(default = timezone.now())
+
+class PostLike(models.Model):
+    parent_post = models.ForeignKey(Post,on_delete = models.CASCADE)
+    likers = models.ManyToManyField(User)
+    
+    def __str__(self):
+        return str(self.parent_post) + ' (' + str(self.likers.count()) + ')'
