@@ -21,7 +21,7 @@ class Comment(models.Model):
 
 class PostLike(models.Model):
     parent_post = models.OneToOneField(Post, on_delete=models.CASCADE)
-    likers = models.ManyToManyField(User)
+    likers = models.ManyToManyField(User, blank=True)
     
     def __str__(self):
         return str(self.parent_post) + ' (' + str(self.likers.count()) + ')'

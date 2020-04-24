@@ -24,26 +24,37 @@
         <br>
         <div class="like-wrapper">
             {% if request.user in post.postlike.likers.all %}
-                <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
-                <div class="likes-count-prefix" id="likes-count-prefix{{ post.id }}">
-                    You and 
+                <div class="like-button-wrapper">
+                    <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
                 </div>
-                <div class="likes-count" id="likes-count{{ post.id }}">
-                    <font class="post-content-font">{{ post.postlike.likers.count|add:"-1"  }}</font>
-                </div>
-                <div class="likes-count-suffix" id="likes-count-suffix{{ post.id }}">
-                    others like this post.
+                <div class="likes-count" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
+                    <font class="like-count-font">
+                        
+                        {% if post.postlike.likers.count == 1 %}
+                            You liked this post.
+                        {% elif post.postlike.likers.count == 2 %}
+                            You and one other liked this post.
+                        {% else %} 
+                            You and {{ post.postlike.likers.count|add:"-1" }} others liked this post.
+                        {% endif %}
+                    
+                    </font>
                 </div>
                 
             {% else %}
-                <i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
-                <div class="likes-count-prefix" id="likes-count-prefix{{ post.id }}">
+                <div class="like-button-wrapper"> 
+                    <i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
                 </div>
-                <div class="likes-count" id="likes-count{{ post.id }}">
-                    <font class="post-content-font">{{ post.postlike.likers.count }}</font>
-                </div>
-                <div class="likes-count-suffix" id="likes-count-suffix{{ post.id }}">
-                    people like this post.
+                <div class="likes-count" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
+                    <font class="like-count-font">
+                        {% if post.postlike.likers.count == 0 %}
+                            No likes yet.
+                        {% elif post.postlike.likers.count == 1 %}
+                            One person liked this post.
+                        {% else %} 
+                            {{ post.postlike.likers.count }} people liked this post.
+                        {% endif %}
+                    </font>
                 </div>
             {% endif %}
         </div>
@@ -63,26 +74,44 @@
                 }, 
                 success: function( data ) 
                 {
+                    var likes = parseInt($('#likes-count'+id).attr("data-catid"))
                     if ($('#like' + id).hasClass('fa-heart-o')){
                         $( '#like' + id ).removeClass('fa-heart-o likes'); 
                         $( '#like' + id ).addClass('fa-heart liked'); 
-                        var targetDiv = document.getElementById("likes-count-prefix"+id);
-                        targetDiv.textContent = "You and ";
-                        targetDiv = document.getElementById("likes-count-suffix"+id);
-                        targetDiv.textContent = " others like this post.";
+
+                        var Div = document.getElementById("likes-count"+id);
+
+                        if(likes==0){
+                            Div.textContent = "You liked this post.";
+                        }
+                        else if(likes==1){
+                            Div.textContent = "You and one other liked this post.";
+                        }
+                        else{
+                            Div.textContent = "You and "+ (likes).toString() + " others liked this post.";
+                        }
+
+                        $('#likes-count'+id).attr("data-catid",(likes+1).toString())
                     }
                     else{
                         $( '#like' + id ).removeClass('fa-heart liked'); 
                         $( '#like' + id ).addClass('fa-heart-o likes'); 
-                        var targetDiv = document.getElementById("likes-count-prefix"+id);
-                        targetDiv.textContent = "";
-                        targetDiv = document.getElementById("likes-count-suffix"+id);
-                        targetDiv.textContent = " people like this post.";
+                        
+                        var Div = document.getElementById("likes-count"+id);
+
+                        if(likes==1){
+                            Div.textContent = "No likes yet.";
+                        }
+                        else if(likes==2){
+                            Div.textContent = "One person liked this post.";
+                        }
+                        else{
+                            Div.textContent = (likes-1).toString() + " people liked this post."
+                        }
+
+                        $('#likes-count'+id).attr("data-catid",(likes-1).toString())
+                        
                     }
-                },
-                error: function(data)
-                {
-                    location.href('')
                 }
             }) 
         });
