@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login
 # Create your views here.
+
 # View For sign up form
 def signup(request):
     if request.method == "POST":

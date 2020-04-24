@@ -83,6 +83,19 @@ body{
 
 .likes:hover{
 	color:#ff0033;
+	cursor: pointer;
+}
+
+.liked{
+	color:#ff0033;
+	transition:all 0.4s ease;
+	-webkit-transition:all 0.4s ease;
+	-moz-transition:all 0.4s ease;
+	-o-transition:all 0.4s ease;
+}
+
+.liked:hover{
+	cursor: pointer;
 }
 
 .form{

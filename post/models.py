@@ -20,7 +20,7 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(default = timezone.now())
 
 class PostLike(models.Model):
-    parent_post = models.ForeignKey(Post,on_delete = models.CASCADE)
+    parent_post = models.OneToOneField(Post, on_delete=models.CASCADE)
     likers = models.ManyToManyField(User)
     
     def __str__(self):

@@ -21,7 +21,37 @@
             {{post.text}}
         </font>
         <br>
-        <i class="fa fa-heart-o likes" aria-hidden="true"></i>
+        {% if request.user in post.postlike.likers.all %}
+            <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
+        {% else %}
+            <i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
+        {% endif %}
+        <font class="post-content-font">{{ post.postlike.likers.count }} like{{post.postlike.likers.count|pluralize}}</font>
     </div>
     {% endfor %}
+    <script type="text/javascript"> 
+        $('.like-button').click(function(){ 
+            var id; 
+            id = $(this).attr("data-catid"); 
+            $.ajax( 
+            { 
+                type:"GET", 
+                url: "{% url 'post:post_like' %}", 
+                data:{ 
+                        post_id: id 
+                }, 
+                success: function( data ) 
+                { 
+                    if ($('#like' + id).hasClass('fa-heart-o')){
+                        $( '#like' + id ).removeClass('fa-heart-o likes'); 
+                        $( '#like' + id ).addClass('fa-heart liked'); 
+                    }
+                    else{
+                        $( '#like' + id ).removeClass('fa-heart liked'); 
+                        $( '#like' + id ).addClass('fa-heart-o likes'); 
+                    }
+                } 
+            }) 
+        });
+    </script>        
 {% endblock content %}

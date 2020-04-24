@@ -26,4 +26,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('signup/', user_views.signup, name='signup'),
     path('home/', post_views.home, name='home'),
+    path('ajax/', include('post.urls')),
 ]
