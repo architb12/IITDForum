@@ -56,6 +56,11 @@ body{
 	padding:0px;
 }
 
+.message-font{
+	font-family: 'Raleway',sans-serif;
+	font-size:15px;
+}
+
 .body-content{
 	padding-top: 10vh;
 	padding-left:10px;
@@ -71,6 +76,40 @@ body{
 	font-family: 'Raleway',sans-serif;
 	font-size:20px;
 	color:#222;
+}
+
+.name-font{
+	font-family: 'Raleway',sans-serif;
+	font-size:13px;
+	font-weight: 700;
+	color:#222;
+}
+
+.post-content-font{
+	font-family: 'Raleway',sans-serif;
+	font-size:15px;
+	color:#222;
+}
+
+.like-count-font{
+	font-family: 'Raleway',sans-serif;
+	font-size:12px;
+	font-weight: 700;
+	color:#222;
+}
+
+.like-wrapper{
+	display: flex;
+}
+
+.likes-count{
+	margin-top: 3px;
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.like-button-wrapper{
+	margin-top: 0.5px;
 }
 
 .likes{
@@ -427,16 +466,4 @@ form{
 	font-size: 15px;
 	font-weight: 700;
 	color:#222;
-}
-
-.like-wrapper{
-	display: flex;
-}
-
-.likes-count{
-	margin-left: 4px;
-	margin-right: 4px;
-}
-.like-button-wrapper{
-	margin-top: 0.5px;
 }

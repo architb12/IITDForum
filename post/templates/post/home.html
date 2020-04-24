@@ -19,7 +19,7 @@
         </font>
         <hr class="hr1" align="left">
         <font class="post-content-font">
-            {{post.text}}
+            {{post.text|linebreaks}}
         </font>
         <br>
         <div class="like-wrapper">
@@ -27,8 +27,8 @@
                 <div class="like-button-wrapper">
                     <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
                 </div>
-                <div class="likes-count" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
-                    <font class="like-count-font">
+                <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
+                    
                         
                         {% if post.postlike.likers.count == 1 %}
                             You liked this post.
@@ -37,16 +37,18 @@
                         {% else %} 
                             You and {{ post.postlike.likers.count|add:"-1" }} others liked this post.
                         {% endif %}
-                    
-                    </font>
                 </div>
                 
             {% else %}
                 <div class="like-button-wrapper"> 
-                    <i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
+                    {% if request.user.is_authenticated %}
+                        <i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
+                    {% else %}
+                        <a href="{% url 'login' %}"><i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i></a>
+                    {% endif %}
                 </div>
-                <div class="likes-count" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
-                    <font class="like-count-font">
+                <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
+                    
                         {% if post.postlike.likers.count == 0 %}
                             No likes yet.
                         {% elif post.postlike.likers.count == 1 %}
@@ -54,7 +56,7 @@
                         {% else %} 
                             {{ post.postlike.likers.count }} people liked this post.
                         {% endif %}
-                    </font>
+                
                 </div>
             {% endif %}
         </div>
