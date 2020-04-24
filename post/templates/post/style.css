@@ -397,3 +397,7 @@ form{
 	font-weight: 700;
 	color:#222;
 }
+
+.like-wrapper{
+	display: flex;
+}

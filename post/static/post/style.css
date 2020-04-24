@@ -428,3 +428,14 @@ form{
 	font-weight: 700;
 	color:#222;
 }
+
+.like-wrapper{
+	display: flex;
+}
+.likes-count{
+	margin-left: 4px;
+	margin-right: 4px;
+}
+.likes-count-prefix{
+	margin-left: 2px;
+}

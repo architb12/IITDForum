@@ -1,6 +1,7 @@
 {% extends "post/base.html" %}
 {% block content %}
     <div class="write-post">
+        {{Element.className}}
         <font class="write-post-font">
             <b>What's on your mind?</b>
         </font>
@@ -21,12 +22,32 @@
             {{post.text}}
         </font>
         <br>
-        {% if request.user in post.postlike.likers.all %}
-            <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
-        {% else %}
-            <i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
-        {% endif %}
-        <font class="post-content-font">{{ post.postlike.likers.count }} like{{post.postlike.likers.count|pluralize}}</font>
+        <div class="like-wrapper">
+            {% if request.user in post.postlike.likers.all %}
+                <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
+                <div class="likes-count-prefix" id="likes-count-prefix{{ post.id }}">
+                    You and 
+                </div>
+                <div class="likes-count" id="likes-count{{ post.id }}">
+                    <font class="post-content-font">{{ post.postlike.likers.count|add:"-1"  }}</font>
+                </div>
+                <div class="likes-count-suffix" id="likes-count-suffix{{ post.id }}">
+                    others like this post.
+                </div>
+                
+            {% else %}
+                <i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
+                <div class="likes-count-prefix" id="likes-count-prefix{{ post.id }}">
+                </div>
+                <div class="likes-count" id="likes-count{{ post.id }}">
+                    <font class="post-content-font">{{ post.postlike.likers.count }}</font>
+                </div>
+                <div class="likes-count-suffix" id="likes-count-suffix{{ post.id }}">
+                    people like this post.
+                </div>
+            {% endif %}
+        </div>
+        
     </div>
     {% endfor %}
     <script type="text/javascript"> 
@@ -41,16 +62,28 @@
                         post_id: id 
                 }, 
                 success: function( data ) 
-                { 
+                {
                     if ($('#like' + id).hasClass('fa-heart-o')){
                         $( '#like' + id ).removeClass('fa-heart-o likes'); 
                         $( '#like' + id ).addClass('fa-heart liked'); 
+                        var targetDiv = document.getElementById("likes-count-prefix"+id);
+                        targetDiv.textContent = "You and ";
+                        targetDiv = document.getElementById("likes-count-suffix"+id);
+                        targetDiv.textContent = " others like this post.";
                     }
                     else{
                         $( '#like' + id ).removeClass('fa-heart liked'); 
                         $( '#like' + id ).addClass('fa-heart-o likes'); 
+                        var targetDiv = document.getElementById("likes-count-prefix"+id);
+                        targetDiv.textContent = "";
+                        targetDiv = document.getElementById("likes-count-suffix"+id);
+                        targetDiv.textContent = " people like this post.";
                     }
-                } 
+                },
+                error: function(data)
+                {
+                    location.href('')
+                }
             }) 
         });
     </script>        

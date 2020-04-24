@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Post, Comment, Post
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect
