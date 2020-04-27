@@ -3,6 +3,19 @@ $(document).ready(function(){
   $(".loader").delay(500).fadeOut();
 });
 
+//Changing Navbar on scrolling
+$(window).on("scroll", function() {
+  if($(window).scrollTop()) {
+        $('.navbar').addClass('nav-scroll');
+        $('.navbar').removeClass('nav-top');
+  }
+
+  else {
+        $('.navbar').removeClass('nav-scroll');
+        $('.navbar').addClass('nav-top');
+  }
+})
+
 //Smooth Scroll
 $(function() {
     $('a[href*=#]:not([href=#])').click(function() {
