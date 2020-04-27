@@ -186,7 +186,7 @@ body{
 
 .username-font{
 	font-family: 'Raleway',sans-serif;
-	font-size:20px;
+	font-size:25px;
 	color:#222;
 }
 
@@ -194,13 +194,46 @@ body{
 	font-family: 'Raleway',sans-serif;
 	font-size:13px;
 	font-weight: 700;
-	color:#222;
+	color:rgb(49, 49, 49);
+}
+
+.date-font{
+	font-family: 'Spartan',sans-serif;
+	font-size:9px;
+	font-weight: 500;
+	color:rgb(94, 94, 94);
+	transition:all 0.1s ease;
+	-webkit-transition:all 0.1s ease;
+	-moz-transition:all 0.1s ease;
+	-o-transition:all 0.1s ease;
+}
+
+.date-font:hover{
+	color:rgb(94, 94, 94);
+	text-decoration: underline;
 }
 
 .post-content-font{
 	font-family: 'Raleway',sans-serif;
 	font-size:15px;
 	color:#222;
+}
+
+.delete-div{
+	padding-top: 5px;
+}
+
+.delete-icon{
+	color:#505050;
+	transition:all 0.1s ease;
+	-webkit-transition:all 0.1s ease;
+	-moz-transition:all 0.1s ease;
+	-o-transition:all 0.1s ease;
+
+}
+
+.delete-icon:hover{
+	color:#a10000;
 }
 
 .like-count-font{
@@ -525,3 +558,18 @@ form{
 	font-weight: 700;
 	color:#222;
 }
+
+.profile-pic{
+	float: right;
+	object-fit: cover;
+	transition:all 0.4s ease;
+	-webkit-transition:all 0.4s ease;
+	-moz-transition:all 0.4s ease;
+	-o-transition:all 0.4s ease;
+}
+
+.profile-pic:hover{
+	width: 65px;
+	height: 65px;
+}
+

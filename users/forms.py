@@ -87,6 +87,3 @@ class SignUpForm(forms.Form):
         )
         new_profile.save()
         return user
-
-
- 

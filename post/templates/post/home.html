@@ -1,22 +1,64 @@
 {% extends "post/base.html" %}
 {% block content %}
-    <div class="write-post">
-        {{Element.className}}
-        <font class="write-post-font">
-            <b>What's on your mind?</b>
-        </font>
-        <br>
-        
-    </div>
+    {% if request.user.is_authenticated %}
+        <div class="home-post">
+            <div class="write-post">
+                <div class="row">
+                    <div class="col-md-1">
+                        <img class="img-circle profile-pic" width=60 height=60 src="{{ request.user.profile.image.url }}" alt="default.jpg">
+                    </div>
+                    <div class="col-md-11"  style="padding-top:15px;">
+                        <font class="username-font">
+                            <b>What's on your mind, {{request.user.username}}?</b>
+                        </font>
+                    </div>
+                </div>
+                <div class="form">
+                    <form action="{% url 'post:post_create' %}" method="POST" class="form-horizontal">
+                        {% csrf_token %}
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea name="post_text" class="form-control" rows="5" id="cmmnt" placeholder="What's on your mind?"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <button class="btn btn-default sub-btn"> Post </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {% for post in posts %}
     <div class="home-post">
-        <font class="username-font">
-            <b>{{post.author.username}}</b>
-        </font>
-        <br>
-        <font class="name-font">
-            {{post.author.profile.full_name}}
-        </font>
+        <div class="row">
+            <div class="col-md-1">
+                <img class="img-circle profile-pic" width=60 height=60 src="{{ post.author.profile.image.url }}" alt="default.jpg">
+            </div>
+            <div class="col-md-10">
+                <font class="username-font">
+                    <b>{{post.author.username}}</b>
+                </font>
+                <br>
+                <font class="name-font">
+                    {{post.author.profile.full_name}}
+                </font>
+                <br>
+                <a href="{% url 'post:post_view' post.id %}" class="date-font">
+                    {{post.pub_date}}
+                </a>
+                 
+            </div>
+            <div class="col-md-1 delete-div">
+                {% if request.user == post.author %}
+                <a href="" data-toggle="modal" data-target="#delete-modal" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Delete this post">
+                    <i class="fas fa-trash-alt delete-icon"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
         <hr class="hr1" align="left">
         <font class="post-content-font">
             {{post.text|linebreaks}}
@@ -118,4 +160,33 @@
             }) 
         });
     </script>        
+
+<!-- Modal for delete post -->
+<div id="delete-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+  
+      <div class="modal-content">
+        <div class="modal-header modal-top">
+
+          <font class="modal-heading">Are you sure you want to delete the post?</font>
+        </div>
+        <div class="modal-body">
+
+          <!-- form -->
+          
+        <center>
+            <form action="post_delete" method="POST">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"> Yes </button>
+            </form>
+            <button type="button" class="btn btn-success" data-dismiss="modal"> Cancel </button>
+        </center>
+          
+          
+        </div>
+      </div>
+  
+    </div>
+  </div>
 {% endblock content %}
+
+

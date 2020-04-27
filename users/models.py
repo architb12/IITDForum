@@ -8,6 +8,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     gender = models.CharField(max_length=100, default="Male")
+    image = models.ImageField(default='default.jpg',upload_to='profile-pics')
 
     def __str__(self):
         return self.parent_user.username
