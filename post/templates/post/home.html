@@ -1,15 +1,15 @@
 {% extends "post/base.html" %}
 {% block content %}
     {% if request.user.is_authenticated %}
-        <div class="home-post">
+        <div class="create-post-div">
             <div class="write-post">
                 <div class="row">
                     <div class="col-md-1">
                         <img class="img-circle profile-pic" width=60 height=60 src="{{ request.user.profile.image.url }}" alt="default.jpg">
                     </div>
                     <div class="col-md-11"  style="padding-top:15px;">
-                        <font class="username-font">
-                            <b>What's on your mind, {{request.user.username}}?</b>
+                        <font class="create-font">
+                            What's on your mind, {{request.user.username}}?
                         </font>
                     </div>
                 </div>
@@ -18,12 +18,14 @@
                         {% csrf_token %}
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <textarea name="post_text" class="form-control" rows="5" id="cmmnt" placeholder="What's on your mind?"></textarea>
+                            <textarea name="post_text" class="form-control create-input" rows="5" placeholder="What's on your mind?"></textarea>
+                            <span class="create-input-focus"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <button class="btn btn-default sub-btn"> Post </button>
+                            <br>
+                            <button class="btn btn-default create-btn"> <span>POST</span> </button>
                         </div>
                     </div>
                     
@@ -32,7 +34,7 @@
         </div>
     {% endif %}
     {% for post in posts %}
-    <div class="home-post">
+    <div class="home-post-div">
         <div class="row">
             <div class="col-md-1">
                 <img class="img-circle profile-pic" width=60 height=60 src="{{ post.author.profile.image.url }}" alt="default.jpg">

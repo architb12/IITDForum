@@ -54,3 +54,21 @@ $(document).ready(function(){
   $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
   });
+
+  //Auto expanding textareas
+  var autoExpand = function(field){
+    field.style.height = 'inherit';
+    var style = window.getComputedStyle(field);
+    var height =  parseInt(style.getPropertyValue('border-top-width'),10)
+                  + parseInt(style.getPropertyValue('padding-top'),10)
+                  + field.scrollHeight
+                  + parseInt(style.getPropertyValue('padding-bottom'),10)
+                  + parseInt(style.getPropertyValue('border-bottom-width'),10);
+    field.style.height = height + 'px';
+  };
+
+  //Event listener for textarea
+  document.addEventListener('input', function(event){
+    if(event.target.tagName.toLowerCase() !== 'textarea') return;
+    autoExpand(event.target);
+  },false);
