@@ -53,3 +53,12 @@ def post_create(request):
     else:
         return redirect('home')
 
+#Post Deletion View
+def post_delete(request):
+    if request.method == 'GET':
+        post_id = request.GET['post_id']
+        post = Post.objects.get(id = post_id)
+        post.delete()
+        return HttpResponse('success')
+    else:
+        return HttpResponse('fail')

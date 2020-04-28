@@ -53,14 +53,14 @@
             <button type="button" class="navbar-toggle" id="collapse-btn" data-toggle="collapse" data-target="#myNavbar">
             <i class="fa fa-bars fa-2x" id="navicon" aria-hidden="true"></i>                    
             </button>
-            <a class="navbar-brand" href="#home">IITD Forum</a>
+            <a class="navbar-brand">IITD Forum</a>
         </div>
         
         <div class="collapse navbar-collapse" id="myNavbar">
     
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_authenticated %}
-                    <li><a href="#">{{request.user.profile.first_name}}</a></li>
+                    <li><a href="{% url 'users:profile_view' request.user.username %}">{{request.user.profile.first_name}}</a></li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                 {% else %}
                     <li><a href="{% url 'login' %}">Login</a></li>

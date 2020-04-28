@@ -1,1 +1,208 @@
-{{ user.username }}
+{% extends "post/base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <img class="img-circle profile-pic" style="float: left;" width=150 height=150 src="{{ user.profile.image.url }}" alt="default.jpg">
+        </div>
+        <div class="col-md-9">
+            <br>
+            <font class="username-font">
+                {{user.username}}
+            </font>
+            <br>
+            <font class="name-font">
+                {{user.profile.full_name}}
+            </font>
+            <br><br>
+            <font class="details-font">
+                <i class="fas fa-home"></i>&nbsp; {{user.profile.hostel}}
+                <br>
+                <i class="far fa-building"></i>&nbsp; {{user.profile.dept}}
+                <br>
+                <i class="fas fa-birthday-cake"></i>&nbsp; {{user.profile.date_of_birth}}
+            </font>   
+        </div>
+    </div>
+    <div class="bio-div">
+        <br>
+        <font class="bio-font">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit quia nam nesciunt aliquam aperiam cupiditate vitae cumque deleniti quae libero facere inventore, explicabo reiciendis vel iste sapiente eaque eos dolore! Totam necessitatibus dolorum aliquam quisquam sed dolores eligendi illum esse corrupti! Omnis sunt quia incidunt sed quasi similique, aspernatur quis, quidem atque tempore quisquam expedita temporibus esse iste illo id blanditiis quas ex adipisci reiciendis nulla. Dolore natus, a assumenda possimus officia quo repellat autem nostrum consectetur! Deleniti natus corrupti esse quibusdam molestiae? Corrupti dolores autem cumque officia. Maxime vel sapiente architecto omnis dicta mollitia illum. Tempora consequuntur necessitatibus inventore?
+        </font>
+    </div>
+    {% for post in posts %}
+    <div class="home-post-div"  id="post-{{ post.id }}-div">
+        <div class="row">
+            <div class="col-md-1">
+                <img class="img-circle profile-pic" width=60 height=60 src="{{ post.author.profile.image.url }}" alt="default.jpg">
+            </div>
+            <div class="col-md-10">
+                <font class="username-font">
+                    <b>{{post.author.username}}</b>
+                </font>
+                <br>
+                <font class="name-font">
+                    {{post.author.profile.full_name}}
+                </font>
+                <br>
+                <a href="{% url 'post:post_view' post.id %}" class="date-font">
+                    {{post.pub_date}}
+                </a>
+                 
+            </div>
+            <div class="col-md-1 delete-div">
+                {% if request.user == post.author %}
+                <a href="#" class="delete-icon" data-catid="{{post.id}}" data-toggle="modal" data-target="#delete-modal" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Delete this post">
+                    <i class="fas fa-trash-alt delete-icon"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <hr class="hr1" align="left">
+        <font class="post-content-font">
+            {{post.text|linebreaks}}
+        </font>
+        <br>
+        <div class="like-wrapper">
+            {% if request.user in post.postlike.likers.all %}
+                <div class="like-button-wrapper">
+                    <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
+                </div>
+                <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
+                    
+                        
+                        {% if post.postlike.likers.count == 1 %}
+                            You liked this post.
+                        {% elif post.postlike.likers.count == 2 %}
+                            You and one other liked this post.
+                        {% else %} 
+                            You and {{ post.postlike.likers.count|add:"-1" }} others liked this post.
+                        {% endif %}
+                </div>
+                
+            {% else %}
+                <div class="like-button-wrapper"> 
+                    {% if request.user.is_authenticated %}
+                        <i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
+                    {% else %}
+                        <a href="{% url 'login' %}"><i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i></a>
+                    {% endif %}
+                </div>
+                <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
+                    
+                        {% if post.postlike.likers.count == 0 %}
+                            No likes yet.
+                        {% elif post.postlike.likers.count == 1 %}
+                            One person liked this post.
+                        {% else %} 
+                            {{ post.postlike.likers.count }} people liked this post.
+                        {% endif %}
+                
+                </div>
+            {% endif %}
+        </div>
+        
+        
+    </div>
+    {% endfor %}
+
+    <!-- Modal for delete post -->
+    <div id="delete-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+    
+        <div class="modal-content">
+            <div class="modal-header modal-top">
+
+            <font class="modal-heading">Are you sure you want to delete the post?</font>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <button class="btn btn-danger" id="delete" data-dismiss="modal" name="delete"> Yes </button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"> Cancel </button>
+                </center>
+            </div>
+        </div>
+    
+        </div>
+    </div>
+    <script type="text/javascript"> 
+        $('.like-button').click(function(){ 
+            var id; 
+            id = $(this).attr("data-catid"); 
+            $.ajax( 
+            { 
+                type:"GET", 
+                url: "{% url 'post:post_like' %}", 
+                data:{ 
+                        post_id: id 
+                }, 
+                success: function( data ) 
+                {
+                    var likes = parseInt($('#likes-count'+id).attr("data-catid"))
+                    if ($('#like' + id).hasClass('fa-heart-o')){
+                        $( '#like' + id ).removeClass('fa-heart-o likes'); 
+                        $( '#like' + id ).addClass('fa-heart liked'); 
+
+                        var Div = document.getElementById("likes-count"+id);
+
+                        if(likes==0){
+                            Div.textContent = "You liked this post.";
+                        }
+                        else if(likes==1){
+                            Div.textContent = "You and one other liked this post.";
+                        }
+                        else{
+                            Div.textContent = "You and "+ (likes).toString() + " others liked this post.";
+                        }
+
+                        $('#likes-count'+id).attr("data-catid",(likes+1).toString())
+                    }
+                    else{
+                        $( '#like' + id ).removeClass('fa-heart liked'); 
+                        $( '#like' + id ).addClass('fa-heart-o likes'); 
+                        
+                        var Div = document.getElementById("likes-count"+id);
+
+                        if(likes==1){
+                            Div.textContent = "No likes yet.";
+                        }
+                        else if(likes==2){
+                            Div.textContent = "One person liked this post.";
+                        }
+                        else{
+                            Div.textContent = (likes-1).toString() + " people liked this post."
+                        }
+
+                        $('#likes-count'+id).attr("data-catid",(likes-1).toString())
+                        
+                    }
+                }
+            }) 
+        });
+        $('.delete-icon').click(function(){
+            var id; 
+            id = $(this).attr("data-catid");
+            $('#delete').attr('value', id);
+        });
+
+
+        $('#delete').click(function(){
+            var id;
+            id = $(this).attr('value');
+            $.ajax( 
+            {  
+                type:"GET", 
+                url: "{% url 'post:post_delete' %}", 
+                data:{ 
+                        post_id: id 
+                }, 
+                success: function( data ) 
+                {
+                    $('#post-' + id + '-div').fadeOut();
+                }
+            }) 
+        });
+
+    </script>        
+{% endblock content %}
+
+

@@ -317,7 +317,7 @@ body{
 	-o-transition:all 0.4s ease;
 }
 
-.profile-pic:hover{
+.post-profile-pic:hover{
 	width: 65px;
 	height: 65px;
 }
@@ -393,6 +393,24 @@ body{
 
 .form{
 	padding:20px;
+}
+
+.details-font{
+	font-family: 'Raleway', sans-serif;
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.bio-font{
+	font-family: 'Raleway', sans-serif;
+	font-size: 15px;
+	font-weight: 400;
+}
+
+.profile-font-1{
+	font-family: 'Spartan', sans-serif;
+	font-weight: 700;
+	font-size: 15px;
 }
 
 .label-font{

@@ -8,6 +8,8 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     gender = models.CharField(max_length=100, default="Male")
+    dept = models.CharField(max_length=100, default="None")
+    hostel = models.CharField(max_length=100, default="None")
     image = models.ImageField(default='default.jpg',upload_to='profile-pics')
 
     def __str__(self):
