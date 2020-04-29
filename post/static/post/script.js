@@ -1,6 +1,6 @@
 //Loader Fade out
 $(document).ready(function(){
-  $(".loader").delay(500).fadeOut();
+  $(".loader").fadeOut();
 });
 
 //Changing Navbar on scrolling
@@ -72,3 +72,27 @@ $(document).ready(function(){
     if(event.target.tagName.toLowerCase() !== 'textarea') return;
     autoExpand(event.target);
   },false);
+
+  //See more-See less functionality
+  $(".see-more").click(function(){
+    var id;            
+    id = $(this).attr("data-catid");
+    $("#post-text-sliced"+id).hide();
+    $("#post-text-full"+id).show();
+    var see_more_div = document.getElementById("see-more"+id);
+    see_more_div.textContent=""
+    var see_less_div = document.getElementById("see-less"+id);
+    see_less_div.textContent="See less"
+});
+
+$(".see-less").click(function(){
+    console.log("SEELESS")
+    var id;            
+    id = $(this).attr("data-catid");
+    $("#post-text-sliced"+id).show();
+    $("#post-text-full"+id).hide();
+    var see_more_div = document.getElementById("see-more"+id);
+    see_more_div.textContent="See more"
+    var see_less_div = document.getElementById("see-less"+id);
+    see_less_div.textContent=""
+});

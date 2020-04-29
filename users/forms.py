@@ -59,6 +59,10 @@ class SignUpForm(forms.Form):
     #Check if username alredy exists
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
+        if len(username)>30:
+            raise ValidationError('Username can not exceed 30 characters.')
+        if len(username)<3:
+            raise ValidationError('Username must contain atleast 3 characters')
         r = User.objects.filter(username=username)
         if r.count():
             raise  ValidationError("Username already exists")
@@ -82,7 +86,10 @@ class SignUpForm(forms.Form):
 
     #Check if age is atleast 13 years
     def clean_date_of_birth(self):
-        date_of_birth = self.cleaned_data['date_of_birth']
+        try:
+            date_of_birth = self.cleaned_data['date_of_birth']
+        except KeyError:
+            raise ValidationError("Please enter Date of Birth.")
         if(timezone.now().date()-date_of_birth < datetime.timedelta(days=4748)):
             raise ValidationError("Age must be atleast 13 years to register")
         return date_of_birth
@@ -90,17 +97,21 @@ class SignUpForm(forms.Form):
     #Check if name contains special characters
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
+        if len(first_name)<3 or len(first_name)>15:
+            raise ValidationError("First name must contain between 3 and 15 letters.")
         for ch in first_name:
             if not ch.isalpha() and ch!=' ':
                 raise ValidationError("Name must not contain special characters or digits")
         return first_name
 
-    def clean_second_name(self):
-        second_name = self.cleaned_data['second_name']
-        for ch in second_name:
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name']
+        if len(last_name)<3 or len(last_name)>15:
+            raise ValidationError("Last name must contain between 3 and 15 letters.")
+        for ch in last_name:
             if not ch.isalpha() and ch!=' ':
                 raise ValidationError("Name must not contain special characters or digits")
-        return second_name
+        return last_name
 
     #Save the form
     def save(self, commit=True):

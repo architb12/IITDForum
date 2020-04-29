@@ -286,6 +286,10 @@ body{
 	background-color: #ececec;
 }
 
+.content-div{
+	overflow-wrap:break-word;
+}
+
 .username-font{
 	font-family: 'Raleway',sans-serif;
 	font-size:25px;

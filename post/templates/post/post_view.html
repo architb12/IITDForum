@@ -31,7 +31,9 @@
     </div>
     <hr class="hr1" align="left">
     <font class="post-content-font">
-        {{post.text|linebreaks}}
+        <div class="content-div">
+            {{post.text|linebreaks}}
+        </div>
     </font>
     <br>
     <div class="like-wrapper">
@@ -113,7 +115,7 @@
                     <div class="col-md-1">
                         <img class="img-circle profile-pic" width=40 height=40 src="{{ comment.author.profile.image.url }}" alt="default.jpg">
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 content-div">
 
                         <a href="{% url 'users:profile_view' comment.author.username %}" class="post-head">
                         <font class="comment-username-font">

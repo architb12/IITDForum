@@ -60,11 +60,11 @@
         <hr class="hr1" align="left">
         <font class="post-content-font">
             <!-- 'See more' feature -->
-            {% if post.text|linebreaks|length < 500 %}
-                {{post.text|linebreaks}}
+            {% if post.text|linebreaks|length < 600 %}
+                <div class="content-div"> {{post.text|linebreaks}} </div>
             {% else %}
-                <div class="post-text-sliced" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks|slice:":450"}}... </div>
-                <div class="collapse" id="post-text-full{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks}} </div>
+                <div class="post-text-sliced content-div" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks|slice:":450"}}... </div>
+                <div class="collapse content-div" id="post-text-full{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks}} </div>
                 <div class="see-more" id="see-more{{post.id}}" data-catid="{{post.id}}"> See more </div>
                 <div class="see-less" id="see-less{{post.id}}" data-catid="{{post.id}}"> </div>
             {% endif %}
@@ -130,7 +130,7 @@
                 <div class="col-md-1">
                     <img class="img-circle profile-pic" width=40 height=40 src="{{ comment.author.profile.image.url }}" alt="default.jpg">
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-10 content-div">
                     <a href="{% url 'users:profile_view' comment.author.username %}" class="post-head">
                         <font class="comment-username-font">
                                 <b>{{comment.author.username}}</b>
@@ -282,29 +282,6 @@
             }
         });
 
-        //See more-See less functionality
-        $(".see-more").click(function(){
-            var id;            
-            id = $(this).attr("data-catid");
-            $("#post-text-sliced"+id).hide();
-            $("#post-text-full"+id).show();
-            var see_more_div = document.getElementById("see-more"+id);
-            see_more_div.textContent=""
-            var see_less_div = document.getElementById("see-less"+id);
-            see_less_div.textContent="See less"
-        });
-
-        $(".see-less").click(function(){
-            console.log("SEELESS")
-            var id;            
-            id = $(this).attr("data-catid");
-            $("#post-text-sliced"+id).show();
-            $("#post-text-full"+id).hide();
-            var see_more_div = document.getElementById("see-more"+id);
-            see_more_div.textContent="See more"
-            var see_less_div = document.getElementById("see-less"+id);
-            see_less_div.textContent=""
-        });
     </script>        
 {% endblock content %}
 

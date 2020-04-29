@@ -1,0 +1,36 @@
+{% extends 'post/base.html' %}
+{% block content %}
+Set up your account 2
+<form action="{% url 'users:setup3' %}" method="POST">
+    {% csrf_token %}
+    ("None", "None"),
+        ("Aravali", "Aravali"), 
+        ("Girnar", "Girnar"),
+        ("Himadri", "Himadri"),
+        ("Jwalamukhi", "Jwalamukhi"),
+        ("Kailash", "Kailash"),
+        ("Karakoram", "Karakoram"),
+        ("Kumaon", "Kumaon"),
+        ("Nilgriri", "Nilgriri"),
+        ("Satpura", "Satpura"),
+        ("Shivalik", "Shivalik"),
+        ("Udaigiri", "Udaigiri"),
+        ("Vindhyachal", "Vindhyachal"),
+        ("Zanskar", "Zanskar"),
+    <button type="submit" name="hostel" value="Aravali"> ara </button>
+    <button type="submit" name="hostel" value="Girnar"> gir </button>
+    <button type="submit" name="hostel" value="Himadri"> hima</button>
+    <button type="submit" name="hostel" value="Jwalamukhi">jwala</button>
+    <button type="submit" name="hostel" value="Kailash">kailash </button>
+    <button type="submit" name="hostel" value="Karakoram"> kara </button>
+    <button type="submit" name="hostel" value="Kumaon"> kumaon </button>
+    <button type="submit" name="hostel" value="Nilgiri"> nilgiri </button>
+    <button type="submit" name="hostel" value="Satpura"> satpura </button>
+    <button type="submit" name="hostel" value="Shivalik"> shivalik </button>
+    <button type="submit" name="hostel" value="Udaigiri"> udaigiri </button>
+    <button type="submit" name="hostel" value="Vindhyachal"> vindy</button>
+    <button type="submit" name="hostel" value="Zanskar"> z</button>
+    <button type="submit" name="hostel" value="Skip">skip for now </button>
+</form>
+
+{% endblock %}

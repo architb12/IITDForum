@@ -1,0 +1,18 @@
+{% extends 'post/base.html' %}
+{% block content %}
+Set up your account
+<form action="{% url 'users:setup2' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" name="dept" value="Biochemical Engineering and Biotechnology"> bb </button>
+    <button type="submit" name="dept" value="Chemical Engineering"> Cchem </button>
+    <button type="submit" name="dept" value="Civil Engineering"> civil</button>
+    <button type="submit" name="dept" value="Computer Science">comp </button>
+    <button type="submit" name="dept" value="Electrical Engineering">ee </button>
+    <button type="submit" name="dept" value="Physics"> ep</button>
+    <button type="submit" name="dept" value="Mathematics"> mt</button>
+    <button type="submit" name="dept" value="Mechanical Engineering"> mech</button>
+    <button type="submit" name="dept" value="Textile Technology"> ttboi</button>
+    <button type="submit" name="dept" value="Skip">skip for now </button>
+</form>
+
+{% endblock %}
