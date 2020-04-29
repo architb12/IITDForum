@@ -41,14 +41,14 @@
             </div>
             <div class="col-md-10">
                 <a href="{% url 'users:profile_view' post.author.username %}" class="post-head">
-                <font class="username-font">
-                    <b>{{post.author.username}}</b>
-                </font>
+                    <font class="username-font">
+                        <b>{{post.author.username}}</b>
+                    </font>
 
-                <br>
-                <font class="name-font">
-                    {{post.author.profile.full_name}}
-                </font>
+                    <br>
+                    <font class="name-font">
+                        {{post.author.profile.full_name}}
+                    </font>
                 </a>
                 <br>
                 <a href="{% url 'post:post_view' post.id %}" class="date-font">
@@ -112,26 +112,23 @@
     </div>
     {% endfor %}
     <!-- Modal for delete post and delete comment -->
-    <!-- Modal for delete post and delete comment -->
-<div id="delete-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-sm">
-
-    <div class="modal-content">
-        <div class="modal-header modal-top">
-            <div class="modal-text" id="modal-text">
-                <font class="modal-heading" id="modal-heading">Are you sure you want to delete the post?</font>
+    <div id="delete-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header modal-top">
+                    <div class="modal-text" id="modal-text">
+                        <font class="modal-heading" id="modal-heading">Are you sure you want to delete this post?</font>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <button class="btn btn-danger" id="delete" data-dismiss="modal" name="delete"> Yes </button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal"> Cancel </button>
+                    </center>
+                </div>
             </div>
         </div>
-        <div class="modal-body">
-            <center>
-                <button class="btn btn-danger" id="delete" data-dismiss="modal" name="delete"> Yes </button>
-                <button type="button" class="btn btn-success" data-dismiss="modal"> Cancel </button>
-            </center>
-        </div>
     </div>
-
-    </div>
-</div>
     <script type="text/javascript"> 
         $('.like-button').click(function(){ 
             var id; 
@@ -187,12 +184,12 @@
             }) 
         });
 
-        $('.comment-delete-icon').click(function(){
+    $('.comment-delete-icon').click(function(){
         var id;            
         id = $(this).attr("data-catid");
         $('#delete').attr('value', 'c'+id);
         var Div = document.getElementById("modal-text");
-        Div.textContent = "Are you sure you want to delete the comment?"
+        Div.textContent = "Are you sure you want to delete this comment?"
     });
 
     $('.delete-icon').click(function(){
@@ -200,7 +197,7 @@
         id = $(this).attr("data-catid");
         $('#delete').attr('value', id);
         var Div = document.getElementById("modal-text");
-        Div.textContent = "Are you sure you want to delete the post?"
+        Div.textContent = "Are you sure you want to delete this post?"
     });
 
     $('#delete').click(function(){
@@ -216,7 +213,7 @@
             }, 
             success: function( data ) 
             {
-            $('#comment-' + id.slice(1) + '-div').fadeOut();
+                $('#comment-' + id.slice(1) + '-div').fadeOut();
             }
             })
         }
@@ -230,7 +227,7 @@
             }, 
             success: function( data ) 
             {
-            $('#post-' + id + '-div').fadeOut();
+                $('#post-' + id + '-div').fadeOut();
             }
             })
         }

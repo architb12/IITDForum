@@ -1,18 +1,21 @@
 {% extends "post/base.html" %}
 {% block content %}
-<div class="home-post">
+<div class="home-post-div">
     <div class="row">
         <div class="col-md-1">
             <img class="img-circle profile-pic" width=60 height=60 src="{{ post.author.profile.image.url }}" alt="default.jpg">
         </div>
         <div class="col-md-10">
-            <font class="username-font">
-                <b>{{post.author.username}}</b>
-            </font>
-            <br>
-            <font class="name-font">
-                {{post.author.profile.full_name}}
-            </font>
+            <a href="{% url 'users:profile_view' post.author.username %}" class="post-head">
+                <font class="username-font">
+                    <b>{{post.author.username}}</b>
+                </font>
+
+                <br>
+                <font class="name-font">
+                    {{post.author.profile.full_name}}
+                </font>
+            </a>
             <br>
             <font class="date-font">
                 {{post.pub_date}}
@@ -70,7 +73,7 @@
         {% endif %}
         
     </div>
-    {% for comment in post.comment_set.all %}
+    {% for comment in post.comment_set.all|dictsortreversed:"pub_date" %}
         <div id="comment-{{comment.id}}-div">
             <div class="comment-div">
                 <div class="row">
@@ -80,9 +83,12 @@
                     <div class="col-md-10">
                         <font class="comment-username-font">
                             <b>{{comment.author.username}}</b>
+                              {{comment.text}}
                         </font>
-
-                        {{comment.text}}
+                        <br>
+                        <font class="date-font">
+                            {{comment.pub_date}}
+                        </font>
                     </div>
                     <div class="col-md-1 comment-delete-div">
                         {% if request.user == comment.author %}
@@ -100,21 +106,19 @@
 <!-- Modal for delete post and delete comment -->
 <div id="delete-modal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-sm">
-
-    <div class="modal-content">
-        <div class="modal-header modal-top">
-            <div class="modal-text" id="modal-text">
-                <font class="modal-heading" id="modal-heading">Are you sure you want to delete the post?</font>
+        <div class="modal-content">
+            <div class="modal-header modal-top">
+                <div class="modal-text" id="modal-text">
+                    <font class="modal-heading" id="modal-heading">Are you sure you want to delete this post?</font>
+                </div>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <button class="btn btn-danger" id="delete" data-dismiss="modal" name="delete"> Yes </button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"> Cancel </button>
+                </center>
             </div>
         </div>
-        <div class="modal-body">
-            <center>
-                <button class="btn btn-danger" id="delete" data-dismiss="modal" name="delete"> Yes </button>
-                <button type="button" class="btn btn-success" data-dismiss="modal"> Cancel </button>
-            </center>
-        </div>
-    </div>
-
     </div>
 </div>
 
@@ -178,7 +182,7 @@
         id = $(this).attr("data-catid");
         $('#delete').attr('value', 'c'+id);
         var Div = document.getElementById("modal-text");
-        Div.textContent = "Are you sure you want to delete the comment?"
+        Div.textContent = "Are you sure you want to delete this comment?";
     });
 
     $('.delete-icon').click(function(){
@@ -186,7 +190,7 @@
         id = $(this).attr("data-catid");
         $('#delete').attr('value', id);
         var Div = document.getElementById("modal-text");
-        Div.textContent = "Are you sure you want to delete the post?"
+        Div.textContent = "Are you sure you want to delete this post?";
     });
 
     $('#delete').click(function(){
@@ -202,7 +206,7 @@
             }, 
             success: function( data ) 
             {
-            $('#comment-' + id.slice(1) + '-div').fadeOut();
+                $('#comment-' + id.slice(1) + '-div').fadeOut();
             }
             })
         }
@@ -216,8 +220,7 @@
             }, 
             success: function( data ) 
             {
-                // Requires work
-
+                window.location.replace("{% url 'home' %}");
             }
             })
         }

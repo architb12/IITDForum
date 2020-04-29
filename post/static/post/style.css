@@ -282,7 +282,8 @@ body{
 .comment-div{
 	padding:10px;
 	margin-top:5px;
-	background-color: #f5f5f5;
+	border-radius: 30px;
+	background-color: #ececec;
 }
 
 .username-font{
@@ -439,23 +440,6 @@ form{
 	font-family: 'Raleway',sans-serif;
 }
 
-.comment{
-	background-color: #f7f7f7;
-}
-
-.comment-head{
-	font-family: 'Raleway',sans-serif;
-	color:#222;
-	font-size:20px;
-	font-weight: 700;
-}
-
-.comment-font{
-	font-family: 'Raleway',sans-serif;
-	color:#222;
-	font-size:16px;
-}
-
 .head1{
     font-family: 'Raleway', sans-serif;
     color:#fff;
@@ -491,10 +475,6 @@ form{
 	color:#222;
 }
 
-#abt-me{
-	background-color: #fff;
-}
-
 .hr1{
 	background-color:#222;
 	width:30%;
@@ -505,10 +485,6 @@ form{
 	font-family: 'Raleway',sans-serif;
 	color:#222;
 	font-size: 20px;
-}
-
-#achvmnts{
-	background-color:#f7f7f7;
 }
 
 .font2{
@@ -523,130 +499,6 @@ form{
 	color:#222;
 }
 
-.quiz{
-	color:#222;
-	transition:all 0.6s ease;
-	-webkit-transition:all 0.6s ease;
-	-moz-transition:all 0.6s ease;
-	-o-transition:all 0.6s ease;
-}
-
-.quiz:hover{
-	color:#FFDC17;
-}
-
-.font4{
-	font-family: 'Raleway',sans-serif;
-	font-size:35px;
-	color:#222;
-}
-
-#quiz1{
-	background-image: url("quiz.jpg");
-    background-attachment: fixed;
-	background-position: center;
-	overflow: hidden;
-	background-size: cover;
-	height:50vh;
-}
-
-#quiz2{
-	background-color: #fff;
-}
-
-.photo{
-	color:#222;
-	transition:all 0.6s ease;
-	-webkit-transition:all 0.6s ease;
-	-moz-transition:all 0.6s ease;
-	-o-transition:all 0.6s ease;
-}
-
-.photo:hover{
-	color: #775239;
-}
-
-#photo2{
-	background-image: url("photo.jpg");
-    background-attachment: fixed;
-	background-position: center;
-	overflow: hidden;
-	background-size: cover;
-	height:50vh;
-}
-
-#photo1{
-	background-color: #f7f7f7;
-	height: 50vh;
-}
-
-#web1{
-	background-image: url("web.png");
-    background-attachment: fixed;
-	background-position: center;
-	overflow: hidden;
-	background-size: cover;
-	height:50vh;
-}
-
-#web2{
-	background-color: #fff;
-}
-
-.web{
-	color:#222;
-	transition:all 0.6s ease;
-	-webkit-transition:all 0.6s ease;
-	-moz-transition:all 0.6s ease;
-	-o-transition:all 0.6s ease;
-}
-
-.web:hover{
-	color:#408c65;
-}
-
-.graphic{
-	height:130px;
-	width:130px;
-	-webkit-filter: grayscale(100%);
-	filter: grayscale(100%);
-	transition:all 0.6s ease;
-	-webkit-transition:all 0.6s ease;
-	-moz-transition:all 0.6s ease;
-	-o-transition:all 0.6s ease;
-}
-
-.graphic:hover{
-	-webkit-filter: none;
-	filter: none;
-}
-
-#graphic2{
-	background-image: url("graphics_bg.jpg");
-    background-attachment: fixed;
-	background-position: center;
-	overflow: hidden;
-	background-size: cover;
-	height:50vh;
-}
-
-#graphic1{
-	background-color: #f7f7f7;
-	height: 50vh;
-}
-
-.facebook{
-	color:#222;
-	transition:all 0.4s ease;
-	-webkit-transition:all 0.4s ease;
-	-moz-transition:all 0.4s ease;
-	-o-transition:all 0.4s ease;
-}
-
-.facebook:hover{
-	color:#4167b2;
-}
-
 .github{
 	color:#222;
 	transition:all 0.4s ease;
@@ -657,30 +509,6 @@ form{
 
 .github:hover{
 	color:#f8a001;
-}
-
-.insta{
-	color:#222;
-	transition:all 0.4s ease;
-	-webkit-transition:all 0.4s ease;
-	-moz-transition:all 0.4s ease;
-	-o-transition:all 0.4s ease;
-}
-
-.insta:hover{
-	color:#cf1e4e;
-}
-
-.email{
-	color:#222;
-	transition:all 0.4s ease;
-	-webkit-transition:all 0.4s ease;
-	-moz-transition:all 0.4s ease;
-	-o-transition:all 0.4s ease;
-}
-
-.email:hover{
-	color:#5bacc3;
 }
 
 #footer{
