@@ -8,14 +8,14 @@ import datetime
 
 class SignUpForm(forms.Form):
     username = forms.CharField(label='Enter Username', min_length=4, max_length=150)
-    email = forms.EmailField(label='Enter email')
-    password1 = forms.CharField(label='Enter password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+    email = forms.EmailField(label='Enter Email')
+    password1 = forms.CharField(label='Enter Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
     first_name = forms.CharField(label='First Name', max_length=50)
     last_name = forms.CharField(label='Last Name', max_length=50)
 
     years_list=[year for year in range(1950,timezone.now().year)]
-    date_of_birth = forms.DateField(label='Date of Birth',widget=forms.SelectDateWidget(years=years_list),initial="2000-01-01")
+    date_of_birth = forms.DateField(label='Date of Birth', input_formats=['%d/%m/%Y'])
 
     gender_choices = ( 
         ("Male", "Male"), 

@@ -1,17 +1,113 @@
+{% load widget_tweaks %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+
+  <title>Sign Up | IITD Forum</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="logo.png">
+
+  <!-- Bootstrap CSS File-->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+  <!--CSS Style File-->
+  <link rel="stylesheet" href="{% static 'users/style.css' %}">
+
+  <!--Google Font File-->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&family=Spartan:wght@200;300;400;500&display=swap" rel="stylesheet">
+  
+  <!--JQuery File-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  <!--Bootstrap Js File-->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <!--Font Awesome File-->
+  <script src="https://kit.fontawesome.com/1d1574361f.js" crossorigin="anonymous"></script>
+
+  <!--JavaScript File-->
+  <script src="{% static 'users/script.js' %}"></script>
+
+  <!--Fengyuan Chen's Datepicker-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+
 </head>
+
 <body>
-    <form method="POST">
-        {% csrf_token %}
-        JOIN TODAY
-        <p> {{ form.as_p }} </p>
-        <button type="submit"> Sign Up </button>
-    </form>
-    Already have an account? <a href="#"> Login </a>
+
+    <!--Loader div-->
+    <div class="loader">
+        <div class="square"></div>
+    </div>
+
+    <!--Navbar-->
+
+    
+    <!--Home div-->
+
+    <div id="home">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="login-div">
+                    <font class="heading-font">
+                        <center>Sign Up</center>
+                    </font>
+                    <div class="form">
+                        <form method="post" class="form-horizontal" novalidate>
+                            {% csrf_token %}
+                            {% if form.non_field_errors %}
+                                {% for error in form.non_field_errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <font class="message-font">{{ error }}</font>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% for field in form.visible_fields %}
+                                <div class="form-group">
+                                    {% render_field field class="form-control login-input" placeholder=field.label %}
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% if field.errors %}
+                                        {% for error in field.errors %}
+                                            <div class="alert alert-danger" role="alert">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                <font class="message-font">{{ error }}</font>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <center><button type="submit" class="login-btn" >SIGN UP</button></center>
+                            </div>
+                        </form>
+                        <br>
+                        <center>
+                            <font class="font-1">
+                                Already have an account? <a href="{% url 'login' %}" class="sign-in-link">Log in</a>
+                            </font>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+         $(function () {
+            $("#id_date_of_birth").datepicker({
+                format:'dd/mm/yyyy',
+            });
+        });
+    </script>
 </body>
 </html>

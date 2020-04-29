@@ -1,0 +1,172 @@
+html, body {
+    width: auto !important;
+    overflow-x: hidden !important;
+}
+  
+body{
+    position:relative;
+    max-width:100%;
+    background-image: url("back.jpg");
+    background-position: fixed;
+    background-attachment: fixed;
+	background-size: cover;
+}
+
+.loader{
+	background-color:#222;
+	width:100vw;
+	height:100vh;
+	position: fixed;
+	z-index:999999999;
+}
+
+.square{
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width:70px;
+	height: 70px;
+	background-color:#fff;
+	position: absolute;
+	-webkit-animation: load 1.2s infinite ease-in-out;
+	animation: load 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes load {
+	0% { -webkit-transform: perspective(150px) rotateY(0deg) rotateX(0deg)}
+	50% { -webkit-transform: perspective(150px) rotateY(180deg) rotateX(0deg)}
+	100% { -webkit-transform: perspective(150px) rotateY(180deg)  rotateX(180deg) }
+}
+  
+@keyframes load {
+	0% { 
+	  transform: perspective(150px) rotateX(0deg) rotateY(0deg);
+	  -webkit-transform: perspective(150px) rotateX(0deg) rotateY(0deg); 
+	} 50% { 
+	  transform: perspective(150px) rotateX(-180deg) rotateY(0deg);
+	  -webkit-transform: perspective(150px) rotateX(-180deg) rotateY(0deg);
+	  background-color:#89c7f6;
+	} 100% { 
+	  transform: perspective(150px) rotateX(-180deg) rotateY(-180deg);
+	  -webkit-transform: perspective(150px) rotateX(-180deg) rotateY(-180deg);
+	}
+}
+
+.heading-font{
+    font-family: 'Raleway',sans-serif;
+    font-size: 50px;
+    color: #380957;
+    font-weight: 600;
+}
+
+.login-div{
+	background-color: #fff;
+	padding: 15px;
+    margin-top: 100px;
+    margin-bottom:100px;
+}
+
+.form{
+	padding:20px;
+}
+
+.login-input{
+	background-color: #f7f7f7;
+	border: none;
+	border-bottom: 2px solid #f7f7f7;
+	border-radius: 0px;
+	box-shadow: none;
+	outline: none;
+	font-family: 'Spartan', sans-serif;
+	font-size: 17px;
+	line-height: 1.2;
+	color:#222;
+	padding: 30px;
+	transition: all 0.4s ease;
+  	-webkit-transition: all 0.4s ease;
+  	-o-transition: all 0.4s ease;
+  	-moz-transition: all 0.4s ease;
+}
+
+.login-input:focus{
+	border: none;
+	border-radius: 0px;
+	border-bottom: 2px solid #222;
+	box-shadow: none;
+	outline: none;
+}
+
+.message-font{
+	font-family: 'Raleway',sans-serif;
+	font-size:15px;
+}
+
+.login-btn:before {
+	font-family: "Font Awesome 5 Free";
+  	font-weight: 900;
+  	content: "\f061";
+  	color: #fff;
+	left: 130%;
+	top: 0;
+	position: absolute;
+	height: 100%;
+	padding: 15px 0px;
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+}
+
+.login-btn {
+	border-radius: 2px;
+	border: 2px solid #380957;
+	font-family: 'Raleway',sans-serif;
+	font-size: 18px;
+	color: #380957;
+	background: transparent;
+	cursor: pointer;
+	padding: 15px 50px;
+	font-weight: 500;
+	outline: none;
+	position: relative;
+	overflow: hidden;
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+}
+
+.login-btn:hover{
+    color:#fff;
+    background:linear-gradient(45deg, #380957, #9f0fac);
+	background:-webkit-linear-gradient(45deg, #380957, #9f0fac);
+	background:-moz-linear-gradient(45deg, #380957, #9f0fac);
+    background:-o-linear-gradient(45deg, #380957, #9f0fac);
+    border: 2px solid transparent;
+}
+
+.login-btn:hover:before {
+	left: 80%;
+}
+
+.login-btn:active{
+    top:1px;
+}
+
+.font-1{
+    font-family: 'Raleway',sans-serif;
+    font-size: 15px;
+    color: #222;
+}
+
+.sign-in-link{
+    color: #380957;
+    font-weight: 600;
+}
+
+.sign-in-link:hover{
+    text-decoration: none;
+    color: #380957;
+}
