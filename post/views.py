@@ -40,6 +40,9 @@ def post_like(request):
 def post_create(request):
     if request.method == 'POST':
         post_text = request.POST['post_text']
+        if len(post_text)>5000:
+            messages.warning(request, f'Post exceeds character limit.')
+            return redirect('home')
         for ch in post_text:
             if(ch.isalpha() or ch.isdigit()):
                 new_post = Post(text=post_text, author=request.user, pub_date=timezone.now())
@@ -72,14 +75,17 @@ def comment_create(request):
         comment_text = request.POST['comment_text']
         post_id = request.POST['post']
         post = Post.objects.get(pk=post_id)
+        if len(comment_text)>500:
+            messages.warning(request, f'Comment exceeds character limit.')
+            return redirect('post:post_view', post_id=post.id)
         for ch in comment_text:
             if(ch.isalpha() or ch.isdigit()):
                 new_comment = Comment(parent_post=post, text=comment_text, author=request.user, pub_date=timezone.now())
                 new_comment.save()
                 messages.success(request, f'Comment added successfully!')
-                return redirect('post:post_view', pk=post.id)
+                return redirect('post:post_view', post_id=post.id)
         messages.warning(request, f'Please enter content in your comment.')
-        return redirect('post:post_view', pk=post.id)
+        return redirect('post:post_view', post_id=post.id)
     else:
         return redirect('home')
 

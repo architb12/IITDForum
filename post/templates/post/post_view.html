@@ -92,12 +92,13 @@
                         <form action="{% url 'post:comment_create' %}" method="POST" class="form-horizontal">
                             {% csrf_token %}
                         <div class="form-group">
-                                <textarea name="comment_text" class="form-control comment-input" rows="5" placeholder="What's on your mind?"></textarea>
+                                <textarea name="comment_text" class="form-control comment-input" rows="2" placeholder="Write a comment....." onkeyup="countChars(this);"></textarea>
                                 <span class="create-input-focus"></span>
                         </div>
                         <div class="form-group">
-                                <br>
                                 <button type="submit" name="post" class="btn btn-default create-btn" value="{{post.id}}"> <span>POST</span> </button>
+                                <br>
+                                <div class="char-counter" id="charNum">0/500</div>
                         </div>
                         </form>
                     </div>
@@ -113,8 +114,11 @@
                         <img class="img-circle profile-pic" width=40 height=40 src="{{ comment.author.profile.image.url }}" alt="default.jpg">
                     </div>
                     <div class="col-md-10">
+
+                        <a href="{% url 'users:profile_view' comment.author.username %}" class="post-head">
                         <font class="comment-username-font">
-                            <b>{{comment.author.username}}</b>
+                                <b>{{comment.author.username}}</b>
+                            </a>
                               {{comment.text}}
                         </font>
                         <br>
@@ -261,6 +265,18 @@
             })
         }
     });
+
+    //Character-counter for comment creation
+    function countChars(obj){
+            if(obj.value.length <= 500){
+                document.getElementById("charNum").style.color = 'black';
+            }
+            else{
+                document.getElementById("charNum").style.color = 'red';
+            }
+            document.getElementById("charNum").innerHTML = obj.value.length+'/500';
+        }
+    
 </script>        
 
 {% endblock %}

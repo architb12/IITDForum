@@ -1,5 +1,6 @@
 {% extends "post/base.html" %}
 {% block content %}
+    <!-- Post Creation Form -->
     {% if request.user.is_authenticated %}
         <div class="create-post-div">
             <div class="write-post">
@@ -18,7 +19,7 @@
                         {% csrf_token %}
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <textarea name="post_text" class="form-control create-input" rows="5" placeholder="What's on your mind?"></textarea>
+                            <textarea name="post_text" class="form-control create-input" rows="5" placeholder="What's on your mind?" onkeyup="countChars(this);"></textarea>
                             <span class="create-input-focus"></span>
                         </div>
                     </div>
@@ -27,12 +28,14 @@
                             <br>
                             <button type="submit" class="btn btn-default create-btn"> <span>POST</span> </button>
                         </div>
+                        <div class="post-char-counter" id='charNum'  style="color:white;"> 0/5000 </div>
                     </div>
                     </form>
                 </div>
             </div>
         </div>
     {% endif %}
+    <!-- Posts -->
     {% for post in posts %}
     <div class="home-post-div" id="post-{{ post.id }}-div">
         <div class="row">
@@ -66,9 +69,18 @@
         </div>
         <hr class="hr1" align="left">
         <font class="post-content-font">
-            {{post.text|linebreaks}}
+            <!-- 'See more' feature -->
+            {% if post.text|linebreaks|length < 500 %}
+                {{post.text|linebreaks}}
+            {% else %}
+                <div class="post-text-sliced" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks|slice:":450"}}... </div>
+                <div class="collapse" id="post-text-full{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks}} </div>
+                <div class="see-more" id="see-more{{post.id}}" data-catid="{{post.id}}"> See more </div>
+                <div class="see-less" id="see-less{{post.id}}" data-catid="{{post.id}}"> </div>
+            {% endif %}
         </font>
         <br>
+        <!-- Post likes -->
         <div class="like-wrapper">
             {% if request.user in post.postlike.likers.all %}
                 <div class="like-button-wrapper">
@@ -123,6 +135,7 @@
                 </div>
             </div>
         {% endif %}
+        <!-- Post Comments -->
         {% for comment in post.comment_set.all|dictsortreversed:"pub_date"|slice:":2" %}
         <div id="comment-{{comment.id}}-div">
             <div class="comment-div">
@@ -131,10 +144,12 @@
                         <img class="img-circle profile-pic" width=40 height=40 src="{{ comment.author.profile.image.url }}" alt="default.jpg">
                     </div>
                     <div class="col-md-10">
-                        <font class="comment-username-font">
-                            <b>{{comment.author.username}}</b>
-                              {{comment.text}}
-                        </font>
+                        <a href="{% url 'users:profile_view' comment.author.username %}" class="post-head">
+                            <font class="comment-username-font">
+                                    <b>{{comment.author.username}}</b>
+                                </a>
+                                  {{comment.text}}
+                            </font>
                         <br>
                         <font class="date-font">
                             {{comment.pub_date}}
@@ -278,6 +293,41 @@
                 })
             }
         });
+
+        //See more-See less functionality
+        $(".see-more").click(function(){
+            var id;            
+            id = $(this).attr("data-catid");
+            $("#post-text-sliced"+id).hide();
+            $("#post-text-full"+id).show();
+            var see_more_div = document.getElementById("see-more"+id);
+            see_more_div.textContent=""
+            var see_less_div = document.getElementById("see-less"+id);
+            see_less_div.textContent="See less"
+        });
+
+        $(".see-less").click(function(){
+            console.log("SEELESS")
+            var id;            
+            id = $(this).attr("data-catid");
+            $("#post-text-sliced"+id).show();
+            $("#post-text-full"+id).hide();
+            var see_more_div = document.getElementById("see-more"+id);
+            see_more_div.textContent="See more"
+            var see_less_div = document.getElementById("see-less"+id);
+            see_less_div.textContent=""
+        });
+
+        //Character-counter for post creation
+        function countChars(obj){
+            if(obj.value.length <= 5000){
+                document.getElementById("charNum").style.color = 'white';
+            }
+            else{
+                document.getElementById("charNum").style.color = 'red';
+            }
+            document.getElementById("charNum").innerHTML = obj.value.length+'/5000';
+        }
     </script>        
 {% endblock content %}
 

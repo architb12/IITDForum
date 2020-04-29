@@ -296,6 +296,7 @@ body{
 	font-family: 'Raleway',sans-serif;
 	font-size:15px;
 	color:#222;
+	text-decoration:none;
 }
 
 .name-font{
@@ -396,6 +397,26 @@ body{
 	color:rgb(94, 94, 94);
 }
 
+.see-more{
+	color:#823aa0;
+	font-weight:20px;
+	cursor:pointer;
+}
+
+.see-less{
+	color:#823aa0;
+	font-weight:20px;
+	cursor:pointer;
+}
+
+.see-more:hover{
+	color:#380957;
+}
+
+.see-less:hover{
+	color:#380957;
+}
+
 .like-button-wrapper{
 	margin-top: 0.5px;
 }
@@ -407,6 +428,8 @@ body{
 	-moz-transition:all 0.4s ease;
 	-o-transition:all 0.4s ease;
 }
+
+
 
 .likes:hover{
 	color:#ff0033;
