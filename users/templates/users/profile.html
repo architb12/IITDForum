@@ -109,8 +109,14 @@
                 {% endif %}
             </div>
         </div>
-        
-        {% for comment in post.comment_set.all|dictsortreversed:"pub_date" %}
+        {% if post.comment_set.all|length > 2 %}
+            <div class="like-wrapper">
+                <div class="likes-count" style="margin-left: 10px;">
+                    <a href="{% url 'post:post_view' post.id %}" class="more-comments-font">View all {{post.comment_set.all|length}} comments.</a> 
+                </div>
+            </div>
+        {% endif %}
+        {% for comment in post.comment_set.all|dictsortreversed:"pub_date"|slice:":2" %}
         <div class="comment-div">
             <div class="row">
                 <div class="col-md-1">

@@ -9,7 +9,6 @@ class Post(models.Model):
     text = models.TextField(max_length = 5000)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     pub_date = models.DateTimeField(default = timezone.now())
-
     def __str__(self):
         return str(self.pub_date) + ' by ' + self.author.username
 

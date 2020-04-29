@@ -81,6 +81,30 @@
             {% endif %}
         </div>
     </div>
+    {% if request.user.is_authenticated %}
+        <div class="comment-div">
+            <div class="row">
+                <div class="col-md-1">
+                    <img class="img-circle profile-pic" width=40 height=40 src="{{ request.user.profile.image.url }}" alt="default.jpg">
+                </div>
+                <div class="col-md-11">
+                    <div class="form">
+                        <form action="{% url 'post:comment_create' %}" method="POST" class="form-horizontal">
+                            {% csrf_token %}
+                        <div class="form-group">
+                                <textarea name="comment_text" class="form-control comment-input" rows="5" placeholder="What's on your mind?"></textarea>
+                                <span class="create-input-focus"></span>
+                        </div>
+                        <div class="form-group">
+                                <br>
+                                <button type="submit" name="post" class="btn btn-default create-btn" value="{{post.id}}"> <span>POST</span> </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {% for comment in post.comment_set.all|dictsortreversed:"pub_date" %}
         <div id="comment-{{comment.id}}-div">
             <div class="comment-div">

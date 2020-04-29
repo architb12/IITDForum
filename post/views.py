@@ -65,6 +65,23 @@ def post_delete(request):
             return HttpResponse('fail')
     else:
         return HttpResponse('fail')
+        
+#Comment Creation View
+def comment_create(request):
+    if request.method == 'POST':
+        comment_text = request.POST['comment_text']
+        post_id = request.POST['post']
+        post = Post.objects.get(pk=post_id)
+        for ch in comment_text:
+            if(ch.isalpha() or ch.isdigit()):
+                new_comment = Comment(parent_post=post, text=comment_text, author=request.user, pub_date=timezone.now())
+                new_comment.save()
+                messages.success(request, f'Comment added successfully!')
+                return redirect('post:post_view', pk=post.id)
+        messages.warning(request, f'Please enter content in your comment.')
+        return redirect('post:post_view', pk=post.id)
+    else:
+        return redirect('home')
 
 #Comment Deletion View
 def comment_delete(request):

@@ -310,10 +310,10 @@ body{
 	font-size:9px;
 	font-weight: 500;
 	color:rgb(94, 94, 94);
-	transition:all 0.1s ease;
-	-webkit-transition:all 0.1s ease;
-	-moz-transition:all 0.1s ease;
-	-o-transition:all 0.1s ease;
+	transition:all 0.3s ease;
+	-webkit-transition:all 0.3s ease;
+	-moz-transition:all 0.3s ease;
+	-o-transition:all 0.3s ease;
 }
 
 .post-head:hover{
@@ -380,6 +380,22 @@ body{
 	margin-right:0;
 }
 
+.more-comments-font{
+	font-family: 'Raleway',sans-serif;
+	font-size:12px;
+	font-weight: 600;
+	color:rgb(94, 94, 94);
+	transition:all 0.3s ease;
+	-webkit-transition:all 0.3s ease;
+	-moz-transition:all 0.3s ease;
+	-o-transition:all 0.3s ease;
+}
+
+.more-comments-font:hover{
+	text-decoration: underline;
+	color:rgb(94, 94, 94);
+}
+
 .like-button-wrapper{
 	margin-top: 0.5px;
 }
@@ -431,36 +447,8 @@ body{
 	font-size: 15px;
 }
 
-.label-font{
-	font-family: 'Raleway',sans-serif;
-	font-size:16px;
-	color:#222;
-}
-
 form{
 	font-family: 'Raleway',sans-serif;
-}
-
-.head1{
-    font-family: 'Raleway', sans-serif;
-    color:#fff;
-    font-size: 75px;
-    transition:all 0.6s ease;
-	-webkit-transition:all 0.6s ease;
-	-moz-transition:all 0.6s ease;
-	-o-transition:all 0.6s ease;
-}
-
-.down{
-    color:#fff;
-    transition:all 0.6s ease;
-	-webkit-transition:all 0.6s ease;
-	-moz-transition:all 0.6s ease;
-	-o-transition:all 0.6s ease;
-}
-
-.down:hover{
-	color: #4d9fde;
 }
 
 #home{
@@ -471,33 +459,10 @@ form{
 	height:100vh;
 }
 
-.head2{
-	font-family: 'Raleway', sans-serif;
-	color:#222;
-}
-
 .hr1{
 	background-color:#222;
 	width:30%;
 	height:3px;
-}
-
-.font1{
-	font-family: 'Raleway',sans-serif;
-	color:#222;
-	font-size: 20px;
-}
-
-.font2{
-	font-family: 'Raleway',sans-serif;
-	font-size:24px;
-	color:#222;
-}
-
-.font3{
-	font-family: 'Raleway',sans-serif;
-	font-size:18px;
-	color:#222;
 }
 
 .github{
