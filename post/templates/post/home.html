@@ -5,7 +5,7 @@
             <div class="write-post">
                 <div class="row">
                     <div class="col-md-1">
-                        <img class="img-circle post-profile-pic profile-pic" width=60 height=60 src="{{ request.user.profile.image.url }}" alt="default.jpg">
+                        <img class="img-circle profile-pic" width=60 height=60 src="{{ request.user.profile.image.url }}" alt="default.jpg">
                     </div>
                     <div class="col-md-11"  style="padding-top:15px;">
                         <font class="create-font">
@@ -106,7 +106,15 @@
                 
                 </div>
             {% endif %}
-            
+            <div class="comments-count like-count-font">
+                {% if post.comment_set.all|length == 0 %}
+                    No comments yet.
+                {% elif post.comment_set.all|length == 1 %}
+                    1 comment.
+                {% else %}
+                    {{post.comment_set.all|length}} comments.
+                {% endif %}
+            </div>
         </div>
         
     </div>
@@ -130,6 +138,7 @@
         </div>
     </div>
     <script type="text/javascript"> 
+        //AJAX for like button functionality
         $('.like-button').click(function(){ 
             var id; 
             id = $(this).attr("data-catid"); 
@@ -184,54 +193,57 @@
             }) 
         });
 
-    $('.comment-delete-icon').click(function(){
-        var id;            
-        id = $(this).attr("data-catid");
-        $('#delete').attr('value', 'c'+id);
-        var Div = document.getElementById("modal-text");
-        Div.textContent = "Are you sure you want to delete this comment?"
-    });
+        //Function to change value of confirmation button on deletion of comment
+        $('.comment-delete-icon').click(function(){
+            var id;            
+            id = $(this).attr("data-catid");
+            $('#delete').attr('value', 'c'+id);
+            var Div = document.getElementById("modal-text");
+            Div.textContent = "Are you sure you want to delete this comment?"
+        });
 
-    $('.delete-icon').click(function(){
-        var id; 
-        id = $(this).attr("data-catid");
-        $('#delete').attr('value', id);
-        var Div = document.getElementById("modal-text");
-        Div.textContent = "Are you sure you want to delete this post?"
-    });
+        //Function to change value of confirmation button on deletion of post
+        $('.delete-icon').click(function(){
+            var id; 
+            id = $(this).attr("data-catid");
+            $('#delete').attr('value', id);
+            var Div = document.getElementById("modal-text");
+            Div.textContent = "Are you sure you want to delete this post?"
+        });
 
-    $('#delete').click(function(){
-        var id;
-        id = $(this).attr('value');
-        if(id[0]=='c'){
-            $.ajax(             
-            { 
-            type:"GET", 
-            url: "{% url 'post:comment_delete' %}", 
-            data:{ 
-                comment_id: id.slice(1)
-            }, 
-            success: function( data ) 
-            {
-                $('#comment-' + id.slice(1) + '-div').fadeOut();
+        //AJAX for delete posts/comments functionality
+        $('#delete').click(function(){
+            var id;
+            id = $(this).attr('value');
+            if(id[0]=='c'){
+                $.ajax(             
+                { 
+                type:"GET", 
+                url: "{% url 'post:comment_delete' %}", 
+                data:{ 
+                    comment_id: id.slice(1)
+                }, 
+                success: function( data ) 
+                {
+                    $('#comment-' + id.slice(1) + '-div').fadeOut();
+                }
+                })
             }
-            })
-        }
-        else{
-            $.ajax(             
-            { 
-            type:"GET", 
-            url: "{% url 'post:post_delete' %}", 
-            data:{ 
-                post_id: id
-            }, 
-            success: function( data ) 
-            {
-                $('#post-' + id + '-div').fadeOut();
+            else{
+                $.ajax(             
+                { 
+                type:"GET", 
+                url: "{% url 'post:post_delete' %}", 
+                data:{ 
+                    post_id: id
+                }, 
+                success: function( data ) 
+                {
+                    $('#post-' + id + '-div').fadeOut();
+                }
+                })
             }
-            })
-        }
-    });
+        });
     </script>        
 {% endblock content %}
 
