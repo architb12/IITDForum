@@ -57,8 +57,24 @@ def post_create(request):
 def post_delete(request):
     if request.method == 'GET':
         post_id = request.GET['post_id']
-        post = Post.objects.get(id = post_id)
-        post.delete()
-        return HttpResponse('success')
+        if Post.objects.get(pk=post_id).author == request.user:
+            post = Post.objects.get(id = post_id)
+            post.delete()
+            return HttpResponse('success')
+        else:
+            return HttpResponse('fail')
+    else:
+        return HttpResponse('fail')
+
+#Comment Deletion View
+def comment_delete(request):
+    if request.method == 'GET':
+        comment_id = request.GET['comment_id']
+        if Comment.objects.get(pk=comment_id).author == request.user:
+            comment = Comment.objects.get(id = comment_id)
+            comment.delete()
+            return HttpResponse('success')
+        else:
+            return HttpResponse('fail')
     else:
         return HttpResponse('fail')

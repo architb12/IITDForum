@@ -101,7 +101,29 @@
             {% endif %}
         </div>
         
-        
+        {% for comment in post.comment_set.all %}
+        <div class="comment-div">
+            <div class="row">
+                <div class="col-md-1">
+                    <img class="img-circle profile-pic" width=40 height=40 src="{{ comment.author.profile.image.url }}" alt="default.jpg">
+                </div>
+                <div class="col-md-10">
+                    <font class="comment-username-font">
+                        <b>{{comment.author.username}}</b>
+                    </font>
+
+                    comment.text
+                </div>
+                <div class="col-md-1 comment-delete-div">
+                    {% if request.user == comment.author %}
+                    <a href="#" class="delete-icon" data-catid="{{post.id}}" data-toggle="modal" data-target="#delete-modal" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Delete this post">
+                        <i class="fas fa-trash-alt delete-icon"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
     {% endfor %}
 

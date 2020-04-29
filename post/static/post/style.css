@@ -279,9 +279,21 @@ body{
 	border-radius: 10px;
 }
 
+.comment-div{
+	padding:10px;
+	margin-top:5px;
+	background-color: #f5f5f5;
+}
+
 .username-font{
 	font-family: 'Raleway',sans-serif;
 	font-size:25px;
+	color:#222;
+}
+
+.comment-username-font{
+	font-family: 'Raleway',sans-serif;
+	font-size:15px;
 	color:#222;
 }
 
@@ -301,6 +313,10 @@ body{
 	-webkit-transition:all 0.1s ease;
 	-moz-transition:all 0.1s ease;
 	-o-transition:all 0.1s ease;
+}
+
+.post-head:hover{
+	text-decoration:none;
 }
 
 .date-font:hover{
