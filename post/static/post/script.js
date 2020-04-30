@@ -73,7 +73,7 @@ $(document).ready(function(){
     autoExpand(event.target);
   },false);
 
-  //See more-See less functionality
+  //See more and See less functionality
   $(".see-more").click(function(){
     var id;            
     id = $(this).attr("data-catid");
@@ -86,7 +86,6 @@ $(document).ready(function(){
 });
 
 $(".see-less").click(function(){
-    console.log("SEELESS")
     var id;            
     id = $(this).attr("data-catid");
     $("#post-text-sliced"+id).show();
