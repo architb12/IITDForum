@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-1 delete-div">
             {% if request.user == post.author %}
-                <a href="#" class="delete-icon" data-catid="{{post.id}}" data-toggle="modal" data-target="#delete-modal" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Delete this post">
+                <a href="#" class="delete-icon" data-catid="{{post.id}}" data-toggle="modal" data-target="#delete-modal" target="_blank">
                     <i class="fas fa-trash-alt delete-icon"></i>
                 </a>
             {% endif %}
@@ -41,8 +41,8 @@
             <div class="like-button-wrapper">
                 <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
             </div>
-            <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
-                
+            <a href="#" data-toggle="modal" data-target="#like-modal-{{post.id}}" target="_blank">
+                <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
                     
                     {% if post.postlike.likers.count == 1 %}
                         You liked this post.
@@ -51,7 +51,9 @@
                     {% else %} 
                         You and {{ post.postlike.likers.count|add:"-1" }} others liked this post.
                     {% endif %}
-            </div>
+
+                </div>
+            </a>
             
         {% else %}
             <div class="like-button-wrapper"> 
@@ -61,7 +63,8 @@
                     <a href="{% url 'login' %}"><i class="fa fa-heart-o likes like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i></a>
                 {% endif %}
             </div>
-            <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
+            <a href="#" data-toggle="modal" data-target="#like-modal-{{post.id}}" target="_blank">
+                <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
                 
                     {% if post.postlike.likers.count == 0 %}
                         No likes yet.
@@ -71,7 +74,8 @@
                         {{ post.postlike.likers.count }} people liked this post.
                     {% endif %}
             
-            </div>
+                </div>
+            </a>
         {% endif %}
         <div class="comments-count like-count-font">
             {% if post.comment_set.all|length == 0 %}
@@ -133,7 +137,7 @@
                     </div>
                     <div class="col-md-1 comment-delete-div">
                         {% if request.user == comment.author %}
-                        <a href="#" class="comment-delete-icon" data-catid="{{comment.id}}" data-toggle="modal" data-target="#delete-modal" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Delete this post">
+                        <a href="#" class="comment-delete-icon" data-catid="{{comment.id}}" data-toggle="modal" data-target="#delete-modal" target="_blank">
                             <i class="fas fa-trash-alt delete-icon"></i>
                         </a>
                         {% endif %}
@@ -141,16 +145,50 @@
                 </div>
             </div>
         </div>
-        {% endfor %}
+    {% endfor %}
 </div>
+<!-- Modal for likes on a post -->
+<div id="like-modal-{{post.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header modal-top">
+                <div class="modal-text" id="modal-like">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times"></i></button>
+                    <font class="modal-heading">People who liked this post</font>
+                </div>
+            </div>
+            <div class="modal-body">
+                {% for liker in post.postlike.likers.all %}
+                    <div class="row user-wrapper">
+                        <div class="col-md-3">
+                            <img class="img-circle profile-pic" width=40 height=40 src="{{ liker.profile.image.url }}" alt="default.jpg">
+                        </div>
+                        <div class="col-md-9">
+                            <a href="{% url 'users:profile_view' liker.username %}" class="liker-link">
+                                <font class="liker-username-font">
+                                    {{liker.username}}
+                                </font>
+                                <br>
+                                <font class="liker-name-font">
+                                    {{liker.profile.full_name}}
+                                </font>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Modal for delete post and delete comment -->
 <div id="delete-modal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header modal-top">
-                <div class="modal-text" id="modal-text">
-                    <font class="modal-heading" id="modal-heading">Are you sure you want to delete this post?</font>
+                <div class="modal-text modal-heading" id="modal-text">
+                    Are you sure you want to delete this post?
                 </div>
             </div>
             <div class="modal-body">
@@ -285,4 +323,3 @@
 </script>        
 
 {% endblock %}
-

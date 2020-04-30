@@ -24,38 +24,6 @@ class SignUpForm(forms.Form):
     )
     gender = forms.ChoiceField(label='Gender',choices=gender_choices)
 
-    dept_choices = (
-        ("None", "None"),
-        ("Biochemical Engineering and Biotechnology", "Biochemical Engineering and Biotechnology"), 
-        ("Chemical Engineering", "Chemical Engineering"),
-        ("Civil Engineering", "Civil Engineering"),
-        ("Computer Science", "Computer Science"),
-        ("Electrical Engineering", "Electrical Engineering"),
-        ("Physics", "Physics"),
-        ("Mathematics", "Mathematics"),
-        ("Mechanical Engineering", "Mechanical Engineering"),
-        ("Textile Technology", "Textile Technology"),
-    )
-    dept = forms.ChoiceField(label='Department',choices=dept_choices)
-
-    hostel_choices = (
-        ("None", "None"),
-        ("Aravali", "Aravali"), 
-        ("Girnar", "Girnar"),
-        ("Himadri", "Himadri"),
-        ("Jwalamukhi", "Jwalamukhi"),
-        ("Kailash", "Kailash"),
-        ("Karakoram", "Karakoram"),
-        ("Kumaon", "Kumaon"),
-        ("Nilgriri", "Nilgriri"),
-        ("Satpura", "Satpura"),
-        ("Shivalik", "Shivalik"),
-        ("Udaigiri", "Udaigiri"),
-        ("Vindhyachal", "Vindhyachal"),
-        ("Zanskar", "Zanskar"),
-    )
-    hostel = forms.ChoiceField(label='Hostel',choices=hostel_choices)
-
     #Check if username alredy exists
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
@@ -126,8 +94,6 @@ class SignUpForm(forms.Form):
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
             gender=self.cleaned_data['gender'],
-            dept=self.cleaned_data['dept'],
-            hostel=self.cleaned_data['hostel'],
         )
         new_profile.save()
         return user

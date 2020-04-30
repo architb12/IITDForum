@@ -18,6 +18,7 @@ def signup(request):
             messages.success(request, f'Account created for {username}!')
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
             login(request, user)
+            messages.success(request, f'Authorized')
             return redirect('users:setup')
     else:
         if request.user.is_authenticated:
@@ -35,7 +36,12 @@ def profile_view(request, u_name):
 
 def setup(request):
     if request.user.is_authenticated:
-        return render(request,'users/setup.html')
+        storage = messages.get_messages(request)
+        for message in storage:
+                if message.message=='Authorized':
+                    del storage._loaded_messages[-1]
+                    return render(request,'users/setup.html')
+        return redirect('home')
     else:
         return redirect('home')
 
@@ -80,7 +86,7 @@ def setup4(request):
             try:
                 skip = request.POST['skip-btn']
                 messages.success(request,f'Your profile has been set up successfully!')
-                return redirect('users:profile_view',u_name=request.user.username)
+                return redirect('users:profile_view', u_name=request.user.username)
             except KeyError:
                 bio = request.POST['bio-text']
                 if len(bio)>200:
@@ -90,7 +96,7 @@ def setup4(request):
                 profile.bio = bio
                 profile.save()
                 messages.success(request,f'Your profile has been set up successfully!')
-                return redirect('users:profile_view',u_name=request.user.username)
+                return redirect('users:profile_view', u_name=request.user.username)
         else:
             return redirect('home')
     else:

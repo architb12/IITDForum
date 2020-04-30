@@ -4,8 +4,8 @@ html, body {
 }
   
 body{
-      position:relative;
-      max-width:100%;
+    position:relative;
+	max-width:100%;
 }
 
 .loader{
@@ -328,8 +328,8 @@ body{
 }
 
 .username-font{
-	font-family: 'Raleway',sans-serif;
-	font-size:25px;
+	font-family: 'Spartan',sans-serif;
+	font-size:20px;
 	color:#222;
 }
 
@@ -712,6 +712,48 @@ form{
 
 .setup-img{
 	margin-bottom:10px;
+}
+
+.modal-heading{
+	font-family: 'Raleway', sans-serif;
+	font-size: 15px;
+	color: #222;
+	font-weight: 300;
+}
+
+.modal-body{
+	overflow-y: auto;
+	height:70vh;
+}
+
+.user-wrapper{
+	background-color: #ececec;
+	padding:5px;
+	margin:5px;
+	border-radius: 25px;
+}
+
+.liker-username-font{
+	font-family: 'Spartan',sans-serif;
+	font-size:12px;
+	color:#222;
+	font-weight: 600;
+}
+
+.liker-name-font{
+	font-family: 'Spartan',sans-serif;
+	font-size:10px;
+	color:#222;
+	font-weight: 400;
+}
+
+.liker-link:hover{
+	text-decoration: none;
+}
+
+.profile-img-div{
+	display:block;
+	min-height: 150px;
 }
 
 .github:hover{
