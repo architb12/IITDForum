@@ -54,12 +54,13 @@ def setup2(request):
         return redirect('home')
 
 def setup3(request):
-    storage = messages.get_messages(request)
-    for message in storage:
-            if message.message=='Bio exceeds character limit.':
-                storage.used = False
-                return render(request,'users/setup3.html') 
-    storage.used = False
+    if request.user.is_authenticated:
+        storage = messages.get_messages(request)
+        for message in storage:
+                if message.message=='Bio exceeds character limit.':
+                    storage.used = False
+                    return render(request,'users/setup3.html') 
+        storage.used = False
     if request.method=='POST':
         if request.user.is_authenticated:
             hostel = request.POST['hostel']
