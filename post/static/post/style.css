@@ -636,6 +636,84 @@ form{
 	-o-transition:all 0.4s ease;
 }
 
+.setup-heading{
+	font-family: 'Spartan',sans-serif;
+	font-size: 35px;
+	color: #380957;
+	font-weight: 600;
+	float: left;
+}
+
+.skip-btn{
+	float:right;
+	border-radius: 2px;
+	border: 2px solid #222;
+	font-family: 'Raleway',sans-serif;
+	font-size: 18px;
+	color: #222;
+	background: transparent;
+	cursor: pointer;
+	padding: 10px 25px;
+	margin:10px;
+	font-weight: 500;
+	outline: none;
+	position: relative;
+	overflow: hidden;
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+}
+
+.skip-btn:hover{
+	color:#fff;
+    background-color: #380957;
+}
+
+.skip-btn:active{
+    top:1px;
+}
+
+.progress-div{
+	margin-top:20px;
+	height: 5px;
+	margin-bottom: 0;
+}
+
+.progress-sub-div{
+	background-color: #380957;
+}
+
+.progress-label{
+	font-family: 'Spartan',sans-serif;
+	font-weight: 200;
+	color:#222;
+	font-size: 15px;
+	margin:0;
+	margin-top: 10px;
+}
+
+.setup-btn {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-family: 'Raleway', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  cursor: pointer;
+  color: #222;
+  margin:20px;
+}
+
+.setup-btn:hover{
+	color:#380957;
+}
+
+.setup-img{
+	margin-bottom:10px;
+}
+
 .github:hover{
 	color:#f8a001;
 }
@@ -645,7 +723,7 @@ form{
 	padding-bottom: 30px;
 }
 
-.footer_font{
+.footer-font{
 	font-family: 'Raleway',sans-serif;
 	font-size: 15px;
 	font-weight: 700;
