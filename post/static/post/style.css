@@ -729,3 +729,19 @@ form{
 	font-weight: 700;
 	color:#222;
 }
+
+.setup-img{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
+	-o-transition: all 0.1s;
+}
+
+.setup-img:hover{
+	padding: 30px;
+	width:250px;
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+}

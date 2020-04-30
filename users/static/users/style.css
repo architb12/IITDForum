@@ -170,3 +170,10 @@ body{
     text-decoration: none;
     color: #380957;
 }
+
+.setup-img:hover{
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+}
