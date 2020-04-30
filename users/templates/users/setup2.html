@@ -1,36 +1,113 @@
 {% extends 'post/base.html' %}
 {% block content %}
-Set up your account 2
+{% load static %}
 <form action="{% url 'users:setup3' %}" method="POST">
     {% csrf_token %}
-    ("None", "None"),
-        ("Aravali", "Aravali"), 
-        ("Girnar", "Girnar"),
-        ("Himadri", "Himadri"),
-        ("Jwalamukhi", "Jwalamukhi"),
-        ("Kailash", "Kailash"),
-        ("Karakoram", "Karakoram"),
-        ("Kumaon", "Kumaon"),
-        ("Nilgriri", "Nilgriri"),
-        ("Satpura", "Satpura"),
-        ("Shivalik", "Shivalik"),
-        ("Udaigiri", "Udaigiri"),
-        ("Vindhyachal", "Vindhyachal"),
-        ("Zanskar", "Zanskar"),
-    <button type="submit" name="hostel" value="Aravali"> ara </button>
-    <button type="submit" name="hostel" value="Girnar"> gir </button>
-    <button type="submit" name="hostel" value="Himadri"> hima</button>
-    <button type="submit" name="hostel" value="Jwalamukhi">jwala</button>
-    <button type="submit" name="hostel" value="Kailash">kailash </button>
-    <button type="submit" name="hostel" value="Karakoram"> kara </button>
-    <button type="submit" name="hostel" value="Kumaon"> kumaon </button>
-    <button type="submit" name="hostel" value="Nilgiri"> nilgiri </button>
-    <button type="submit" name="hostel" value="Satpura"> satpura </button>
-    <button type="submit" name="hostel" value="Shivalik"> shivalik </button>
-    <button type="submit" name="hostel" value="Udaigiri"> udaigiri </button>
-    <button type="submit" name="hostel" value="Vindhyachal"> vindy</button>
-    <button type="submit" name="hostel" value="Zanskar"> z</button>
-    <button type="submit" name="hostel" value="Skip">skip for now </button>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="setup-heading">
+                Set up your account
+            </div>
+            <button type="submit" name="hostel" class="skip-btn" value="Skip">Skip for now <i class="fas fa-angle-double-right"></i></button>	
+        </div>
+    </div>
+    <div class="progress progress-div">
+      <div class="progress-bar progress-sub-div" role="progressbar" aria-valuenow="33"
+      aria-valuemin="0" aria-valuemax="100" style="width:66%">
+        <span class="sr-only">66% Complete</span>
+      </div>
+    </div>
+    <label class="progress-label">Step (2/3)</label>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Aravali"> 
+                <img src="{% static 'users/dept_images/bb.jpg' %}" class="img-responsive img-circle setup-img">
+                Aravali
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Girnar">
+                <img src="{% static 'users/dept_images/ch.jpg' %}" class="img-responsive img-circle setup-img">
+                Girnar
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Himadri">
+                <img src="{% static 'users/dept_images/ce.jpg' %}" class="img-responsive img-circle setup-img">
+                Himadri
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Jwalamukhi">
+                <img src="{% static 'users/dept_images/cs.jpg' %}" class="img-responsive img-circle setup-img">
+                Jwalamukhi
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Kailash">
+                <img src="{% static 'users/dept_images/ee.jpg' %}" class="img-responsive img-circle setup-img">
+                Kailash
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Karakoram">
+                <img src="{% static 'users/dept_images/ph.jpg' %}" class="img-responsive img-circle setup-img">
+                Karakoram
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Kumaon">
+                <img src="{% static 'users/dept_images/mt.jpg' %}" class="img-responsive img-circle setup-img">
+                Kumaon
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Nilgiri">
+                <img src="{% static 'users/dept_images/me.jpg' %}" class="img-responsive img-circle setup-img">
+                Nilgiri
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Satpura">
+                <img src="{% static 'users/dept_images/tt.jpg' %}" class="img-responsive img-circle setup-img">
+                Satpura
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Shivalik">
+                <img src="{% static 'users/dept_images/mt.jpg' %}" class="img-responsive img-circle setup-img">
+                Shivalik
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Udaigiri">
+                <img src="{% static 'users/dept_images/me.jpg' %}" class="img-responsive img-circle setup-img">
+                Udaigiri
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Vindhyachal">
+                <img src="{% static 'users/dept_images/tt.jpg' %}" class="img-responsive img-circle setup-img">
+                Vindhyachal
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <button type="submit" name="hostel" class="setup-btn" value="Zanskar">
+                <img src="{% static 'users/dept_images/mt.jpg' %}" class="img-responsive img-circle setup-img">
+                Zanskar
+            </button>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
 </form>
-
 {% endblock %}
