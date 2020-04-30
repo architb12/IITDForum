@@ -11,6 +11,7 @@ class Profile(models.Model):
     dept = models.CharField(max_length=100, default="None")
     hostel = models.CharField(max_length=100, default="None")
     image = models.ImageField(default='default.jpg',upload_to='profile-pics')
+    bio = models.TextField(default='', max_length=200)
 
     def __str__(self):
         return self.parent_user.username

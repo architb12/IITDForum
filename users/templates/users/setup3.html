@@ -1,0 +1,70 @@
+{% extends 'post/base.html' %}
+{% block content %}
+{% load static %}
+<form action="{% url 'users:setup4' %}" method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="setup-heading">
+                Set up your account
+            </div>
+            <button type="submit" name="skip-btn" class="skip-btn" value="Skip">Skip for now <i class="fas fa-angle-double-right"></i></button>	
+        </div>
+    </div>
+    <div class="progress progress-div">
+      <div class="progress-bar progress-sub-div" role="progressbar" aria-valuenow="33"
+      aria-valuemin="0" aria-valuemax="100" style="width:100%">
+        <span class="sr-only">% Complete</span>
+      </div>
+    </div>
+    <label class="progress-label">Step (3/3): Write a bio for yourself! </label>
+    <br>
+   <br>
+    <!-- Textarea region -->
+    <div class="create-post-div">
+        <div class="write-post">
+            <div class="row">
+                <div class="col-md-11"  style="padding-top:15px;">
+                    <font class="create-font">
+                        Write a bio for yourself!
+                    </font>
+                </div>
+            </div>
+            <div class="form">
+                <form action="{% url 'post:post_create' %}" method="POST" class="form-horizontal">
+                    {% csrf_token %}
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <textarea name="bio-text" class="form-control create-input" rows="5" placeholder="Be creative! You can edit your bio any time in the future." onkeyup="countChars(this);"></textarea>
+                        <span class="create-input-focus"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div class="post-char-counter" id='charNum'> 0/200 </div>
+                        <button type="submit" class="create-btn"> <span>Post</span> </button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+</form>
+
+<script>
+
+    //Character-counter for bio creation
+    function countChars(obj){
+            if(obj.value.length <= 200){
+                document.getElementById("charNum").style.color = 'white';
+            }
+            else{
+                document.getElementById("charNum").style.color = 'red';
+            }
+            document.getElementById("charNum").innerHTML = obj.value.length+'/200';
+        };
+
+</script>
+{% endblock %}

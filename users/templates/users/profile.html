@@ -26,7 +26,7 @@
     <div class="bio-div">
         <br>
         <font class="bio-font">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit quia nam nesciunt aliquam aperiam cupiditate vitae cumque deleniti quae libero facere inventore, explicabo reiciendis vel iste sapiente eaque eos dolore! Totam necessitatibus dolorum aliquam quisquam sed dolores eligendi illum esse corrupti! Omnis sunt quia incidunt sed quasi similique, aspernatur quis, quidem atque tempore quisquam expedita temporibus esse iste illo id blanditiis quas ex adipisci reiciendis nulla. Dolore natus, a assumenda possimus officia quo repellat autem nostrum consectetur! Deleniti natus corrupti esse quibusdam molestiae? Corrupti dolores autem cumque officia. Maxime vel sapiente architecto omnis dicta mollitia illum. Tempora consequuntur necessitatibus inventore?
+            {{user.profile.bio|urlize|linebreaks}}
         </font>
     </div>
     {% for post in posts %}

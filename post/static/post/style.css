@@ -745,3 +745,9 @@ form{
 	-moz-filter: grayscale(100%);
 	-o-filter: grayscale(100%);
 }
+
+.setup-btn:focus{
+	outline:none;
+	box-shadow:none;
+	border:none;
+}

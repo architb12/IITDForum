@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import SignUpForm
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
@@ -53,6 +54,12 @@ def setup2(request):
         return redirect('home')
 
 def setup3(request):
+    storage = messages.get_messages(request)
+    for message in storage:
+            if message.message=='Bio exceeds character limit.':
+                storage.used = False
+                return render(request,'users/setup3.html') 
+    storage.used = False
     if request.method=='POST':
         if request.user.is_authenticated:
             hostel = request.POST['hostel']
@@ -60,8 +67,29 @@ def setup3(request):
                 profile = request.user.profile
                 profile.hostel = hostel
                 profile.save()
-            messages.success(request, f'Your profile has been set up successfully!')
-            return redirect('users:profile_view', u_name=request.user.username)     
+            return render(request,'users/setup3.html')   
+        else:
+            return redirect('home')
+    else:
+        return redirect('home')
+
+def setup4(request):
+    if request.method=='POST':
+        if request.user.is_authenticated:
+            try:
+                skip = request.POST['skip-btn']
+                messages.success(request,f'Your profile has been set up successfully!')
+                return redirect('users:profile_view',u_name=request.user.username)
+            except KeyError:
+                bio = request.POST['bio-text']
+                if len(bio)>200:
+                    messages.warning(request, f'Bio exceeds character limit.')
+                    return redirect('users:setup3')
+                profile = request.user.profile
+                profile.bio = bio
+                profile.save()
+                messages.success(request,f'Your profile has been set up successfully!')
+                return redirect('users:profile_view',u_name=request.user.username)
         else:
             return redirect('home')
     else:
