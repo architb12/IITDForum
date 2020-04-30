@@ -61,7 +61,7 @@
         <font class="post-content-font">
             <!-- 'See more' feature -->
             {% if post.text|linebreaks|length < 600 %}
-                <div class="content-div"> {{post.text|linebreaks}} </div>
+                <div class="content-div"> {{post.text|urlize|linebreaks}} </div>
             {% else %}
                 <div class="post-text-sliced content-div" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks|slice:":450"}}... </div>
                 <div class="collapse content-div" id="post-text-full{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks}} </div>
@@ -135,7 +135,7 @@
                         <font class="comment-username-font">
                                 <b>{{comment.author.username}}</b>
                             </a>
-                              {{comment.text}}
+                              {{comment.text|urlize}}
                         </font>
                     <br>
                     <font class="date-font">

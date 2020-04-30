@@ -32,7 +32,7 @@
     <hr class="hr1" align="left">
     <font class="post-content-font">
         <div class="content-div">
-            {{post.text|linebreaks}}
+            {{post.text|urlize|linebreaks}}
         </div>
     </font>
     <br>
@@ -124,7 +124,7 @@
                         <font class="comment-username-font">
                             <b>{{comment.author.username}}</b>
                             </a>
-                              {{comment.text}}
+                              {{comment.text|urlize}}
                         </font>
                         <br>
                         <font class="date-font">

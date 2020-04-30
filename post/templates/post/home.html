@@ -70,10 +70,10 @@
         <font class="post-content-font">
             <!-- 'See more' feature -->
             {% if post.text|linebreaks|length < 600 %}
-                <div class="content-div"> {{post.text|linebreaks}} </div>
+                <div class="content-div"> {{post.text|urlize|linebreaks}} </div>
             {% else %}
-                <div class="post-text-sliced content-div" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks|slice:":450"}}... </div>
-                <div class="collapse content-div" id="post-text-full{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks}} </div>
+                <div class="post-text-sliced content-div" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|urlize|linebreaks|slice:":450"}}... </div>
+                <div class="collapse content-div" id="post-text-full{{post.id}}" data-catid="{{post.id}}"> {{post.text|urlize|linebreaks}} </div>
                 <div class="see-more" id="see-more{{post.id}}" data-catid="{{post.id}}"> See more </div>
                 <div class="see-less" id="see-less{{post.id}}" data-catid="{{post.id}}"> </div>
             {% endif %}
@@ -86,15 +86,15 @@
                     <i class="fa fa-heart liked like-button" aria-hidden="true" id="like{{ post.id }}" data-catid="{{ post.id }}"></i>
                 </div>
                 <div class="likes-count like-count-font" id="likes-count{{ post.id }}" data-catid="{{post.postlike.likers.count}}">
-                    
-                        {% if post.postlike.likers.count == 1 %}
-                            You liked this post.
-                        {% elif post.postlike.likers.count == 2 %}
-                            You and one other liked this post.
-                        {% else %} 
-                            You and {{ post.postlike.likers.count|add:"-1" }} others liked this post.
-                        {% endif %}
                         
+                            {% if post.postlike.likers.count == 1 %}
+                                You liked this post.
+                            {% elif post.postlike.likers.count == 2 %}
+                                You and one other liked this post.
+                            {% else %} 
+                                You and {{ post.postlike.likers.count|add:"-1" }} others liked this post.
+                            {% endif %}
+                            
                 </div>
                 
             {% else %}
@@ -147,7 +147,7 @@
                             <font class="comment-username-font">
                                     <b>{{comment.author.username}}</b>
                                 </a>
-                                  {{comment.text}}
+                                  {{comment.text|urlize}}
                             </font>
                         <br>
                         <font class="date-font">
@@ -167,6 +167,7 @@
         {% endfor %}
     </div>
     {% endfor %}
+
     <!-- Modal for delete post and delete comment -->
     <div id="delete-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -303,7 +304,8 @@
                 document.getElementById("charNum").style.color = 'red';
             }
             document.getElementById("charNum").innerHTML = obj.value.length+'/5000';
-        }
+        };
+
     </script>        
 {% endblock content %}
 

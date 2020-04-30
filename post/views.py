@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Post, Comment, PostLike
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.views.generic import RedirectView
 from django.utils import timezone
 # Create your views here.
@@ -96,7 +96,7 @@ def comment_delete(request):
         if Comment.objects.get(pk=comment_id).author == request.user:
             comment = Comment.objects.get(id = comment_id)
             comment.delete()
-            return HttpResponse('success')
+            return HttpResponse('success',)
         else:
             return HttpResponse('fail')
     else:
