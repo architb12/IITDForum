@@ -605,6 +605,13 @@ body{
 	color:#999;
 }
 
+.bio-div{
+	margin:5px;
+	background-color: #f7f7f7;
+	padding:5px 10px;
+	border-radius: 10px;
+}
+
 .bio-font{
 	font-family: 'Raleway', sans-serif;
 	font-size: 15px;

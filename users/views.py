@@ -111,6 +111,7 @@ def edit_hostel(request):
                 profile = request.user.profile
                 profile.hostel = hostel
                 profile.save()
+                messages.success(request, f'Hostel updated')
             return redirect('users:profile_view', u_name=request.user.username)
         else:
             return render(request,'users/edit_hostel.html',{'title': 'Change your hostel'})
@@ -127,9 +128,33 @@ def edit_dept(request):
                 profile = request.user.profile
                 profile.dept = dept
                 profile.save()
+                messages.success(request, f'Department updated')
             return redirect('users:profile_view', u_name=request.user.username)
         else:
-            return render(request,'users/edit_dept.html',{'title': 'Change your dept'})
+            return render(request,'users/edit_dept.html',{'title': 'Change your department'})
+    else:
+        messages.warning(request, f'Please login or create an account.')
+        return redirect('home')
+
+#Edit Bio view
+def edit_bio(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            try:
+                skip = request.POST['skip-btn']
+                return redirect('users:profile_view', u_name=request.user.username)
+            except KeyError:
+                bio = request.POST['bio-text']
+                if len(bio)>200:
+                    messages.warning(request, f'Bio exceeds character limit.')
+                    return redirect('users:edit_bio')
+                profile = request.user.profile
+                profile.bio = bio
+                profile.save()
+                messages.success(request,f'Bio updated')
+                return redirect('users:profile_view', u_name=request.user.username)
+        else:
+            return render(request,'users/edit_bio.html',{'title': 'Edit your bio'})
     else:
         messages.warning(request, f'Please login or create an account.')
         return redirect('home')

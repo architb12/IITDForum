@@ -37,10 +37,20 @@
         </div>
     </div>
     <div class="bio-div">
-        <br>
         <font class="bio-font">
             {{user.profile.bio|urlize|linebreaks}}
         </font>
+        {% if request.user == user %}
+            <a href="{% url 'users:edit_bio' %}">
+                <font class="details-small-font">
+                    {% if user.profile.bio %}
+                        Edit
+                    {% else %}
+                        Add bio
+                    {% endif %}
+                </font>
+            </a>
+        {% endif %}
     </div>
     {% for post in posts %}
     <div class="home-post-div"  id="post-{{ post.id }}-div">
