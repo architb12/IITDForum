@@ -16,21 +16,6 @@ $(window).on("scroll", function() {
   }
 })
 
-//Smooth Scroll
-$(function() {
-    $('a[href*=#]:not([href=#])').click(function() {
-      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-        var target = $(this.hash);
-        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-        if (target.length) {
-          $('html,body').animate({
-            scrollTop: target.offset().top
-          }, 1000);
-          return false;
-        }
-      }
-    });
-  });
 
 //Changing Collapse Button
 $(document).ready(function(){
@@ -96,24 +81,3 @@ $(".see-less").click(function(){
     see_less_div.textContent=""
 });
 
-//Search bar functionality
-function searchBar(obj){
-  if(obj.value.length==0){
-      $("#search-results").hide();
-  }
-  else $("#search-results").show();
-
-  var search_text = obj.value
-  $.ajax( 
-  { 
-      type:"GET", 
-      url: "{% url 'users:search' %}", 
-      data:{
-          'search_text' : search_text
-      },
-      success: function(data){
-          document.getElementById("search-results").innerHTML = data;
-      }
-  }) 
-
-}
