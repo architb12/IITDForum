@@ -40,7 +40,7 @@ def setup(request):
         for message in storage:
                 if message.message=='Authorized':
                     del storage._loaded_messages[-1]
-                    return render(request,'users/setup.html')
+                    return render(request,'users/setup.html',{'title': 'Select your Department'})
         return redirect('home')
     else:
         return redirect('home')
@@ -53,7 +53,7 @@ def setup2(request):
                 profile = request.user.profile
                 profile.dept = dept
                 profile.save()
-            return render(request,'users/setup2.html')     
+            return render(request,'users/setup2.html',{'title': 'Select your Hostel'})     
         else:
             return redirect('home')
     else:
@@ -65,7 +65,7 @@ def setup3(request):
         for message in storage:
                 if message.message=='Bio exceeds character limit.':
                     storage.used = False
-                    return render(request,'users/setup3.html') 
+                    return render(request,'users/setup3.html',{'title': 'Write a bio'}) 
         storage.used = False
     if request.method=='POST':
         if request.user.is_authenticated:
@@ -74,7 +74,7 @@ def setup3(request):
                 profile = request.user.profile
                 profile.hostel = hostel
                 profile.save()
-            return render(request,'users/setup3.html')   
+            return render(request,'users/setup3.html',{'title': 'Write a bio'})   
         else:
             return redirect('home')
     else:
@@ -100,4 +100,36 @@ def setup4(request):
         else:
             return redirect('home')
     else:
+        return redirect('home')
+
+#Edit Hostel view
+def edit_hostel(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            hostel = request.POST['hostel']
+            if(hostel!='Skip'):
+                profile = request.user.profile
+                profile.hostel = hostel
+                profile.save()
+            return redirect('users:profile_view', u_name=request.user.username)
+        else:
+            return render(request,'users/edit_hostel.html',{'title': 'Change your hostel'})
+    else:
+        messages.warning(request, f'Please login or create an account.')
+        return redirect('home')
+
+#Edit Department view
+def edit_dept(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            dept = request.POST['dept']
+            if(dept!='Skip'):
+                profile = request.user.profile
+                profile.dept = dept
+                profile.save()
+            return redirect('users:profile_view', u_name=request.user.username)
+        else:
+            return render(request,'users/edit_dept.html',{'title': 'Change your dept'})
+    else:
+        messages.warning(request, f'Please login or create an account.')
         return redirect('home')

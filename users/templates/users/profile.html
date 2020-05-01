@@ -14,13 +14,26 @@
                 {{user.profile.full_name}}
             </font>
             <br><br>
-            <font class="details-font">
-                <i class="fas fa-home"></i>&nbsp; {{user.profile.hostel}}
-                <br>
-                <i class="far fa-building"></i>&nbsp; {{user.profile.dept}}
-                <br>
-                <i class="fas fa-birthday-cake"></i>&nbsp; {{user.profile.date_of_birth}}
-            </font>   
+            <ul class="list-inline">
+                <li>
+                    <i class="fas fa-home"></i>&nbsp; 
+                    <font class="details-font">{{user.profile.hostel}}</font>
+                    {% if request.user == user %}
+                    <a href="{% url 'users:edit_hostel' %}"><font class="details-small-font">Edit</font></a>
+                    {% endif %}
+                </li>
+                <li>
+                    <i class="far fa-building"></i>&nbsp; 
+                    <font class="details-font">{{user.profile.dept}}</font>
+                    {% if request.user == user %}
+                    <a href="{% url 'users:edit_dept' %}"><font class="details-small-font">Edit</font></a>
+                    {% endif %}
+                </li>
+                <li>
+                    <i class="fas fa-birthday-cake"></i>&nbsp; 
+                    <font class="details-font">{{user.profile.date_of_birth}}</font>
+                </li>
+            </ul> 
         </div>
     </div>
     <div class="bio-div">

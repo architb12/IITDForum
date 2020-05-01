@@ -598,6 +598,13 @@ body{
 	font-weight: 500;
 }
 
+.details-small-font{
+	font-family: 'Raleway', sans-serif;
+	font-size: 11px;
+	font-weight: 500;
+	color:#999;
+}
+
 .bio-font{
 	font-family: 'Raleway', sans-serif;
 	font-size: 15px;
@@ -723,7 +730,7 @@ form{
 
 .modal-body{
 	overflow-y: auto;
-	height:70vh;
+	max-height:70vh;
 }
 
 .user-wrapper{
@@ -763,12 +770,13 @@ form{
 #footer{
 	padding-top:40px;
 	padding-bottom: 30px;
+	background-color: #fff;
 }
 
 .footer-font{
 	font-family: 'Raleway',sans-serif;
 	font-size: 15px;
-	font-weight: 700;
+	font-weight: 300;
 	color:#222;
 }
 
