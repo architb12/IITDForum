@@ -56,8 +56,14 @@
             </div>
             
             <div class="collapse navbar-collapse" id="myNavbar">
-        
+                
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div class="search-bar">
+                            <input class="form-control" name="search-bar" id="search-bar" cols="30" rows="1" onkeyup="searchBar(this);" placeholder="Search for users">
+                        </div>
+                     </li>
+        
                     {% if request.user.is_authenticated %}
                         <li><a href="{% url 'users:profile_view' request.user.username %}">{{request.user.profile.first_name}}</a></li>
                         <li><a href="{% url 'logout' %}?next=/home">Logout</a></li>
@@ -65,8 +71,10 @@
                         <li><a href="{% url 'login' %}">Login</a></li>
                         <li><a href="{% url 'signup' %}">Sign Up</a></li>
                     {% endif %}
+                    
+                    <div class="search-results collapse" id="search-results"> </div>
                 </ul>
-            
+                
             </div>
         
             </div>
@@ -130,5 +138,27 @@
     
     <!--JavaScript File-->
     <script src="{% static 'post/script.js' %}"></script>
+    <script>
+        //Search bar functionality
+        function searchBar(obj){
+            if(obj.value.length==0){
+                $("#search-results").hide();
+            }
+            else $("#search-results").show();
+
+            var search_text = obj.value
+            $.ajax( 
+            { 
+                type:"GET", 
+                url: "{% url 'users:search' %}", 
+                data:{
+                    'search_text' : search_text
+                },
+                success: function(data){
+                    document.getElementById("search-results").innerHTML = data;
+                }
+            }) 
+        }
+    </script>
 </html>
 

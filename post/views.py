@@ -19,7 +19,7 @@ def post_view(request, post_id):
 # Home page 
 def home(request):
     posts = Post.objects.all().order_by('-pub_date')
-    return render(request,'post/home.html',{'posts':posts,'title':'Home'})
+    return render(request,'post/home.html',{'posts':posts, 'title':'Home'})
 
 # PostLike View
 def post_like(request): 

@@ -158,3 +158,41 @@ def edit_bio(request):
     else:
         messages.warning(request, f'Please login or create an account.')
         return redirect('home')
+
+#Search User View
+def search(request):
+    if request.method == 'GET':
+        search_text = request.GET['search_text'].lower()
+        users = User.objects.all()
+        valid_users = []
+        def check_valid(user):
+            if user.username.lower().find(search_text) != -1:
+                return True
+            if user.profile.first_name.lower().find(search_text) != -1:
+                return True
+            if user.profile.last_name.lower().find(search_text) != -1:
+                return True
+            return False
+            
+        for user in users:
+            if check_valid(user):
+                valid_users.append(user)
+            if len(valid_users)>4:
+                break
+        
+        html = ""
+        for user in valid_users:
+            html += '<div class="row user-wrapper"> <div class="col-md-3"> <img class="img-circle profile-pic" width=40 height=40 src="'
+            html += user.profile.image.url
+            html += '" alt="default.jpg"> </div> <div class="col-md-9"> <a href="'
+            html += '/users/' + user.username +'/"'
+            html +=  'class="liker-link"> <font class="liker-username-font"> '
+            html += user.username
+            html += ' </font> <br> <font class="liker-name-font"> '
+            html += user.profile.full_name()
+            html += ' </font> </a> </div> </div>'
+
+        return HttpResponse(html)
+    else:
+        return HttpResponse('fail')
+

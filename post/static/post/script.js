@@ -95,3 +95,25 @@ $(".see-less").click(function(){
     var see_less_div = document.getElementById("see-less"+id);
     see_less_div.textContent=""
 });
+
+//Search bar functionality
+function searchBar(obj){
+  if(obj.value.length==0){
+      $("#search-results").hide();
+  }
+  else $("#search-results").show();
+
+  var search_text = obj.value
+  $.ajax( 
+  { 
+      type:"GET", 
+      url: "{% url 'users:search' %}", 
+      data:{
+          'search_text' : search_text
+      },
+      success: function(data){
+          document.getElementById("search-results").innerHTML = data;
+      }
+  }) 
+
+}
