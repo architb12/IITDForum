@@ -159,6 +159,10 @@
                 }
             }) 
         }
+
+        $('#search-bar').focusout(function(){
+            $('#search-results').delay(100).fadeOut();
+        })
     </script>
 </html>
 
