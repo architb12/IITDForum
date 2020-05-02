@@ -90,8 +90,12 @@ body{
     background-color: transparent;
 }
 
-.nav-scroll .search-bar-div{
-	border-bottom: 1px solid #222;
+.nav-top .search-bar-div{
+	border-bottom: 2px solid #222;
+}
+
+.nav-top .search-bar-input:focus{
+	border-bottom: 2px solid #222;
 }
 
 .nav-top .navbar-collapse{
@@ -166,7 +170,11 @@ body{
 }
 
 .nav-scroll .search-bar-div{
-	border-bottom: 1px solid #4330ab;
+	border-bottom: 2px solid #4330ab;
+}
+
+.nav-scroll .search-bar-input:focus{
+	border-bottom: 2px solid #4330ab;
 }
 
 .nav-scroll .navbar-collapse{
@@ -207,6 +215,7 @@ body{
 		width: 100%;
 		padding: 10px 20px;
 		margin:0;
+		border-radius: 0;
 	}
 }
 
@@ -217,9 +226,33 @@ body{
 		padding: 10px 20px;
 		border-radius: 0;
 		padding: 10px 20px;
+		margin: 0;
 	}
 }
 
+.search-bar-input{
+	background-color: #f7f7f7;
+	border: none;
+	border-bottom: 2px solid #999;
+	border-radius: 0px;
+	box-shadow: none;
+	outline: none;
+	font-family: 'Spartan', sans-serif;
+	font-size: 13px;
+	color:#222;
+	padding: 10px;
+	transition: all 0.4s ease;
+  	-webkit-transition: all 0.4s ease;
+  	-o-transition: all 0.4s ease;
+  	-moz-transition: all 0.4s ease;
+}
+
+.search-bar-input:focus{
+	border: none;
+	border-radius: 0px;
+	box-shadow: none;
+	outline: none;
+}
 
 .message-font{
 	font-family: 'Raleway',sans-serif;
