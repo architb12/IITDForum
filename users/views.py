@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import SignUpForm
+from .forms import SignUpForm, EditProfileForm
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -155,6 +155,33 @@ def edit_bio(request):
                 return redirect('users:profile_view', u_name=request.user.username)
         else:
             return render(request,'users/edit_bio.html',{'title': 'Edit your bio'})
+    else:
+        messages.warning(request, f'Please login or create an account.')
+        return redirect('home')
+
+#Edit Profile View
+def edit_profile(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = EditProfileForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, f'Profile updated successfully!')
+                return redirect('users:profile_view', u_name=request.user.username)
+            else:
+                return render(request, 'users/edit_profile.html', {'form':form})
+        else:
+            form = EditProfileForm(initial = {
+                'userid': request.user.id,
+                'username': request.user.username,
+                'init_username': request.user.username,
+                'email': request.user.email,
+                'init_email': request.user.email, 
+                'first_name': request.user.profile.first_name,
+                'last_name': request.user.profile.last_name,
+                'date_of_birth': request.user.profile.date_of_birth,
+                })
+            return render(request, 'users/edit_profile.html', {'form':form})
     else:
         messages.warning(request, f'Please login or create an account.')
         return redirect('home')

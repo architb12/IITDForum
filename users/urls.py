@@ -12,5 +12,6 @@ urlpatterns = [
     path('account/edit/hostel/', views.edit_hostel, name='edit_hostel'),
     path('account/edit/dept/', views.edit_dept, name='edit_dept'),
     path('account/edit/bio/', views.edit_bio, name='edit_bio'),
+    path('account/edit/profile/', views.edit_profile, name='edit_profile'),
     path('account/search/', views.search, name='search')
 ]

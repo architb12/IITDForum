@@ -39,7 +39,11 @@
     </div>
     <div class="bio-div">
         <font class="bio-font">
-            {{user.profile.bio|urlize|linebreaks|tagize|safe}}
+            {% if user.profile.bio %}
+                {{user.profile.bio|urlize|linebreaks|tagize|safe}}
+            {% else %}
+                No bio yet.
+            {% endif %}
         </font>
         {% if request.user == user %}
             <a href="{% url 'users:edit_bio' %}">
