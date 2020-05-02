@@ -50,8 +50,15 @@
             
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" id="collapse-btn" data-toggle="collapse" data-target="#myNavbar">
-                <i class="fa fa-bars fa-2x" id="navicon" aria-hidden="true"></i>                    
+                    <i class="fa fa-bars fa-2x" id="navicon" aria-hidden="true"></i>                    
                 </button>
+                <a class="search-icon" data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fas fa-search"></i></a>
+                <ul class="dropdown-menu search-bar-div">
+                    <div class="search-bar">
+                        <input class="form-control" name="search-bar" id="search-bar" cols="30" rows="1" onkeyup="searchBar(this);" placeholder="Search for users">
+                        <div class="search-results collapse" id="search-results"> </div>
+                    </div>
+				</ul>
                 <a class="navbar-brand" href="{% url 'home' %}">IITD Forum</a>
             </div>
             
@@ -59,10 +66,8 @@
                 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <div class="search-bar">
-                            <input class="form-control" name="search-bar" id="search-bar" cols="30" rows="1" onkeyup="searchBar(this);" placeholder="Search for users">
-                        </div>
-                     </li>
+                       
+                    </li>
         
                     {% if request.user.is_authenticated %}
                         <li><a href="{% url 'users:profile_view' request.user.username %}">{{request.user.profile.first_name}}</a></li>
@@ -72,7 +77,6 @@
                         <li><a href="{% url 'signup' %}">Sign Up</a></li>
                     {% endif %}
                     
-                    <div class="search-results collapse" id="search-results"> </div>
                 </ul>
                 
             </div>

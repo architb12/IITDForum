@@ -27,8 +27,8 @@ class SignUpForm(forms.Form):
     #Check if username alredy exists
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
-        if len(username)>30:
-            raise ValidationError('Username can not exceed 30 characters')
+        if len(username)>20:
+            raise ValidationError('Username can not exceed 20 characters')
         if len(username)<3:
             raise ValidationError('Username must contain atleast 3 characters')
         if ' ' in username:

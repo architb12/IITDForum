@@ -182,7 +182,7 @@ def search(request):
         
         html = ""
         for user in valid_users:
-            html += '<a href="'
+            html += '<li><a href="'
             html += '/users/' + user.username +'/"'
             html +=  'class="liker-link"> ' 
             html += '<div class="row user-wrapper"> <div class="col-md-3"> <img class="img-circle profile-pic" width=40 height=40 src="'
@@ -192,7 +192,7 @@ def search(request):
             html += user.username
             html += ' </font> <br> <font class="liker-name-font"> '
             html += user.profile.full_name()
-            html += ' </font> </div> </div> </a> '
+            html += ' </font> </div> </div> </a> </li> '
 
         return HttpResponse(html)
     else:

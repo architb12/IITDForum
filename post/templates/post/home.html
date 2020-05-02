@@ -354,7 +354,7 @@
         function tag(obj){
             var text = obj.value;
             var tagpos = text.lastIndexOf('@')
-            if(tagpos != -1 && text.lastIndexOf(' ') == tagpos-1){
+            if(tagpos != -1 && ( text.lastIndexOf(' ') == tagpos-1 || text.lastIndexOf('\n') == tagpos-1)){
                 $('#tag-suggestions').show();
                 $('#tag-suggestions-head').show();
                 var search_text= text.slice(tagpos+1);
