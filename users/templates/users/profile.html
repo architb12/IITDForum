@@ -1,4 +1,5 @@
 {% extends "post/base.html" %}
+{% load post_filters %}
 {% block content %}
     <div class="row">
         <div class="col-md-3 profile-img-div">
@@ -38,7 +39,7 @@
     </div>
     <div class="bio-div">
         <font class="bio-font">
-            {{user.profile.bio|urlize|linebreaks}}
+            {{user.profile.bio|urlize|linebreaks|tagize|safe}}
         </font>
         {% if request.user == user %}
             <a href="{% url 'users:edit_bio' %}">
@@ -84,10 +85,10 @@
         <font class="post-content-font">
             <!-- 'See more' feature -->
             {% if post.text|linebreaks|length < 600 %}
-                <div class="content-div"> {{post.text|urlize|linebreaks}} </div>
+                <div class="content-div"> {{post.text|urlize|linebreaks|tagize|safe}} </div>
             {% else %}
-                <div class="post-text-sliced content-div" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks|slice:":450"}}... </div>
-                <div class="collapse content-div" id="post-text-full{{post.id}}" data-catid="{{post.id}}"> {{post.text|linebreaks}} </div>
+                <div class="post-text-sliced content-div" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|urlize|linebreaks|tagize|safe|slice:":450"}}... </div>
+                <div class="collapse content-div" id="post-text-full{{post.id}}" data-catid="{{post.id}}"> {{post.text|urlize|linebreaks|tagize|safe}} </div>
                 <div class="see-more" id="see-more{{post.id}}" data-catid="{{post.id}}"> See more </div>
                 <div class="see-less" id="see-less{{post.id}}" data-catid="{{post.id}}"> </div>
             {% endif %}
@@ -163,7 +164,7 @@
                             <font class="comment-username-font">
                                     <b>{{comment.author.username}}</b>
                                 </a>
-                                  {{comment.text|urlize}}
+                                  {{comment.text|urlize|linebreaks|tagize|safe}}
                             </font>
                         <br>
                         <font class="date-font">

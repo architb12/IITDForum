@@ -897,11 +897,11 @@ form{
 
 .tag-link{
 	text-decoration: none;
-	font-weight:700;
-	color:#222;
+	font-weight:500;
+	color:rgb(83, 0, 72);
 }
 
 .tag-link:hover{
-	color: #4330ab;
+	color: #000000;
 	text-decoration: none;
 }

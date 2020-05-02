@@ -1,4 +1,5 @@
 {% extends "post/base.html" %}
+{% load post_filters %}
 {% block content %}
 <div class="home-post-div">
     <div class="row">
@@ -32,7 +33,7 @@
     <hr class="hr1" align="left">
     <font class="post-content-font">
         <div class="content-div">
-            {{post.text|urlize|linebreaks}}
+            {{post.text|urlize|linebreaks|tagize|safe}}
         </div>
     </font>
     <br>
@@ -99,7 +100,7 @@
                             {% csrf_token %}
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <textarea name="comment_text" class="form-control comment-input" rows="2" placeholder="Write a comment....." onkeyup="countChars(this);"></textarea>
+                                    <textarea id="write-comment" name="comment_text" class="form-control comment-input" rows="2" placeholder="Write a comment....." onkeyup="countChars(this); tag(this);"></textarea>
                                     <span class="comment-input-focus"></span>
                                 </div> 
                             </div>
@@ -114,6 +115,8 @@
                 </div>
             </div>
         </div>
+        <div class="collapse tag-suggestions-head" id="tag-suggestions-head"> Tag Someone...</div>
+        <div class="collapse tag-suggestions" id="tag-suggestions"> </div>
     {% endif %}
     {% for comment in post.comment_set.all|dictsortreversed:"pub_date" %}
         <div id="comment-{{comment.id}}-div">
@@ -128,7 +131,7 @@
                         <font class="comment-username-font">
                             <b>{{comment.author.username}}</b>
                             </a>
-                              {{comment.text|urlize}}
+                              {{comment.text|urlize|linebreaks|tagize|safe}}
                         </font>
                         <br>
                         <font class="date-font">
@@ -320,6 +323,48 @@
             document.getElementById("charNum").innerHTML = obj.value.length+'/500';
         }
     
+    //Real time tagging in post textarea
+    function tag(obj){
+            var pos = obj.selectionStart;
+            var text = obj.value.slice(0,pos);
+            var tagpos = text.lastIndexOf('@')
+            if(tagpos != -1 && ( text.lastIndexOf(' ') == tagpos-1 || text.lastIndexOf('\n') == tagpos-1)){
+                $('#tag-suggestions').show();
+                $('#tag-suggestions-head').show();
+                var search_text= text.slice(tagpos+1);
+                $.ajax( 
+                { 
+                    type:"GET", 
+                    url: "{% url 'post:tag_search' %}", 
+                    data:{
+                        'search_text' : search_text
+                    },
+                    success: function(data){
+                        document.getElementById("tag-suggestions").innerHTML = data;
+                        if (data.length == 0) $('#tag-suggestions-head').hide();
+                    }
+                }) 
+            }
+            else{
+                $('#tag-suggestions').hide();
+                $('#tag-suggestions-head').hide();
+            }
+            
+        };
+        // Auto-complete input on clicking tag-suggestion
+        function tag_complete(obj){
+            var pos = document.getElementById('write-comment').selectionStart;
+            var text = $('#write-comment').val()
+            var text_sliced = text.slice(0,pos)
+            var tagpos = text_sliced.lastIndexOf('@')
+            var new_text = text.slice(0,tagpos+1) + obj + ' ' + text.slice(pos)
+            document.getElementById('write-comment').value = new_text
+            $('#write-comment').focus();
+            document.getElementById('write-comment').selectionStart = tagpos + obj.length + 2;
+            document.getElementById('write-comment').selectionEnd = tagpos + obj.length + 2;
+            $('#tag-suggestions').hide();
+            $('#tag-suggestions-head').hide();
+        }
 </script>        
 
 {% endblock %}

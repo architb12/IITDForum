@@ -154,7 +154,7 @@
                             <font class="comment-username-font">
                                     <b>{{comment.author.username}}</b>
                                 </a>
-                                  {{comment.text|urlize}}
+                                  {{comment.text|urlize|linebreaks|tagize|safe}}
                             </font>
                         <br>
                         <font class="date-font">
@@ -352,7 +352,8 @@
 
         //Real time tagging in post textarea
         function tag(obj){
-            var text = obj.value;
+            var pos = obj.selectionStart;
+            var text = obj.value.slice(0,pos);
             var tagpos = text.lastIndexOf('@')
             if(tagpos != -1 && ( text.lastIndexOf(' ') == tagpos-1 || text.lastIndexOf('\n') == tagpos-1)){
                 $('#tag-suggestions').show();
@@ -367,9 +368,7 @@
                     },
                     success: function(data){
                         document.getElementById("tag-suggestions").innerHTML = data;
-                        if(data == ''){
-                            $('#tag-suggestions-head').hide();
-                        }
+                        if (data.length == 0) $('#tag-suggestions-head').hide();
                     }
                 }) 
             }
@@ -381,11 +380,15 @@
         };
         // Auto-complete input on clicking tag-suggestion
         function tag_complete(obj){
-            var text = $('#write-post').val();
-            var tagpos = text.lastIndexOf('@')
-            var new_text = text.slice(0,tagpos+1) + obj + ' '
+            var pos = document.getElementById('write-post').selectionStart;
+            var text = $('#write-post').val()
+            var text_sliced = text.slice(0,pos)
+            var tagpos = text_sliced.lastIndexOf('@')
+            var new_text = text.slice(0,tagpos+1) + obj + ' ' + text.slice(pos)
             document.getElementById('write-post').value = new_text
             $('#write-post').focus();
+            document.getElementById('write-post').selectionStart = tagpos + obj.length + 2;
+            document.getElementById('write-post').selectionEnd = tagpos + obj.length + 2;
             $('#tag-suggestions').hide();
             $('#tag-suggestions-head').hide();
         }
