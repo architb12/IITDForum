@@ -19,7 +19,7 @@
                         {% csrf_token %}
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <textarea name="post_text" class="form-control create-input" rows="5" placeholder="What's on your mind?" onkeyup="countChars(this);"></textarea>
+                            <textarea name="post_text" class="form-control create-input" id="write-post" rows="5" placeholder="What's on your mind?" onkeyup="countChars(this); tag(this);"></textarea>
                             <span class="create-input-focus"></span>
                         </div>
                     </div>
@@ -33,6 +33,8 @@
                 </div>
             </div>
         </div>
+        <div class="collapse tag-suggestions-head" id="tag-suggestions-head"> Tag Someone...</div>
+        <div class="collapse tag-suggestions" id="tag-suggestions"> </div>
     {% endif %}
     <!-- Posts -->
     {% for post in posts %}
@@ -348,6 +350,41 @@
             document.getElementById("charNum").innerHTML = obj.value.length+'/5000';
         };
 
+        //Real time tagging in post textarea
+        function tag(obj){
+            var text = obj.value;
+            var tagpos = text.lastIndexOf('@')
+            if(tagpos != -1 && text.lastIndexOf(' ') == tagpos-1){
+                $('#tag-suggestions').show();
+                $('#tag-suggestions-head').show();
+                var search_text= text.slice(tagpos+1);
+                $.ajax( 
+                { 
+                    type:"GET", 
+                    url: "{% url 'post:tag_search' %}", 
+                    data:{
+                        'search_text' : search_text
+                    },
+                    success: function(data){
+                        document.getElementById("tag-suggestions").innerHTML = data;
+                    }
+                }) 
+            }
+            else{
+                $('#tag-suggestions').hide();
+                $('#tag-suggestions-head').hide();
+            }
+            
+        };
+        // Auto-complete input on clicking tag-suggestion
+        function tag_complete(obj){
+            var text = $('#write-post').val();
+            var tagpos = text.lastIndexOf('@')
+            var new_text = text.slice(0,tagpos+1) + obj + ' '
+            document.getElementById('write-post').value = new_text
+            $('#write-post').focus();
+            console.log(new_text)
+        }
         
     </script>        
 {% endblock content %}

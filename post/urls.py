@@ -9,4 +9,5 @@ urlpatterns = [
     path('createcomment/', views.comment_create, name='comment_create'),
     path('deletepost/', views.post_delete, name='post_delete'),
     path('deletecomment/', views.comment_delete, name='comment_delete'),
+    path('tagsearch/', views.tag_search, name='tag_search')
 ]
