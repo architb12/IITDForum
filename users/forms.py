@@ -31,6 +31,11 @@ class SignUpForm(forms.Form):
             raise ValidationError('Username can not exceed 30 characters')
         if len(username)<3:
             raise ValidationError('Username must contain atleast 3 characters')
+        if ' ' in username:
+            raise ValidationError('Username must not contain any spaces')
+        for ch in username:
+            if not (ch.isalpha() or ch.isdigit() or ch == '.' or ch == '_'):
+                raise ValidationError('Username must only contain alphabet, digits, \'.\' and \'_\' .')
         r = User.objects.filter(username=username)
         if r.count():
             raise  ValidationError("Username already exists")
