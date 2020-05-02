@@ -74,7 +74,7 @@
                         <li><a href="{% url 'users:profile_view' request.user.username %}">{{request.user.profile.first_name}}</a></li>
                         <li><a href="{% url 'logout' %}?next=/home">Logout</a></li>
                     {% else %}
-                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
                         <li><a href="{% url 'signup' %}">Sign Up</a></li>
                     {% endif %}
                     

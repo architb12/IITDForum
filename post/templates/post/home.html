@@ -338,7 +338,6 @@
                 })
             }
         });
-
         
         //Character-counter for post creation
         function countChars(obj){
@@ -368,6 +367,9 @@
                     },
                     success: function(data){
                         document.getElementById("tag-suggestions").innerHTML = data;
+                        if(data == ''){
+                            $('#tag-suggestions-head').hide();
+                        }
                     }
                 }) 
             }
@@ -384,7 +386,6 @@
             var new_text = text.slice(0,tagpos+1) + obj + ' '
             document.getElementById('write-post').value = new_text
             $('#write-post').focus();
-            console.log(new_text)
             $('#tag-suggestions').hide();
             $('#tag-suggestions-head').hide();
         }
