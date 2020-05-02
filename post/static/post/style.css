@@ -225,8 +225,25 @@ body{
 		width: 270px;
 		padding: 10px 20px;
 		border-radius: 0;
-		padding: 10px 20px;
 		margin: 0;
+	}
+}
+
+@media (max-width: 768px){
+	.tag-suggestions {
+		width: 100%;
+		margin:0;
+		border-radius: 0;
+		cursor: pointer;
+	}
+}
+
+@media (min-width: 769px){
+	.tag-suggestions {
+		width: 270px;
+		border-radius: 0;
+		margin: 0;
+		cursor: pointer;
 	}
 }
 
@@ -424,6 +441,10 @@ body{
 	font-size:15px;
 	color:#222;
 	text-decoration:none;
+}
+
+.comment-username-font p{
+	margin: 0;
 }
 
 .name-font{
@@ -827,7 +848,7 @@ form{
 }
 
 .user-wrapper{
-	background-color: #ececec;
+	background-color: #e0e0e0;
 	padding:5px;
 	margin:5px;
 	border-radius: 25px;

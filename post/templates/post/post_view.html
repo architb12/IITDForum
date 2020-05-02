@@ -102,6 +102,7 @@
                                 <div class="col-md-12">
                                     <textarea id="write-comment" name="comment_text" class="form-control comment-input" rows="2" placeholder="Write a comment....." onkeyup="countChars(this); tag(this);"></textarea>
                                     <span class="comment-input-focus"></span>
+                                    <div class="collapse tag-suggestions" id="tag-suggestions"> </div>
                                 </div> 
                             </div>
                             <div class="form-group">
@@ -115,8 +116,6 @@
                 </div>
             </div>
         </div>
-        <div class="collapse tag-suggestions-head" id="tag-suggestions-head"> Tag Someone...</div>
-        <div class="collapse tag-suggestions" id="tag-suggestions"> </div>
     {% endif %}
     {% for comment in post.comment_set.all|dictsortreversed:"pub_date" %}
         <div id="comment-{{comment.id}}-div">
@@ -133,7 +132,6 @@
                             </a>
                               {{comment.text|urlize|linebreaks|tagize|safe}}
                         </font>
-                        <br>
                         <font class="date-font">
                             {{comment.pub_date}}
                         </font>
@@ -330,7 +328,6 @@
             var tagpos = text.lastIndexOf('@')
             if(tagpos != -1 && ( text.lastIndexOf(' ') == tagpos-1 || text.lastIndexOf('\n') == tagpos-1)){
                 $('#tag-suggestions').show();
-                $('#tag-suggestions-head').show();
                 var search_text= text.slice(tagpos+1);
                 $.ajax( 
                 { 
@@ -341,13 +338,11 @@
                     },
                     success: function(data){
                         document.getElementById("tag-suggestions").innerHTML = data;
-                        if (data.length == 0) $('#tag-suggestions-head').hide();
                     }
                 }) 
             }
             else{
                 $('#tag-suggestions').hide();
-                $('#tag-suggestions-head').hide();
             }
             
         };
@@ -363,7 +358,6 @@
             document.getElementById('write-comment').selectionStart = tagpos + obj.length + 2;
             document.getElementById('write-comment').selectionEnd = tagpos + obj.length + 2;
             $('#tag-suggestions').hide();
-            $('#tag-suggestions-head').hide();
         }
 </script>        
 
