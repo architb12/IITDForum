@@ -14,52 +14,50 @@ $(window).on("scroll", function() {
         $('.navbar').removeClass('nav-scroll');
         $('.navbar').addClass('nav-top');
   }
-})
-
+});
 
 //Changing Collapse Button
 $(document).ready(function(){
 
-    $("#collapse-btn").click(function(){
-  
-      if($("#navicon").hasClass("fa-bars")){
-        $("#navicon").removeClass("fa-bars");
-        $("#navicon").addClass("fa-times");
-      }
-      else if($("#navicon").hasClass("fa-times")){
-        $("#navicon").removeClass("fa-times");
-        $("#navicon").addClass("fa-bars");
-      }
-  
-    });
-  
+  $("#collapse-btn").click(function(){
+
+    if($("#navicon").hasClass("fa-bars")){
+      $("#navicon").removeClass("fa-bars");
+      $("#navicon").addClass("fa-times");
+    }
+    else if($("#navicon").hasClass("fa-times")){
+      $("#navicon").removeClass("fa-times");
+      $("#navicon").addClass("fa-bars");
+    }
+
   });
+});
 
-  //Tooltips
-  $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-  });
+//Tooltips
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
 
-  //Auto expanding textareas
-  var autoExpand = function(field){
-    field.style.height = 'inherit';
-    var style = window.getComputedStyle(field);
-    var height =  parseInt(style.getPropertyValue('border-top-width'),10)
-                  + parseInt(style.getPropertyValue('padding-top'),10)
-                  + field.scrollHeight
-                  + parseInt(style.getPropertyValue('padding-bottom'),10)
-                  + parseInt(style.getPropertyValue('border-bottom-width'),10);
-    field.style.height = height + 'px';
-  };
+//Auto expanding textareas
+var autoExpand = function(field){
+  field.style.height = 'inherit';
+  var style = window.getComputedStyle(field);
+  var height =  parseInt(style.getPropertyValue('border-top-width'),10)
+                + parseInt(style.getPropertyValue('padding-top'),10)
+                + field.scrollHeight
+                + parseInt(style.getPropertyValue('padding-bottom'),10)
+                + parseInt(style.getPropertyValue('border-bottom-width'),10);
+  field.style.height = height + 'px';
+};
 
-  //Event listener for textarea
-  document.addEventListener('input', function(event){
-    if(event.target.tagName.toLowerCase() !== 'textarea') return;
-    autoExpand(event.target);
-  },false);
+//Event listener for textarea
+document.addEventListener('input', function(event){
+  if(event.target.tagName.toLowerCase() !== 'textarea') return;
+  autoExpand(event.target);
+},false);
 
-  //See more and See less functionality
-  $(".see-more").click(function(){
+//See more and See less functionality
+$(".see-more").click(function(){
     var id;            
     id = $(this).attr("data-catid");
     $("#post-text-sliced"+id).hide();
@@ -80,4 +78,3 @@ $(".see-less").click(function(){
     var see_less_div = document.getElementById("see-less"+id);
     see_less_div.textContent=""
 });
-
