@@ -6,6 +6,7 @@ from django.utils import timezone
 import datetime
 
 class SignUpForm(forms.Form):
+    username = forms.CharField(label='Enter Username', min_length=4, max_length=150)
     email = forms.EmailField(label='Enter Email')
     password1 = forms.CharField(label='Enter Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
