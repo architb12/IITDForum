@@ -15,13 +15,6 @@ class SignUpForm(forms.Form):
 
     date_of_birth = forms.DateField(label='Date of Birth', input_formats=['%d/%m/%Y'])
 
-    gender_choices = ( 
-        ("Male", "Male"), 
-        ("Female", "Female"), 
-        ("Other", "Other"), 
-    )
-    gender = forms.ChoiceField(label='Gender',choices=gender_choices)
-
     #Check if username alredy exists
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
@@ -96,7 +89,6 @@ class SignUpForm(forms.Form):
             date_of_birth=self.cleaned_data['date_of_birth'],
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
-            gender=self.cleaned_data['gender'],
         )
         new_profile.save()
         return user

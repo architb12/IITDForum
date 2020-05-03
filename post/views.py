@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import Post, Comment, PostLike
+from .models import Post, Comment, PostLike, Tag
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.views.generic import RedirectView
 from django.utils import timezone
 # Create your views here.
+
+
+
 
 # View individual post with comments
 def post_view(request, post_id):
@@ -47,6 +50,37 @@ def post_create(request):
             if(ch.isalpha() or ch.isdigit()):
                 new_post = Post(text=post_text, author=request.user, pub_date=timezone.now())
                 new_post.save()
+
+                #Utility function to identify tags from text
+                tag_list = []
+                tokens = post_text.split(' ')
+                for token in tokens:
+                    try:
+                        if token[0]=='@' and len(token)>3 and len(token)<22:
+                            valid = True
+                            for ch in token[1:]:
+                                if ch!='.' and ch!='_' and not ch.isalpha() and not ch.isdigit():
+                                    valid = False
+                                    break
+                            if valid:
+                                try:
+                                    tagged_user = User.objects.get(username=token[1:])
+                                    if request.user != tagged_user and not tagged_user in tag_list:
+                                        tag_list.append(tagged_user)
+                                except: 
+                                    continue
+                    except:
+                        continue
+                
+                #Checks if user already has atleast 10 tags and removes oldest tag if required
+                for tagged_user in tag_list:
+                    if tagged_user.tag_set.count() >= 10:
+                        remove_tag = tagged_user.tag_set.order_by('pub_date')[0]
+                        remove_tag.delete()
+                    new_tag = Tag(parent_user=tagged_user,tagger_id=str(request.user.id),tag_type='post',pub_date=timezone.now(),post_id=new_post.id)
+                    new_tag.save()
+                    
+
                 new_post_likes = PostLike(parent_post=new_post)
                 new_post_likes.save()
                 messages.success(request, f'Post created successfully!')
@@ -82,6 +116,36 @@ def comment_create(request):
             if(ch.isalpha() or ch.isdigit()):
                 new_comment = Comment(parent_post=post, text=comment_text, author=request.user, pub_date=timezone.now())
                 new_comment.save()
+
+                #Utility function to identify tags from text
+                tag_list = []
+                tokens = comment_text.split(' ')
+                for token in tokens:
+                    try:
+                        if token[0]=='@' and len(token)>3 and len(token)<22:
+                            valid = True
+                            for ch in token[1:]:
+                                if ch!='.' and ch!='_' and not ch.isalpha() and not ch.isdigit():
+                                    valid = False
+                                    break
+                            if valid:
+                                try:
+                                    tagged_user = User.objects.get(username=token[1:])
+                                    if request.user != tagged_user and not tagged_user in tag_list:
+                                        tag_list.append(tagged_user)
+                                except: 
+                                    continue
+                    except:
+                        continue
+                
+                #Checks if user already has atleast 10 tags and removes oldest tag if required
+                for tagged_user in tag_list:
+                    if tagged_user.tag_set.count() >= 10:
+                        remove_tag = tagged_user.tag_set.order_by('pub_date')[0]
+                        remove_tag.delete()
+                    new_tag = Tag(parent_user=tagged_user,tagger_id=str(request.user.id),tag_type='comment',pub_date=timezone.now(),post_id=new_comment.parent_post.id)
+                    new_tag.save()
+
                 messages.success(request, f'Comment added successfully!')
                 return redirect('post:post_view', post_id=post.id)
         messages.warning(request, f'Please enter content in your comment.')
@@ -139,3 +203,13 @@ def tag_search(request):
         return HttpResponse(html)
     else:
         return HttpResponse('fail')
+
+def tag_view(request,tag_id):
+    tag = Tag.objects.get(id=tag_id)
+    user = tag.parent_user
+    seen_tags = Tag.objects.filter(parent_user=user,post_id=tag.post_id)
+    for seen_tag in seen_tags:
+        seen_tag.seen = True
+        seen_tag.save()
+
+    return redirect('post:post_view',post_id=tag.post_id)

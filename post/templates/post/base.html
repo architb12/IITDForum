@@ -56,7 +56,7 @@
                 <a class="search-icon" data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fas fa-search"></i></a>
                 <ul class="dropdown-menu search-bar-div">
                     <div class="search-bar">
-                        <input class="form-control search-bar-input" name="search-bar" id="search-bar" onkeyup="searchBar(this);" placeholder="Search...">
+                        <input class="form-control search-bar-input" name="search-bar" id="search-bar" onkeyup="searchBar(this);" placeholder="Search users...">
                         <div class="search-results collapse" id="search-results"> </div>
                     </div>
 				</ul>
@@ -71,7 +71,20 @@
                     </li>
         
                     {% if request.user.is_authenticated %}
-                        <li> <a href="#"> Tags </a></li>
+                        <li><a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="far fa-bell"> {{request.user.tag_set.count }}</i>
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% for tag in request.user.tag_set.all %}
+                                <li><a href="{% url 'post:tag_view' tag.id %}"> 
+                                    {% if tag.seen %}
+                                    {{ tag.tagger_name }} tagged you in a {{tag.tag_type}}
+                                    {% else %}
+                                    <strong> {{ tag.tagger_name }} tagged you in a {{tag.tag_type}}</strong>
+                                    {% endif %}
+                                </a></li>
+                                {% endfor %}
+                            </ul>
+                         </li>
                         <li><a href="{% url 'users:profile_view' request.user.username %}">{{request.user.profile.first_name}}</a></li>
                         <li><a href="{% url 'logout' %}?next=/home">Logout</a></li>
                     {% else %}

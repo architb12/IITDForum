@@ -24,3 +24,17 @@ class PostLike(models.Model):
     
     def __str__(self):
         return str(self.parent_post) + ' (' + str(self.likers.count()) + ')'
+
+class Tag(models.Model):
+    parent_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    tagger_id = models.CharField(max_length = 10, default = '1')
+    tag_type = models.CharField(max_length = 10, default = 'post')
+    pub_date = models.DateTimeField(default = timezone.now())
+    post_id = models.CharField(max_length = 10, default = '1')
+    seen = models.BooleanField(default = False)
+
+    def __str__(self):
+        return 'User with id ' + self.tagger_id + ' tagged ' + self.parent_user.username + ' on a ' + self.tag_type + ' at time ' + str(self.pub_date)
+    
+    def tagger_name(self):
+        return User.objects.get(id=self.tagger_id).username
