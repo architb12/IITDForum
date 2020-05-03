@@ -173,7 +173,7 @@ def edit_profile(request):
                 messages.success(request, f'Profile updated successfully!')
                 return redirect('users:profile_view', u_name=new_username)
             else:
-                return render(request, 'users/edit_profile.html', {'form':form})
+                return render(request, 'users/edit_profile.html', {'form':form, 'title': 'Edit your profile'})
         else:
             form = EditProfileForm(initial = {
                 'userid': request.user.id,
@@ -185,7 +185,7 @@ def edit_profile(request):
                 'last_name': request.user.profile.last_name,
                 'date_of_birth': request.user.profile.date_of_birth,
             })
-            return render(request, 'users/edit_profile.html', {'form':form})
+            return render(request, 'users/edit_profile.html', {'form':form, 'title': 'Edit your profile'})
     else:
         messages.warning(request, f'Please login or create an account.')
         return redirect('home')

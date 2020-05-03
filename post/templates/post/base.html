@@ -37,7 +37,7 @@
 
     </head>
 
-    <body data-spy="scroll" data-target=".navbar" data-offset="50">
+    <body>
 
         <!--Loader div-->
         <div class="loader">
@@ -85,10 +85,10 @@
             </div>
         </nav>
 
-        <div class="body-content" id="top">
+        <div class="body-div" id="top">
             <div class="row">
             <div class="col-md-2"></div>
-            <div class="col-md-7">
+            <div class="col-md-7 body-content">
                 {% if request.user.is_authenticated == False %}
                     <div class="alert alert-info">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

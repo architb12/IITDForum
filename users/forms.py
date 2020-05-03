@@ -107,8 +107,8 @@ class EditProfileForm(forms.Form):
     init_username = forms.CharField(widget=forms.HiddenInput())
     init_email = forms.EmailField(widget=forms.HiddenInput())
 
-    username = forms.CharField(label='Enter Username', min_length=4, max_length=150)
-    email = forms.EmailField(label='Enter Email')
+    username = forms.CharField(label='Username', min_length=4, max_length=150)
+    email = forms.EmailField(label='Email')
     first_name = forms.CharField(label='First Name', max_length=50)
     last_name = forms.CharField(label='Last Name', max_length=50)
 
@@ -125,7 +125,6 @@ class EditProfileForm(forms.Form):
         return init_email
 
     #Check if username alredy exists
-
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
         if username != self.cleaned_data['init_username']:

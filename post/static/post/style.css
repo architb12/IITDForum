@@ -277,8 +277,8 @@ body{
 }
 
 .body-content{
+	padding:10px;
 	padding-top: 15vh;
-	padding-left:10px;
 }
 
 .create-post-div{
@@ -925,4 +925,47 @@ form{
 .tag-link:hover{
 	color: #000000;
 	text-decoration: none;
+}
+
+
+.login-input{
+	background-color: #f7f7f7;
+	border: none;
+	border-bottom: 2px solid #f7f7f7;
+	border-radius: 0px;
+	box-shadow: none;
+	outline: none;
+	font-family: 'Spartan', sans-serif;
+	font-size: 17px;
+	line-height: 1.2;
+	color:#222;
+	padding: 30px;
+	transition: all 0.4s ease;
+  	-webkit-transition: all 0.4s ease;
+  	-o-transition: all 0.4s ease;
+  	-moz-transition: all 0.4s ease;
+}
+
+.login-input:focus{
+	border: none;
+	border-radius: 0px;
+	border-bottom: 2px solid #222;
+	box-shadow: none;
+	outline: none;
+}
+
+.message-font{
+	font-family: 'Raleway',sans-serif;
+	font-size:15px;
+}
+
+.edit-form-div{
+	padding:10px;
+}
+
+.label-font{
+	font-family: 'Raleway',sans-serif;
+	font-size: 15px;
+	color: #222;
+	font-weight: 500;
 }
