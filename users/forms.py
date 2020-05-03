@@ -6,7 +6,6 @@ from django.utils import timezone
 import datetime
 
 class SignUpForm(forms.Form):
-    username = forms.CharField(label='Enter Username', min_length=4, max_length=150)
     email = forms.EmailField(label='Enter Email')
     password1 = forms.CharField(label='Enter Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
@@ -103,7 +102,7 @@ class SignUpForm(forms.Form):
 
 
 class EditProfileForm(forms.Form):
-    init_userid = forms.CharField(widget=forms.HiddenInput())
+    userid = forms.CharField(widget=forms.HiddenInput())
     init_username = forms.CharField(widget=forms.HiddenInput())
     init_email = forms.EmailField(widget=forms.HiddenInput())
 
@@ -114,19 +113,19 @@ class EditProfileForm(forms.Form):
 
     date_of_birth = forms.DateField(label='Date of Birth', input_formats=['%d/%m/%Y'])
 
-    # def clean_init_userid(self):
-    #     init_userid = self.cleaned_data['init_userid']
-    #     return init_userid
-    # def clean_init_username(self):
-    #     init_username = self.cleaned_data['init_username']
-    #     return init_username
-    # def clean_init_email(self):
-    #     init_email = self.cleaned_data['init_email']
-    #     return init_email
+    def clean_userid(self):
+        userid = self.cleaned_data['userid']
+        return userid
+    def clean_init_username(self):
+        init_username = self.cleaned_data['init_username']
+        return init_username
+    def clean_init_email(self):
+        init_email = self.cleaned_data['init_email']
+        return init_email
 
     #Check if username alredy exists
+
     def clean_username(self):
-        print(self.cleaned_data['init_username'])
         username = self.cleaned_data['username'].lower()
         if username != self.cleaned_data['init_username']:
             if len(username)>20:
@@ -146,7 +145,7 @@ class EditProfileForm(forms.Form):
     #Check if email already exists
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
-        if email != self['init_email']:
+        if email != self.cleaned_data['init_email']:
             r = User.objects.filter(email=email)
             if r.count():
                 raise  ValidationError("Email already exists")
@@ -183,11 +182,13 @@ class EditProfileForm(forms.Form):
     
     #Save the form
     def save(self, commit=True):
-        user = Users.objects.get(pk = self['userid'])
+        user = User.objects.get(pk = self.cleaned_data['userid'])
         profile = user.profile
         user.username = self.cleaned_data['username']
         user.email = self.cleaned_data['email']
         profile.first_name = self.cleaned_data['first_name']
         profile.last_name = self.cleaned_data['last_name']
+        profile.date_of_birth = self.cleaned_data['date_of_birth']
         user.save()
         profile.save()
+        return user.username

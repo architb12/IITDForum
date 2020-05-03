@@ -57,11 +57,14 @@
             <div class="col-md-4">
                 <div class="login-div">
                     <font class="heading-font">
-                        <center>Sign Up</center>
+                        <center>Edit profile</center>
                     </font>
                     <div class="form">
                         <form method="post" class="form-horizontal" novalidate>
                             {% csrf_token %}
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
                             {% for field in form.visible_fields %}
                                 <div class="form-group">
                                     {% render_field field class="form-control login-input" placeholder=field.label %}

@@ -163,11 +163,15 @@ def edit_bio(request):
 def edit_profile(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            form = EditProfileForm(request.POST)
+            post = request.POST.copy()
+            post['userid'] = request.user.id
+            post['init_username'] = request.user.username
+            post['init_email'] = request.user.email
+            form = EditProfileForm(post)
             if form.is_valid():
-                form.save()
+                new_username = form.save()
                 messages.success(request, f'Profile updated successfully!')
-                return redirect('users:profile_view', u_name=request.user.username)
+                return redirect('users:profile_view', u_name=new_username)
             else:
                 return render(request, 'users/edit_profile.html', {'form':form})
         else:
@@ -180,7 +184,7 @@ def edit_profile(request):
                 'first_name': request.user.profile.first_name,
                 'last_name': request.user.profile.last_name,
                 'date_of_birth': request.user.profile.date_of_birth,
-                })
+            })
             return render(request, 'users/edit_profile.html', {'form':form})
     else:
         messages.warning(request, f'Please login or create an account.')
