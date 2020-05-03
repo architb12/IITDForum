@@ -71,6 +71,7 @@
                     </li>
         
                     {% if request.user.is_authenticated %}
+                        <li> <a href="#"> Tags </a></li>
                         <li><a href="{% url 'users:profile_view' request.user.username %}">{{request.user.profile.first_name}}</a></li>
                         <li><a href="{% url 'logout' %}?next=/home">Logout</a></li>
                     {% else %}
@@ -85,10 +86,10 @@
             </div>
         </nav>
 
-        <div class="body-div" id="top">
-            <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-7 body-content">
+        <div class="body-content" id="top">	      
+            <div class="row">	           
+            <div class="col-md-2"></div>	          
+            <div class="col-md-7">	          
                 {% if request.user.is_authenticated == False %}
                     <div class="alert alert-info">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

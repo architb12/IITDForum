@@ -5,9 +5,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="setup-heading">
-                Edit your bio
+                Edit your profile
             </div>
-            <button type="submit" name="skip-btn" class="skip-btn" value="Skip">Cancel <i class="fas fa-angle-double-right"></i></button>	
+            <a href="{% url 'users:profile_view' request.user %}">
+            <button type="submit" name="skip-btn" class="skip-btn" >Cancel <i class="fas fa-angle-double-right"></i></button>	
+            </a>
         </div>
     </div>
     <br>

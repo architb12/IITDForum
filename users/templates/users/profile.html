@@ -14,20 +14,25 @@
             <font class="name-font">
                 {{user.profile.full_name}}
             </font>
+            {% if request.user == user %}
+            <a href="{% url 'users:edit_profile' %}"">
+                <button type="submit" name="edit-btn" class="edit-btn"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit </button>	
+            </a>
+            {% endif %}
             <br><br>
             <ul class="list-inline">
                 <li>
                     <i class="fas fa-home"></i>&nbsp; 
                     <font class="details-font">{{user.profile.hostel}}</font>
                     {% if request.user == user %}
-                    <a href="{% url 'users:edit_hostel' %}"><font class="details-small-font">Edit</font></a>
+                    <a href="{% url 'users:edit_hostel' %}"><font class="details-small-font"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</font></a>
                     {% endif %}
                 </li>
                 <li>
                     <i class="far fa-building"></i>&nbsp; 
                     <font class="details-font">{{user.profile.dept}}</font>
                     {% if request.user == user %}
-                    <a href="{% url 'users:edit_dept' %}"><font class="details-small-font">Edit</font></a>
+                    <a href="{% url 'users:edit_dept' %}"><font class="details-small-font"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</font></a>
                     {% endif %}
                 </li>
                 <li>
@@ -49,7 +54,7 @@
             <a href="{% url 'users:edit_bio' %}">
                 <font class="details-small-font">
                     {% if user.profile.bio %}
-                        Edit
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                     {% else %}
                         Add bio
                     {% endif %}
