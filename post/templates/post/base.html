@@ -90,29 +90,31 @@
                                     </li>
                                     {% for tag in request.user.tag_set.all %}
                                         <li>
-                                            {% if tag.seen %}
-                                            <div class="notif-div notif-seen">
-                                            {% else %}
-                                            <div class="notif-div">
-                                            {% endif %}
-                                                <div class="row">
-                                                    <div class="col-md-1">
-                                                        <img class="img-circle profile-pic pull-left" style="margin:5px;" width=20 height=20 src="{{tag.tagger_image.url}}" alt="default.jpg">
-                                                    </div>
-                                                    <div class="col-md-11">
-                                                        <a href="{% url 'post:tag_view' tag.id %}" class="tag-link">
-                                                        <font class="notif-font">
-                                                            <font class="notif-bold">{{tag.tagger_name}}</font>
-                                                            {% if tag.tag_type == 'comment' %}
-                                                            mentioned you in a comment on a post by <font class="notif-bold">{{tag.post_author_name}}</font>.
-                                                            {% else %}
-                                                            tagged you in a post.
-                                                            {% endif %}
-                                                        </font>
-                                                        </a>
+                                            <a href="{% url 'post:tag_view' tag.id %}" class="tag-link">
+                                                {% if tag.seen %}
+                                                <div class="notif-div notif-seen">
+                                                {% else %}
+                                                <div class="notif-div">
+                                                {% endif %}
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <img class="img-circle profile-pic pull-left" style="margin:5px;" width=20 height=20 src="{{tag.tagger_image.url}}" alt="default.jpg">
+                                                        </div>
+                                                        
+                                                        <div class="col-md-11">
+                                                            <font class="notif-font">
+                                                                <font class="notif-bold">{{tag.tagger_name}}</font>
+                                                                {% if tag.tag_type == 'comment' %}
+                                                                mentioned you in a comment on a post by <font class="notif-bold">{{tag.post_author_name}}</font>.
+                                                                {% else %}
+                                                                tagged you in a post.
+                                                                {% endif %}
+                                                            </font>
+                                                            
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </li>
                                     {% empty %}
                                         <div class="notif-div" style="background-color: #fff;">

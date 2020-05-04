@@ -281,8 +281,12 @@ body{
 	border: none !important;
 }
 
+.tag-link{
+	text-align: left !important;
+}
+
 .tag-link::after{
-	border:none !important;
+	border: none !important;
 }
 
 .tag-link:hover{
@@ -344,6 +348,7 @@ body{
 	font-family: 'Spartan', sans-serif;
 	font-weight: 300;
 	font-size: 13px;
+	
 }
 
 .notif-bold{
