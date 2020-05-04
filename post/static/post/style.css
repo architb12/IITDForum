@@ -328,6 +328,7 @@ body{
 .notif-head-font{
 	color: #fff;
 	font-family: 'Spartan', sans-serif;
+	letter-spacing: 1px !important;
 	font-weight: 300;
 	font-size: 13px;
 }
@@ -346,6 +347,7 @@ body{
 .notif-font{
 	color: #222;
 	font-family: 'Spartan', sans-serif;
+	letter-spacing: normal !important;
 	font-weight: 300;
 	font-size: 13px;
 	
@@ -364,6 +366,7 @@ body{
 .notif-footer-font{
 	color: #fff !important;
 	font-family: 'Spartan', sans-serif !important;
+	letter-spacing: normal !important;
 	font-weight: 300 !important;
 	font-size: 10px !important;
 }

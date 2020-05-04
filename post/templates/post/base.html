@@ -69,8 +69,8 @@
                     {% if request.user.is_authenticated %}
                         <li>
                             <a class="notif-icon-link dropdown-toggle" data-toggle="dropdown" href="#" style="background-color: transparent;">
-                                {% if request.user.tag_set.count %} 
-                                    <i class="fas fa-bell notif-icon"><span class="notif-count">{{ request.user.tag_set.count }}</span></i>
+                                {% if request.user.profile.unseen_tag_count %} 
+                                    <i class="fas fa-bell notif-icon"><span class="notif-count">{{ request.user.profile.unseen_tag_count }}</span></i>
                                 {% else %}
                                     <i class="fas fa-bell notif-icon"></i>
                                 {% endif %}
@@ -82,7 +82,10 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <font class="notif-head-font">
-                                                        Notifications({{ request.user.tag_set.count }})
+                                                        Notifications 
+                                                        {% if request.user.profile.unseen_tag_count %}
+                                                        ({{ request.user.profile.unseen_tag_count }})
+                                                        {% endif %}
                                                     </font>
                                                 </div>
                                             </div>
@@ -110,7 +113,6 @@
                                                                 tagged you in a post.
                                                                 {% endif %}
                                                             </font>
-                                                            
                                                         </div>
                                                     </div>
                                                 </div>

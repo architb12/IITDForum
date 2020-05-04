@@ -18,3 +18,6 @@ class Profile(models.Model):
 
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+    
+    def unseen_tag_count(self):
+        return self.parent_user.tag_set.filter(seen=False).count()
