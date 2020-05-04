@@ -240,19 +240,35 @@ def edit_image(request):
             user = request.user
             profile = user.profile
             img = request.FILES['image_input']
-            image = Image.open(img)
-            img_io = BytesIO()
-            resized_image = image.resize((300, 300), Image.ANTIALIAS)
-            resized_image.save(img_io, format='JPEG', quality=100)
-            img_content = ContentFile(img_io.getvalue(), str(user.id)+'_image.jpg')
-            if user.profile.image.url == "/media/default.jpg":
-                profile.image = img_content
-                profile.save()
-            else:
-                profile.image.delete()
-                profile.image = img_content
-                profile.save()
-            return redirect('home')
+            try:
+                image = Image.open(img)
+                w,h = image.size
+                if w > h:
+                    top = 0
+                    bottom = h
+                    left = (w-h)/2
+                    right = (w+h)/2
+                else:
+                    top = (h+w)/2
+                    bottom = (h-w)/2
+                    left = 0
+                    right = w
+                img_io = BytesIO()
+                cropped_image = image.crop((left, top, right, bottom))
+                resized_image = cropped_image.resize((300, 300), Image.ANTIALIAS)
+                resized_image.save(img_io, format='JPEG', quality=100)
+                img_content = ContentFile(img_io.getvalue(), str(user.id)+'_image.jpg')
+                if user.profile.image.url == "/media/default.jpg":
+                    profile.image = img_content
+                    profile.save()
+                else:
+                    profile.image.delete()
+                    profile.image = img_content
+                    profile.save()
+                return redirect('users:profile_view', u_name=user.username)
+            except:
+                messages.warning(request, f'File format is incorrect')
+                return redirect('users:profile_view', u_name=user.username)
         else:
             return render(request, 'users/test.html')
     else:
@@ -273,7 +289,7 @@ def delete_image(request):
                 profile.image = 'default.jpg'
                 profile.save()
                 messages.success(request, 'Profile picture deleted.')
-                return redirect('home')
+                return redirect('users:profile_view', u_name=user.username)
         else:
             return redirect('users:profile_view', u_name=user.username)
     else:
