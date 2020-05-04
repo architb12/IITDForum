@@ -73,7 +73,8 @@ def post_create(request):
                         continue
                 
                 #Checks if user already has atleast 10 tags and removes oldest tag if required
-                for tagged_user in tag_list:
+                #Takes only the first 10 tags from the post
+                for tagged_user in tag_list[:10]:
                     if tagged_user.tag_set.count() >= 10:
                         remove_tag = tagged_user.tag_set.order_by('pub_date')[0]
                         remove_tag.delete()
@@ -131,19 +132,40 @@ def comment_create(request):
                             if valid:
                                 try:
                                     tagged_user = User.objects.get(username=token[1:])
-                                    if request.user != tagged_user and not tagged_user in tag_list:
+                                    if request.user != tagged_user and not tagged_user in tag_list and post.author != tagged_user:
                                         tag_list.append(tagged_user)
                                 except: 
                                     continue
                     except:
                         continue
                 
-                #Checks if user already has atleast 10 tags and removes oldest tag if required
-                for tagged_user in tag_list:
+                #Checks if user already has atleast 10 tags and removes oldest tag if required 
+                #Takes only the first 10 tags from the comment
+                for tagged_user in tag_list[:10]:
                     if tagged_user.tag_set.count() >= 10:
                         remove_tag = tagged_user.tag_set.order_by('pub_date')[0]
                         remove_tag.delete()
-                    new_tag = Tag(parent_user=tagged_user,tagger_id=str(request.user.id),tag_type='comment',pub_date=timezone.now(),post_id=new_comment.parent_post.id)
+                    new_tag = Tag(
+                        parent_user=tagged_user,
+                        tagger_id=str(request.user.id),
+                        tag_type='comment',
+                        pub_date=timezone.now(),
+                        post_id=new_comment.parent_post.id
+                        )
+                    new_tag.save()
+                
+                #For creating 'commented' tag for notifications
+                if post.author != new_comment.author:
+                    if post.author.tag_set.count() >= 10:
+                            remove_tag = tagged_user.tag_set.order_by('pub_date')[0]
+                            remove_tag.delete()
+                    new_tag = Tag(
+                        parent_user=post.author,
+                        tagger_id=str(request.user.id),
+                        tag_type='commented',
+                        pub_date=timezone.now(),
+                        post_id=new_comment.parent_post.id
+                        )
                     new_tag.save()
 
                 messages.success(request, f'Comment added successfully!')

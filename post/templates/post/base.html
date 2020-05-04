@@ -109,6 +109,8 @@
                                                                 <font class="notif-bold">{{tag.tagger_name}}</font>
                                                                 {% if tag.tag_type == 'comment' %}
                                                                 mentioned you in a comment on a post by <font class="notif-bold">{{tag.post_author_name}}</font>.
+                                                                {% elif tag.tag_type == 'commented' %}
+                                                                commented on your post.
                                                                 {% else %}
                                                                 tagged you in a post.
                                                                 {% endif %}
