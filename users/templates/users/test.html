@@ -1,0 +1,10 @@
+{% extends 'post/base.html' %}
+{% block content %}
+
+<form action="{% url 'users:edit_image' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="image_input" id="image_input">
+    <button type="submit"> submit </button>
+</form>
+
+{% endblock %}

@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import authenticate, login
 from django.http import Http404
+from PIL import Image
+from django.core.files.base import ContentFile
+from io import BytesIO
 # Create your views here.
 
 # View For sign up form
@@ -229,3 +232,50 @@ def search(request):
     else:
         return HttpResponse('fail')
 
+
+#Edit Image View
+def edit_image(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = request.user
+            profile = user.profile
+            img = request.FILES['image_input']
+            image = Image.open(img)
+            img_io = BytesIO()
+            resized_image = image.resize((300, 300), Image.ANTIALIAS)
+            resized_image.save(img_io, format='JPEG', quality=100)
+            img_content = ContentFile(img_io.getvalue(), str(user.id)+'_image.jpg')
+            if user.profile.image.url == "/media/default.jpg":
+                profile.image = img_content
+                profile.save()
+            else:
+                profile.image.delete()
+                profile.image = img_content
+                profile.save()
+            return redirect('home')
+        else:
+            return render(request, 'users/test.html')
+    else:
+        messages.warning(request, f'Please login or create an account.')
+        return redirect('home')
+
+#Delete image view
+def delete_image(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = request.user
+            profile = user.profile
+            if user.profile.image.url == "/media/default.jpg":
+                messages.warning(request, f'You don\'t have a profile picture yet.')
+                return redirect('users:profile_view', u_name=user.username)
+            else:
+                profile.image.delete()
+                profile.image = 'default.jpg'
+                profile.save()
+                messages.success(request, 'Profile picture deleted.')
+                return redirect('home')
+        else:
+            return redirect('users:profile_view', u_name=user.username)
+    else:
+        messages.warning(request, f'Please login or create an account.')
+        return redirect('home')
