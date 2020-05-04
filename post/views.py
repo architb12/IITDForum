@@ -205,11 +205,29 @@ def tag_search(request):
         return HttpResponse('fail')
 
 def tag_view(request,tag_id):
-    tag = Tag.objects.get(id=tag_id)
-    user = tag.parent_user
-    seen_tags = Tag.objects.filter(parent_user=user,post_id=tag.post_id)
-    for seen_tag in seen_tags:
-        seen_tag.seen = True
-        seen_tag.save()
+    if request.user.is_authenticated:
+        tag = Tag.objects.get(id=tag_id)
+        if request.user == tag.parent_user:
+            user = tag.parent_user
+            seen_tags = Tag.objects.filter(parent_user=user,post_id=tag.post_id)
+            for seen_tag in seen_tags:
+                seen_tag.seen = True
+                seen_tag.save()
+            return redirect('post:post_view',post_id=tag.post_id)
+        else:
+            return redirect('home')
+    else:
+        messages.warning(request, f'Please login or create an account.')
+        return redirect('home')
+    
 
-    return redirect('post:post_view',post_id=tag.post_id)
+def mark_as_read(request):
+    if request.user.is_authenticated:
+        tags = request.user.tag_set.filter(seen=False)
+        for tag in tags:
+            tag.seen = True
+            tag.save()
+        return redirect('home')
+    else:
+        messages.warning(request, f'Please login or create an account.')
+        return redirect('home')

@@ -10,5 +10,6 @@ urlpatterns = [
     path('deletepost/', views.post_delete, name='post_delete'),
     path('deletecomment/', views.comment_delete, name='comment_delete'),
     path('tagsearch/', views.tag_search, name='tag_search'),
-    path('tag_view/<int:tag_id>', views.tag_view, name='tag_view')
+    path('tag_view/<int:tag_id>', views.tag_view, name='tag_view'),
+    path('mark_as_read/', views.mark_as_read, name='mark_as_read'),
 ]

@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="{% static 'post/style.css' %}">
 
         <!--Google Font File-->
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&family=Spartan:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800&family=Roboto:wght@400;500;700;900&family=Spartan:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
         
         <!--JQuery File-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -66,25 +66,83 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                       
-                    </li>
-        
                     {% if request.user.is_authenticated %}
-                        <li><a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="far fa-bell"> {{request.user.tag_set.count }}</i>
-                            <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                {% for tag in request.user.tag_set.all %}
-                                <li><a href="{% url 'post:tag_view' tag.id %}"> 
-                                    {% if tag.seen %}
-                                    {{ tag.tagger_name }} tagged you in a {{tag.tag_type}}
-                                    {% else %}
-                                    <strong> {{ tag.tagger_name }} tagged you in a {{tag.tag_type}}</strong>
+                        <li>
+                            <a class="notif-icon-link dropdown-toggle" data-toggle="dropdown" href="#" style="background-color: transparent;">
+                                {% if request.user.tag_set.count %} 
+                                    <i class="fas fa-bell notif-icon"><span class="notif-count">{{ request.user.tag_set.count }}</span></i>
+                                {% else %}
+                                    <i class="fas fa-bell notif-icon"></i>
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu notif-container">
+                                <div class="notif-content-div">
+                                    <li>
+                                        <div class="notif-head-div">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <font class="notif-head-font">
+                                                        Notifications({{ request.user.tag_set.count }})
+                                                    </font>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% for tag in request.user.tag_set.all %}
+                                        <li>
+                                            {% if tag.seen %}
+                                            <div class="notif-div notif-seen">
+                                            {% else %}
+                                            <div class="notif-div">
+                                            {% endif %}
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <img class="img-circle profile-pic pull-left" style="margin:5px;" width=20 height=20 src="{{tag.tagger_image.url}}" alt="default.jpg">
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                        <a href="{% url 'post:tag_view' tag.id %}" class="tag-link">
+                                                        <font class="notif-font">
+                                                            <font class="notif-bold">{{tag.tagger_name}}</font>
+                                                            {% if tag.tag_type == 'comment' %}
+                                                            mentioned you in a comment on a post by <font class="notif-bold">{{tag.post_author_name}}</font>.
+                                                            {% else %}
+                                                            tagged you in a post.
+                                                            {% endif %}
+                                                        </font>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% empty %}
+                                        <div class="notif-div" style="background-color: #fff;">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <font class="notif-font">
+                                                        No notifications.
+                                                    </font>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    </li>
+                                    {% if request.user.tag_set.count %}
+                                        <li>
+                                            <div class="notif-footer-div">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <center>
+                                                            <a class="notif-footer-font" href="{% url 'post:mark_as_read' %}">Mark all as read</a>
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
                                     {% endif %}
-                                </a></li>
-                                {% endfor %}
+                                </div>
+                                
                             </ul>
-                         </li>
+                        </li>
                         <li><a href="{% url 'users:profile_view' request.user.username %}">{{request.user.profile.first_name}}</a></li>
                         <li><a href="{% url 'logout' %}?next=/home">Logout</a></li>
                     {% else %}

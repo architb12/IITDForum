@@ -33,8 +33,17 @@ class Tag(models.Model):
     post_id = models.CharField(max_length = 10, default = '1')
     seen = models.BooleanField(default = False)
 
+    class Meta:
+        ordering = ['-pub_date']
+
     def __str__(self):
         return 'User with id ' + self.tagger_id + ' tagged ' + self.parent_user.username + ' on a ' + self.tag_type + ' at time ' + str(self.pub_date)
-    
+
     def tagger_name(self):
         return User.objects.get(id=self.tagger_id).username
+
+    def tagger_image(self):
+        return User.objects.get(id=self.tagger_id).profile.image
+    
+    def post_author_name(self):
+        return Post.objects.get(id=self.post_id).author.username
