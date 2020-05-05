@@ -2,6 +2,10 @@
 {% load widget_tweaks %}
 {% block content %}
 {% load static %}
+    <!--Fengyuan Chen's Datepicker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+
     <div class="row">
         <div class="col-md-12">
             <div class="setup-heading">
@@ -13,10 +17,10 @@
         </div>
     </div>
     <br>
-    <br>
-    <form method="post" class="form-horizontal" novalidate></form>
-        <div class="form create-post-div" style="padding:20px;">
-        
+   <br>
+   <div class="form">
+       <div class="create-post-div" style="padding:20px;">
+        <form method="post" class="form-horizontal" novalidate>
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
@@ -43,12 +47,19 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            
-        </div>
-        <div class="form-group row">
-            <center>
-                <button type="submit" style="float: none;" class="skip-btn">Submit <i class="fas fa-angle-double-right"></i></button>
-            </center>
-        </div>
-    </form>
+       </div>
+            <div class="form-group row">
+                <center>
+                    <button type="submit" style="float: none;" class="skip-btn">Submit <i class="fas fa-angle-double-right"></i></button>
+                </center>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+           $("#id_date_of_birth").datepicker({
+               format:'dd/mm/yyyy',
+           });
+       });
+   </script>
 {% endblock %}
