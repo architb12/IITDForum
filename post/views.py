@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.views.generic import RedirectView
 from django.utils import timezone
+import datetime
 # Create your views here.
 
 
@@ -42,6 +43,11 @@ def post_like(request):
 #Post Creation View
 def post_create(request):
     if request.method == 'POST':
+        user = request.user
+        if user.post_set.count() > 9:
+            if timezone.now() - user.post_set.all().order_by('-pub_date')[9].pub_date < datetime.timedelta(days = 1):
+                messages.warning(request,"Maximum post limit reached! You can not create more than 10 posts within a span of 24 hours..")
+                return redirect('home')
         post_text = request.POST['post_text']
         if len(post_text)>5000:
             messages.warning(request, f'Post exceeds character limit.')
@@ -110,6 +116,11 @@ def comment_create(request):
         comment_text = request.POST['comment_text']
         post_id = request.POST['post']
         post = Post.objects.get(pk=post_id)
+        user = request.user
+        if user.comment_set.count() > 99:
+            if timezone.now() - user.comment_set.all().order_by('-pub_date')[99].pub_date < datetime.timedelta(days = 1):
+                messages.warning(request,"Maximum comment limit reached! You can not create more than 100 comments within a span of 24 hours.")
+                return redirect('post:post_view', post_id=post.id)
         if len(comment_text)>500:
             messages.warning(request, f'Comment exceeds character limit.')
             return redirect('post:post_view', post_id=post.id)
@@ -157,7 +168,7 @@ def comment_create(request):
                 #For creating 'commented' tag for notifications
                 if post.author != new_comment.author:
                     if post.author.tag_set.count() >= 10:
-                            remove_tag = tagged_user.tag_set.order_by('pub_date')[0]
+                            remove_tag = post.author.tag_set.order_by('pub_date')[0]
                             remove_tag.delete()
                     new_tag = Tag(
                         parent_user=post.author,
