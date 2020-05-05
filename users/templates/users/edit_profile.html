@@ -13,9 +13,10 @@
         </div>
     </div>
     <br>
-   <br>
-   <div class="form">
-        <form method="post" class="form-horizontal" novalidate>
+    <br>
+    <form method="post" class="form-horizontal" novalidate></form>
+        <div class="form create-post-div" style="padding:20px;">
+        
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
                 {{ hidden }}
@@ -42,11 +43,12 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <div class="form-group row">
-                <center>
-                    <button type="submit" style="float: none;" class="skip-btn">Submit <i class="fas fa-angle-double-right"></i></button>
-                </center>
-            </div>
-        </form>
-    </div>
+            
+        </div>
+        <div class="form-group row">
+            <center>
+                <button type="submit" style="float: none;" class="skip-btn">Submit <i class="fas fa-angle-double-right"></i></button>
+            </center>
+        </div>
+    </form>
 {% endblock %}
