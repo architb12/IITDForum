@@ -8,9 +8,6 @@ from django.utils import timezone
 import datetime
 # Create your views here.
 
-
-
-
 # View individual post with comments
 def post_view(request, post_id):
     try:

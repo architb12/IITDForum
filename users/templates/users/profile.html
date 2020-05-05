@@ -3,7 +3,13 @@
 {% block content %}
     <div class="row">
         <div class="col-md-3 profile-img-div">
-            <img class="img-circle img-responsive profile-pic" style="float: left;" width=150 height=150 src="{{ user.profile.image.url }}" alt="default.jpg">
+            {% if request.user == user %}
+                <a href="#" data-toggle="modal" data-target="#edit-image-modal" target="_blank">
+                    <img class="img-circle img-responsive profile-pic" style="float: left;" width=150 height=150 src="{{ user.profile.image.url }}" alt="default.jpg">
+                </a>
+            {% else %}
+                <img class="img-circle img-responsive profile-pic" style="float: left;" width=150 height=150 src="{{ user.profile.image.url }}" alt="default.jpg">
+            {% endif %}
         </div>
         <div class="col-md-9 profile-details-div">
             <br>
@@ -15,10 +21,6 @@
                 {{user.profile.full_name}}
             </font>
             {% if request.user == user %}
-            <form method='POST' action="{% url 'users:delete_image' %}">
-                {% csrf_token %}
-                <button type="submit">Delete</button>
-            </form>
             <a href="{% url 'users:edit_profile' %}"">
                 <button type="submit" name="edit-btn" class="edit-btn"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit </button>	
             </a>
@@ -249,6 +251,41 @@
         </div>
     </div>
 
+    {% if request.user == user %}
+        <!-- Modal for editing image -->
+        <div id="edit-image-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header modal-top">
+                        <div class="modal-text modal-heading" id="modal-text">
+                            <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times"></i></button>
+                            Edit your Profile Picture
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <center>
+                            <button id="edit-image-btn" class="edit-image-btn"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Change picture </button>	
+                            <button id="delete-image-btn" class="edit-image-btn"> <i class="fas fa-trash-alt" aria-hidden="true"></i> Remove picture </button>
+                        </center>
+                        <div class="upload-div collapse" id="upload-image-div">
+                            <form action="{% url 'users:edit_image' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="file" name="image_input" id="image_input">
+                                <button type="submit"> submit </button>
+                            </form>
+                        </div>
+                        <div class="upload-div collapse" id="delete-image-div">
+                            <form method='POST' action="{% url 'users:delete_image' %}">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <script type="text/javascript"> 
         //AJAX for like button functionality
         $('.like-button').click(function(){ 
@@ -355,6 +392,15 @@
                 }
                 })
             }
+        });
+
+        $(document).ready(function(){
+            $("#edit-image-btn").click(function(){
+                $("#upload-image-div").fadeIn()
+            });
+            $("#delete-image-btn").click(function(){
+                $("#delete-image-div").fadeIn()
+            });
         });
 
     </script>        

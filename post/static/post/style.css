@@ -6,6 +6,8 @@ html, body {
 body{
     position:relative;
 	max-width:100%;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 400;
 }
 
 .loader{
@@ -98,6 +100,10 @@ body{
 	border-bottom: 2px solid #222;
 }
 
+.nav-top .navbar-header #navicon{
+	color: #fff;
+}
+
 .nav-top .navbar-collapse{
 	padding: 20px;
 	padding-bottom: 10px;
@@ -175,6 +181,10 @@ body{
 
 .nav-scroll .search-bar-input:focus{
 	border-bottom: 2px solid #4330ab;
+}
+
+.nav-scroll .navbar-header #navicon{
+	color: #4330ab;
 }
 
 .nav-scroll .navbar-collapse{
@@ -972,10 +982,17 @@ form{
 	margin-bottom:10px;
 }
 
+.modal-header{
+	background:linear-gradient(45deg, #380957, #9f0fac);
+	background:-webkit-linear-gradient(45deg, #380957, #9f0fac);
+	background:-moz-linear-gradient(45deg, #380957, #9f0fac);
+    background:-o-linear-gradient(45deg, #380957, #9f0fac);
+}
+
 .modal-heading{
 	font-family: 'Raleway', sans-serif;
 	font-size: 15px;
-	color: #222;
+	color: #fff;
 	font-weight: 300;
 }
 
@@ -1100,4 +1117,30 @@ form{
 	font-size: 15px;
 	color: #222;
 	font-weight: 500;
+}
+
+.edit-image-btn{
+	float:none;
+	border-radius: 2px;
+	border: 2px solid #222;
+	font-family: 'Raleway',sans-serif;
+	font-size: 15px;
+	color: #222;
+	background: transparent;
+	cursor: pointer;
+	padding: 10px 20px;
+	margin:15px;
+	font-weight: 500;
+	outline: none;
+	position: relative;
+	overflow: hidden;
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+}
+
+.edit-image-btn:hover{
+	color:#fff;
+    background-color: #380957;
 }

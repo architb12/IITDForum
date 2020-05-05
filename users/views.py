@@ -270,7 +270,7 @@ def edit_image(request):
                 messages.warning(request, f'File format is incorrect')
                 return redirect('users:profile_view', u_name=user.username)
         else:
-            return render(request, 'users/test.html')
+            return redirect('users:profile_view', u_name=user.username)
     else:
         messages.warning(request, f'Please login or create an account.')
         return redirect('home')
