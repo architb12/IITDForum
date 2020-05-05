@@ -1144,3 +1144,27 @@ form{
 	color:#fff;
     background-color: #380957;
 }
+
+.upload-div{
+	background-color: #ddd;
+	margin: 10px;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.image-div-font{
+	font-family: 'Raleway',sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	color: #222;
+	margin: 10px;
+}
+
+.image-input{
+	height: 0.1px;
+	width: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}

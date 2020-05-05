@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-3 profile-img-div">
             {% if request.user == user %}
-                <a href="#" data-toggle="modal" data-target="#edit-image-modal" target="_blank">
+                <a href="#" id="edit-image-toggle" data-toggle="modal" data-target="#edit-image-modal" target="_blank">
                     <img class="img-circle img-responsive profile-pic" style="float: left;" width=150 height=150 src="{{ user.profile.image.url }}" alt="default.jpg">
                 </a>
             {% else %}
@@ -268,17 +268,29 @@
                             <button id="delete-image-btn" class="edit-image-btn"> <i class="fas fa-trash-alt" aria-hidden="true"></i> Remove picture </button>
                         </center>
                         <div class="upload-div collapse" id="upload-image-div">
-                            <form action="{% url 'users:edit_image' %}" method="POST" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <input type="file" name="image_input" id="image_input">
-                                <button type="submit"> submit </button>
-                            </form>
+                            <center>
+                                <form action="{% url 'users:edit_image' %}" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="file" name="image_input" id="image_input" class="image-input">
+                                    <label class="edit-image-btn" for="image_input"><i class="fas fa-upload"></i>  Upload a picture</label>
+                                    <br>
+                                    <button type="submit" class="btn btn-success"> Confirm  </button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"> Cancel </button>
+                                </form>
+                            </center>
                         </div>
                         <div class="upload-div collapse" id="delete-image-div">
-                            <form method='POST' action="{% url 'users:delete_image' %}">
-                                {% csrf_token %}
-                                <button type="submit">Delete</button>
-                            </form>
+                            <center>
+                                <font class="image-div-font">
+                                    Are you sure you want to delete your profile picture?
+                                </font>
+                                <br><br>
+                                <form action="{% url 'users:delete_image' %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger"> Yes, delete it </button>
+                                    <button type="button" class="btn btn-success" data-dismiss="modal"> Cancel </button>
+                                </form>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -395,10 +407,16 @@
         });
 
         $(document).ready(function(){
+            $("#edit-image-toggle").click(function(){
+                $("#delete-image-div").fadeOut()
+                $("#upload-image-div").fadeOut()
+            });
             $("#edit-image-btn").click(function(){
+                $("#delete-image-div").fadeOut()
                 $("#upload-image-div").fadeIn()
             });
             $("#delete-image-btn").click(function(){
+                $("#upload-image-div").fadeOut()
                 $("#delete-image-div").fadeIn()
             });
         });
