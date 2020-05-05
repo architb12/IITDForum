@@ -139,6 +139,12 @@
                     <a href="{% url 'post:post_view' post.id %}" class="more-comments-font">View all {{post.comment_set.all|length}} comments.</a> 
                 </div>
             </div>
+        {% else %}
+            <div class="like-wrapper">
+                <div class="likes-count" style="margin-left: 10px;">
+                    <a href="{% url 'post:post_view' post.id %}" class="more-comments-font"> <i class="fa fa-pencil-square-o" aria-hidden="true"> </i> Write a comment.</a> 
+                </div>
+            </div>
         {% endif %}
         <!-- Post Comments -->
         {% for comment in post.comment_set.all|dictsortreversed:"pub_date"|slice:":2" %}
