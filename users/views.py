@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
 from .forms import SignUpForm, EditProfileForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.http import Http404
 from PIL import Image
 from django.core.files.base import ContentFile
@@ -296,6 +297,23 @@ def delete_image(request):
                 return redirect('users:profile_view', u_name=user.username)
         else:
             return redirect('users:profile_view', u_name=user.username)
+    else:
+        messages.warning(request, f'Please login or create an account.')
+        return redirect('home')
+
+#Change Password View
+def change_password(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = PasswordChangeForm(request.user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, f'Your password has been changed.')
+                return redirect('users:profile_view', u_name=user.username)
+        else:
+            form = PasswordChangeForm(request.user)
+        return render(request, 'users/change_password.html', {'form': form})
     else:
         messages.warning(request, f'Please login or create an account.')
         return redirect('home')

@@ -32,19 +32,18 @@
                     </div>
                     <div class="col-md-9">
                         {% render_field field class="form-control login-input" placeholder=field.label %}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <font class="message-font">{{ error }}</font>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
-                    
-                    {% if field.help_text %}
-                        <small class="form-text text-muted">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% if field.errors %}
-                        {% for error in field.errors %}
-                            <div class="alert alert-danger" role="alert">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <font class="message-font">{{ error }}</font>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
                 </div>
             {% endfor %}
        </div>
