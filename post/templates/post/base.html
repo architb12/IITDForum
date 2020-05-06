@@ -98,7 +98,7 @@
                                     </li>
                                     {% for tag in request.user.tag_set.all %}
                                         <li>
-                                            <a href="{% url 'post:tag_view' tag.id %}" class="tag-link">
+                                            <a href="{% url 'post:tag_view' tag.id %}" class="notif-tag-link">
                                                 {% if tag.seen %}
                                                 <div class="notif-div notif-seen">
                                                 {% else %}
@@ -115,10 +115,14 @@
                                                                 {% if tag.tag_type == 'comment' %}
                                                                 mentioned you in a comment on a post by <font class="notif-bold">{{tag.post_author_name}}</font>.
                                                                 {% elif tag.tag_type == 'commented' %}
-                                                                commented on your post.
+                                                                commented on your post. 
                                                                 {% else %}
-                                                                tagged you in a post.
+                                                                tagged you in a post. 
                                                                 {% endif %}
+                                                            </font>
+                                                            <br>
+                                                            <font class="notif-date-font">
+                                                                {{ tag.pub_date }}
                                                             </font>
                                                         </div>
                                                     </div>

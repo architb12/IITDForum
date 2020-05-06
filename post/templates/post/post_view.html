@@ -151,15 +151,17 @@
         </div>
     {% endfor %}
     </div>
+    {% if comments.has_next %}
+        <br>
+        <center>
+            <a class="infinite-more-link more-link" href="?page={{ comments.next_page_number }}">More</a>
+        </center>
+    {% endif %}
+    <div class="loading load-post-div" style="display: none;">
+        <i class="fas fa-cog fa-3x fa-spin"></i>
+    </div>    
 </div>
 
-{% if comments.has_next %}
-    <a class="infinite-more-link" href="?page={{ comments.next_page_number }}">More</a>
-{% endif %}
-
-<div class="loading" style="display: none;">
-    Loading...
-</div>
 
 <!-- Modal for likes on a post -->
 <div id="like-modal-{{post.id}}" class="modal fade" role="dialog">

@@ -291,15 +291,15 @@ body{
 	border: none !important;
 }
 
-.tag-link{
+.notif-tag-link{
 	text-align: left !important;
 }
 
-.tag-link::after{
+.notif-tag-link::after{
 	border: none !important;
 }
 
-.tag-link:hover{
+.notif-tag-link:hover{
 	text-decoration: none;
 }
 
@@ -359,12 +359,19 @@ body{
 	font-family: 'Spartan', sans-serif;
 	letter-spacing: normal !important;
 	font-weight: 300;
-	font-size: 13px;
-	
+	font-size: 13px;	
 }
 
 .notif-bold{
 	font-weight: 500 !important;
+}
+
+.notif-date-font{
+	font-family: 'Spartan',sans-serif;
+	font-size:8px;
+	letter-spacing: normal !important;
+	font-weight: 500;
+	color:rgb(94, 94, 94);
 }
 
 .notif-footer-div{
@@ -1167,4 +1174,26 @@ form{
 	overflow: hidden;
 	position: absolute;
 	z-index: -1;
+}
+
+.more-link{
+	font-family: 'Raleway', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	color:rgb(83, 0, 72);
+	text-decoration: none;
+}
+
+.more-link:hover{
+	text-decoration: none;
+	color: #000;
+}
+
+.load-post-div{
+	background-color: transparent;
+	color:rgb(83, 0, 72);
+	padding: 20px;
+	border-radius: 10px;
+	text-align: center;
+	margin: 5px;
 }
