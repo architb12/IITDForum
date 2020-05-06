@@ -10,6 +10,7 @@ from django.http import Http404
 from PIL import Image
 from django.core.files.base import ContentFile
 from io import BytesIO
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 # View For sign up form
@@ -36,7 +37,16 @@ def profile_view(request, u_name):
     except User.DoesNotExist:
         raise Http404("ERROR 404: User does not exist")
     posts = user.post_set.all().order_by('-pub_date')
-    return render(request, 'users/profile.html', {'user': user, 'posts':posts, 'title': user.username})
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts, 5)
+    try:
+        posts_list = paginator.page(page)
+    except PageNotAnInteger:
+        posts_list = paginator.page(1)
+    except EmptyPage:
+        posts_list = paginator.page(paginator.num_pages)
+
+    return render(request, 'users/profile.html', {'user': user, 'posts':posts_list, 'title': user.username})
 
 def setup(request):
     if request.user.is_authenticated:

@@ -6,6 +6,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonRespons
 from django.views.generic import RedirectView
 from django.utils import timezone
 import datetime
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 # View individual post with comments
@@ -15,12 +16,28 @@ def post_view(request, post_id):
     except Post.DoesNotExist:
         raise Http404("ERROR 404: Post does not exist")
     comments = post.comment_set.order_by('-pub_date')
-    return render(request, 'post/post_view.html', {'post': post, 'comments': comments, 'title':'Post by '+post.author.username})
+    page = request.GET.get('page', 1)
+    paginator = Paginator(comments, 3)
+    try:
+        comments_list = paginator.page(page)
+    except PageNotAnInteger:
+        comments_list = paginator.page(1)
+    except EmptyPage:
+        comments_list = paginator.page(paginator.num_pages)
+    return render(request, 'post/post_view.html', {'post': post, 'comments': comments_list, 'title':'Post by '+post.author.username})
 
 # Home page 
 def home(request):
     posts = Post.objects.all().order_by('-pub_date')
-    return render(request,'post/home.html',{'posts':posts, 'title':'Home'})
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts, 5)
+    try:
+        posts_list = paginator.page(page)
+    except PageNotAnInteger:
+        posts_list = paginator.page(1)
+    except EmptyPage:
+        posts_list = paginator.page(paginator.num_pages)
+    return render(request,'post/home.html',{'posts':posts_list, 'title':'Home'})
 
 # PostLike View
 def post_like(request): 
@@ -100,8 +117,11 @@ def post_delete(request):
         post_id = request.GET['post_id']
         if Post.objects.get(pk=post_id).author == request.user:
             post = Post.objects.get(id = post_id)
-            post.delete()
-            return HttpResponse('success')
+            if request.user == post.author:
+                post.delete()
+                return HttpResponse('success')
+            else:
+                return HttpResponse('fail')
         else:
             return HttpResponse('fail')
     else:
@@ -189,8 +209,11 @@ def comment_delete(request):
         comment_id = request.GET['comment_id']
         if Comment.objects.get(pk=comment_id).author == request.user:
             comment = Comment.objects.get(id = comment_id)
-            comment.delete()
-            return HttpResponse('success',)
+            if request.user == comment.author:
+                comment.delete()
+                return HttpResponse('success')
+            else:
+                return HttpResponse('fail')
         else:
             return HttpResponse('fail')
     else:

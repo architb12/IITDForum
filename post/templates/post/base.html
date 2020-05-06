@@ -12,6 +12,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
 
+
+        <script src="{% static 'post/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'post/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'post/infinite.min.js' %}"></script>
+
         <!--Favicon-->
         <link rel="shortcut icon" href="#">
 
@@ -220,6 +225,7 @@
     </body>
 
     
+
     <!--JavaScript File-->
     <script src="{% static 'post/script.js' %}"></script>
     <script>
@@ -247,6 +253,10 @@
         $('#search-bar').focusout(function(){
             $('#search-results').fadeOut();
         })
-        
+
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0]
+        });
     </script>
+
 </html>

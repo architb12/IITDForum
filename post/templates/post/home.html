@@ -1,6 +1,7 @@
 {% extends "post/base.html" %}
 {% load post_filters %}
 {% block content %}
+
     <!-- Post Creation Form -->
     {% if request.user.is_authenticated %}
         <div class="create-post-div">
@@ -37,7 +38,9 @@
         </div>
     {% endif %}
     <!-- Posts -->
+    <div class="infinite-container">
     {% for post in posts %}
+    <div class="infinite-item">
         <div class="home-post-div" id="post-{{ post.id }}-div">
             <div class="row">
                 <div class="col-md-1">
@@ -69,9 +72,9 @@
                 </div>
             </div>
             <hr class="hr1" align="left">
-            <font class="post-content-font">
+            <div class="post-content-font">
                 <!-- 'See more' feature -->
-                {% if post.text|linebreaks|length < 600 %}
+                {% if 600 > post.text|linebreaks|length %}
                     <div class="content-div"> {{post.text|urlize|linebreaks|tagize|safe}} </div>
                 {% else %}
                     <div class="post-text-sliced content-div" id="post-text-sliced{{post.id}}" data-catid="{{post.id}}"> {{post.text|urlize|linebreaks|tagize|safe|slice:":450"}}... </div>
@@ -79,7 +82,7 @@
                     <div class="see-more" id="see-more{{post.id}}" data-catid="{{post.id}}"> See more </div>
                     <div class="see-less" id="see-less{{post.id}}" data-catid="{{post.id}}"> </div>
                 {% endif %}
-            </font>
+            </div>
             <br>
             <!-- Post likes -->
             <div class="like-wrapper">
@@ -214,8 +217,17 @@
                 </div>
             </div>
         </div>
+    </div>
     {% endfor %}
+    </div>
 
+    {% if posts.has_next %}
+        <a class="infinite-more-link" href="?page={{ posts.next_page_number   }}">More</a>
+    {% endif %}
+
+    <div class="loading" style="display: none;">
+        Loading...
+    </div>
     <!-- Modal for delete post and delete comment -->
     <div id="delete-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -237,7 +249,7 @@
 
     <script type="text/javascript"> 
         //AJAX for like button functionality
-        $('.like-button').click(function(){ 
+        $(document).on("click",'.like-button',function(){ 
             var id; 
             id = $(this).attr("data-catid"); 
             $.ajax( 
@@ -292,7 +304,7 @@
         });
 
         //Function to change value of confirmation button on deletion of comment
-        $('.comment-delete-icon').click(function(){
+        $(document).on("click",'.comment-delete-icon',function(){
             var id;            
             id = $(this).attr("data-catid");
             $('#delete').attr('value', 'c'+id);
@@ -301,7 +313,7 @@
         });
 
         //Function to change value of confirmation button on deletion of post
-        $('.delete-icon').click(function(){
+        $(document).on("click",'.delete-icon',function(){
             var id; 
             id = $(this).attr("data-catid");
             $('#delete').attr('value', id);
@@ -323,7 +335,10 @@
                 }, 
                 success: function( data ) 
                 {
-                    $('#comment-' + id.slice(1) + '-div').fadeOut();
+                    if(data=='success'){
+                        $('#comment-' + id.slice(1) + '-div').fadeOut();
+                    }
+                    
                 }
                 })
             }
@@ -337,7 +352,9 @@
                 }, 
                 success: function( data ) 
                 {
-                    $('#post-' + id + '-div').fadeOut();
+                    if(data=='success'){
+                        $('#post-' + id + '-div').fadeOut();
+                    }
                 }
                 })
             }
@@ -393,5 +410,11 @@
             $('#tag-suggestions').hide();
         }
         
-    </script>        
+        
+        
+    </script>     
+
+    
+    
+
 {% endblock content %}

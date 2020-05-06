@@ -57,7 +57,7 @@ document.addEventListener('input', function(event){
 },false);
 
 //See more and See less functionality
-$(".see-more").click(function(){
+$(document).on("click",".see-more",function(){
     var id;            
     id = $(this).attr("data-catid");
     $("#post-text-sliced"+id).hide();
@@ -68,7 +68,7 @@ $(".see-more").click(function(){
     see_less_div.textContent="See less"
 });
 
-$(".see-less").click(function(){
+$(document).on("click",".see-less",function(){
     var id;            
     id = $(this).attr("data-catid");
     $("#post-text-sliced"+id).show();

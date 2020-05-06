@@ -117,37 +117,50 @@
             </div>
         </div>
     {% endif %}
-    {% for comment in post.comment_set.all|dictsortreversed:"pub_date" %}
-        <div id="comment-{{comment.id}}-div">
-            <div class="comment-div">
-                <div class="row">
-                    <div class="col-md-1">
-                        <img class="img-circle profile-pic" width=40 height=40 src="{{ comment.author.profile.image.url }}" alt="default.jpg">
-                    </div>
-                    <div class="col-md-10 content-div">
+    <div class="infinite-container">
+    {% for comment in comments %}
+        <div class="infinite-item">
+            <div id="comment-{{comment.id}}-div">
+                <div class="comment-div">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <img class="img-circle profile-pic" width=40 height=40 src="{{ comment.author.profile.image.url }}" alt="default.jpg">
+                        </div>
+                        <div class="col-md-10 content-div">
 
-                        <a href="{% url 'users:profile_view' comment.author.username %}" class="post-head">
-                        <font class="comment-username-font">
-                            <b>{{comment.author.username}}</b>
+                            <a href="{% url 'users:profile_view' comment.author.username %}" class="post-head">
+                            <font class="comment-username-font">
+                                <b>{{comment.author.username}}</b>
+                                </a>
+                                {{comment.text|urlize|linebreaks|tagize|safe}}
+                            </font>
+                            <font class="date-font">
+                                {{comment.pub_date}}
+                            </font>
+                        </div>
+                        <div class="col-md-1 comment-delete-div">
+                            {% if request.user == comment.author %}
+                            <a href="#" class="comment-delete-icon" data-catid="{{comment.id}}" data-toggle="modal" data-target="#delete-modal" target="_blank">
+                                <i class="fas fa-trash-alt delete-icon"></i>
                             </a>
-                              {{comment.text|urlize|linebreaks|tagize|safe}}
-                        </font>
-                        <font class="date-font">
-                            {{comment.pub_date}}
-                        </font>
-                    </div>
-                    <div class="col-md-1 comment-delete-div">
-                        {% if request.user == comment.author %}
-                        <a href="#" class="comment-delete-icon" data-catid="{{comment.id}}" data-toggle="modal" data-target="#delete-modal" target="_blank">
-                            <i class="fas fa-trash-alt delete-icon"></i>
-                        </a>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     {% endfor %}
+    </div>
 </div>
+
+{% if comments.has_next %}
+    <a class="infinite-more-link" href="?page={{ comments.next_page_number }}">More</a>
+{% endif %}
+
+<div class="loading" style="display: none;">
+    Loading...
+</div>
+
 <!-- Modal for likes on a post -->
 <div id="like-modal-{{post.id}}" class="modal fade" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -204,7 +217,7 @@
 
 <script type="text/javascript"> 
     //AJAX for like button functionality
-    $('.like-button').click(function(){ 
+    $(document).on("click",'.like-button',function(){ 
         var id; 
         id = $(this).attr("data-catid"); 
         $.ajax( 
@@ -259,21 +272,21 @@
     });
 
     //Function to change value of confirmation button on deletion of comment
-    $('.comment-delete-icon').click(function(){
-        var id;            
-        id = $(this).attr("data-catid");
-        $('#delete').attr('value', 'c'+id);
-        var Div = document.getElementById("modal-text");
-        Div.textContent = "Are you sure you want to delete this comment?";
-    });
+    $(document).on("click",'.comment-delete-icon',function(){
+            var id;            
+            id = $(this).attr("data-catid");
+            $('#delete').attr('value', 'c'+id);
+            var Div = document.getElementById("modal-text");
+            Div.textContent = "Are you sure you want to delete this comment?"
+        });
 
     //Function to change value of confirmation button on deletion of post
-    $('.delete-icon').click(function(){
+    $(document).on("click",'.delete-icon',function(){
         var id; 
         id = $(this).attr("data-catid");
         $('#delete').attr('value', id);
         var Div = document.getElementById("modal-text");
-        Div.textContent = "Are you sure you want to delete this post?";
+        Div.textContent = "Are you sure you want to delete this post?"
     });
 
     //AJAX for delete posts/comments functionality
@@ -290,7 +303,9 @@
             }, 
             success: function( data ) 
             {
-                $('#comment-' + id.slice(1) + '-div').fadeOut();
+                if(data=='success'){
+                    $('#comment-' + id.slice(1) + '-div').fadeOut();
+                }
             }
             })
         }
