@@ -13,7 +13,7 @@ class SignUpForm(forms.Form):
     first_name = forms.CharField(label='First Name', max_length=50)
     last_name = forms.CharField(label='Last Name', max_length=50)
 
-    date_of_birth = forms.DateField(label='Date of Birth', input_formats=['%d/%m/%Y'])
+    date_of_birth = forms.DateField(label='Date of Birth', widget=forms.DateInput(format='%d/%m/%Y'), input_formats=['%d/%m/%Y'])
 
     #Check if username alredy exists
     def clean_username(self):
@@ -106,7 +106,7 @@ class EditProfileForm(forms.Form):
     first_name = forms.CharField(label='First Name', max_length=50)
     last_name = forms.CharField(label='Last Name', max_length=50)
 
-    date_of_birth = forms.DateField(label='Date of Birth', input_formats=['%d/%m/%Y'])
+    date_of_birth = forms.DateField(label='Date of Birth', widget=forms.DateInput(format='%d/%m/%Y'), input_formats=['%d/%m/%Y'])
 
     def clean_userid(self):
         userid = self.cleaned_data['userid']
