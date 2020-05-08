@@ -18,7 +18,7 @@
         <script src="{% static 'post/infinite.min.js' %}"></script>
 
         <!--Favicon-->
-        <link rel="shortcut icon" href="#">
+        <link rel="shortcut icon" href="{% static 'users/favicon.png' %}">
 
         <!-- Bootstrap CSS File-->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -259,7 +259,13 @@
         })
 
         var infinite = new Waypoint.Infinite({
-            element: $('.infinite-container')[0]
+            element: $('.infinite-container')[0],
+            onBeforePageLoad: function () {
+                $('.loading').show();
+            },
+            onAfterPageLoad: function ($items) {
+                $('.loading').hide();
+            }
         });
     </script>
 
