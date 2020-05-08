@@ -23,6 +23,10 @@ IITD Forum is a web-application developed using the Python based Django web fram
 * This application is temporarily deployed at http://ritvikgupta199.pythonanywhere.com/.
 * There might be some minor glitches in the application hosted at the above url. These are mainly due to the improper deployment of the application at the moment.
 * Installations required for running the application on a local server are mentioned in the *requirements.txt* file.
+* The admin site for the repository can be accessed from http://127.0.0.1:8000/admin/ on the local server.
+* The user credentials for the Admin account are
+	* Username : admin
+	* Password : adminpassword
 
 
 ## Key Features
