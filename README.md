@@ -21,7 +21,7 @@ IITD Forum is a web-application developed using the Python based Django web fram
 ## Note 
 * This application is not developed, used or endorsed by the Indian Institute of Technology, Delhi. This is an independent project by Ritvik Gupta and Archit Bubna.
 * This application is temporarily deployed at http://ritvikgupta199.pythonanywhere.com/.
-* There may be some minor glitches in the application hosted at the above url. These are mainly due to the improper deployment of the application at the moment.
+* There might be some minor glitches in the application hosted at the above url. These are mainly due to the improper deployment of the application at the moment.
 * Installations required for running the application on a local server are mentioned in the *requirements.txt* file.
 
 
@@ -79,7 +79,7 @@ A user may delete any of their own posts and comments by clicking on the trash-i
 The character limit for posts and comments are 5000 characters and 500 characters respectively. The application displays a real-time character counter as one enters input into the post/comment creation fields, for the user to check if they are within the limit.
 
 ###### Spam Prevention
-In order to prevent spamming, a user can only write 10 posts and 100 comments in a span of 24 hours.
+In order to prevent spamming, the application does not allow a user to create more than 10 posts or 100 comments within a span of 24 hours.
 
 ###### Tagging users
 <!--screenshot of tag suggestions-->
@@ -111,7 +111,7 @@ On each page, the content loads as the user scrolls down to the bottom of the lo
 <!--View with search bar open with suggestions-->
 A user may access the search bar by clicking on the 'search-icon' on the navigation bar. The search bar allows the user to search for any user registered on the Forum. The search results are shown in real-time, i.e. as the user types into the search bar, and the results appear on the basis of the presence of the input string in the names/usernames of registered users.
 
-#### Searching a user:
+#### Searching for a user:
 
 <img src="https://github.com/architb12/collab/blob/master/Screenshots/Search/search_pc.jpg?raw=true" alt="Search" title="Searching a user" width="720" height="450" />
 <img src="https://github.com/architb12/collab/blob/master/Screenshots/Search/search_phone.jpg?raw=true" alt="Search" title="Searching a user" width="270" height="585" />
