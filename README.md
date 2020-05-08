@@ -4,6 +4,7 @@ IITD Forum is a web-application developed using the Python based Django web fram
 
 #### Screenshots of the application on all screen sizes:
 <!--Screenshots in all screen sizes-->
+
 <img src="https://github.com/architb12/collab/blob/master/Screenshots/Responsive/phone.jpg?raw=true" alt="Phone"
 	title="Site on a phone" width="270" height="585" />
   <img src="https://github.com/architb12/collab/blob/master/Screenshots/Responsive/ipad.jpg?raw=true" alt="iPad"
@@ -20,6 +21,7 @@ IITD Forum is a web-application developed using the Python based Django web fram
 ## Note 
 * This application is not developed, used or endorsed by the Indian Institute of Technology, Delhi. This is an independent project by Ritvik Gupta and Archit Bubna.
 * This application is temporarily deployed at http://ritvikgupta199.pythonanywhere.com/.
+* There may be some minor glitches in the application hosted at the above url. These are mainly due to the improper deployment of the application at the moment.
 * Installations required for running the application on a local server are mentioned in the *requirements.txt* file.
 
 
@@ -75,6 +77,10 @@ A user may delete any of their own posts and comments by clicking on the trash-i
   
 ###### Character limit
 The character limit for posts and comments are 5000 characters and 500 characters respectively. The application displays a real-time character counter as one enters input into the post/comment creation fields, for the user to check if they are within the limit.
+
+###### Spam Prevention
+In order to prevent spamming, a user can only write 10 posts and 100 comments in a span of 24 hours.
+
 ###### Tagging users
 <!--screenshot of tag suggestions-->
 While writing a post or a comment, a user may tag any user on the Forum by simply typing their username after an '@' symbol. As soon as a user enters the '@' symbol into the input field, real-time tag suggestions appear, which narrow down on the basis of the characters typed by the user after the '@' symbol. The suggestions narrow down on the basis of the appearance of the user's input string in the names/usernames of users registered on the Forum.
